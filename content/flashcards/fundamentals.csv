@@ -1,0 +1,11 @@
+track,card_front,card_back
+fundamentals,What is "loss"?,A scalar measuring prediction error used to tune parameters.
+fundamentals,Train/Val/Test—why split?,To estimate generalization and avoid overfitting/leakage.
+fundamentals,What is a "feature"?,An input variable (e.g., age, income) used to make predictions.
+fundamentals,What is "overfitting"?,When a model memorizes training data but fails on new data.
+fundamentals,What is "bias" in ML?,Systematic error that leads to unfair or incorrect predictions.
+fundamentals,What is "supervised learning"?,Learning with labeled examples (input → correct output).
+fundamentals,What is "unsupervised learning"?,Finding patterns in data without labeled examples.
+fundamentals,What is "reinforcement learning"?,Learning through trial and error with rewards/penalties.
+fundamentals,What is "accuracy"?,Correct predictions / Total predictions.
+fundamentals,What is "precision"?,True positives / (True positives + False positives).

@@ -332,19 +332,28 @@ export default function AppPage() {
 
           {/* Learning Paths Section */}
           <div className="mb-8">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className={`text-2xl font-bold ${themeClasses.text} flex items-center`}>
-                <BookOpen className="h-6 w-6 mr-2 text-blue-400" />
-                AI Learning Paths
-              </h3>
-              <Button
-                onClick={handleStartStorytelling}
-                className="bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white font-semibold"
-              >
-                <Play className="h-4 w-4 mr-2" />
-                Start AI Learning Journey
-              </Button>
-            </div>
+        <div className="flex items-center justify-between mb-6">
+          <h3 className={`text-2xl font-bold ${themeClasses.text} flex items-center`}>
+            <BookOpen className="h-6 w-6 mr-2 text-blue-400" />
+            AI Learning Paths
+          </h3>
+          <div className="flex space-x-3">
+            <Button
+              onClick={() => router.push('/learning-path/fundamentals')}
+              className="bg-gradient-to-r from-green-500 to-teal-600 hover:from-green-600 hover:to-teal-700 text-white font-semibold"
+            >
+              <BookOpen className="h-4 w-4 mr-2" />
+              4-Week Fundamentals
+            </Button>
+            <Button
+              onClick={handleStartStorytelling}
+              className="bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white font-semibold"
+            >
+              <Play className="h-4 w-4 mr-2" />
+              Start AI Learning Journey
+            </Button>
+          </div>
+        </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {learningPaths.slice(0, 3).map((path) => (
@@ -627,6 +636,98 @@ export default function AppPage() {
                   </div>
                 </div>
               ))}
+            </div>
+          </div>
+
+          {/* New Content System Section */}
+          <div className="mb-8">
+            <h3 className={`text-2xl font-bold ${themeClasses.text} mb-6`}>
+              🆕 New Interactive Learning System
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <Card className={`${themeClasses.card} backdrop-blur-sm border ${themeClasses.border} hover:${themeClasses.card.replace('/10', '/20')} transition-all duration-300 transform hover:scale-105 cursor-pointer`}
+                onClick={() => router.push('/learning-path/fundamentals')}>
+                <CardHeader>
+                  <CardTitle className={`text-xl ${themeClasses.text} flex items-center`}>
+                    📚 4-Week Fundamentals Course
+                  </CardTitle>
+                  <CardDescription className={`${themeClasses.text}/70`}>
+                    Structured learning path with interactive lessons, videos, and hands-on exercises
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between">
+                      <span className={`${themeClasses.text}/70`}>Lessons:</span>
+                      <span className={`${themeClasses.text}`}>16</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className={`${themeClasses.text}/70`}>Duration:</span>
+                      <span className={`${themeClasses.text}`}>12-16 hours</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className={`${themeClasses.text}/70`}>Features:</span>
+                      <span className={`${themeClasses.text}`}>Videos, Quizzes, Code</span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className={`${themeClasses.card} backdrop-blur-sm border ${themeClasses.border} hover:${themeClasses.card.replace('/10', '/20')} transition-all duration-300 transform hover:scale-105 cursor-pointer`}
+                onClick={() => router.push('/lesson/fundamentals-ch1-lesson2')}>
+                <CardHeader>
+                  <CardTitle className={`text-xl ${themeClasses.text} flex items-center`}>
+                    🎯 Try Sample Lesson
+                  </CardTitle>
+                  <CardDescription className={`${themeClasses.text}/70`}>
+                    Experience the new interactive lesson format with videos, quizzes, and coding
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between">
+                      <span className={`${themeClasses.text}/70`}>Topic:</span>
+                      <span className={`${themeClasses.text}`}>AI in Daily Life</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className={`${themeClasses.text}/70`}>Duration:</span>
+                      <span className={`${themeClasses.text}`}>25 minutes</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className={`${themeClasses.text}/70`}>Level:</span>
+                      <span className={`${themeClasses.text}`}>Beginner</span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className={`${themeClasses.card} backdrop-blur-sm border ${themeClasses.border} hover:${themeClasses.card.replace('/10', '/20')} transition-all duration-300 transform hover:scale-105 cursor-pointer`}
+                onClick={() => router.push('/flashcards/fundamentals')}>
+                <CardHeader>
+                  <CardTitle className={`text-xl ${themeClasses.text} flex items-center`}>
+                    🃏 Practice with Flashcards
+                  </CardTitle>
+                  <CardDescription className={`${themeClasses.text}/70`}>
+                    Reinforce your learning with spaced repetition flashcards
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between">
+                      <span className={`${themeClasses.text}/70`}>Cards:</span>
+                      <span className={`${themeClasses.text}`}>10+</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className={`${themeClasses.text}/70`}>Method:</span>
+                      <span className={`${themeClasses.text}`}>Spaced Repetition</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className={`${themeClasses.text}/70`}>Track:</span>
+                      <span className={`${themeClasses.text}`}>Fundamentals</span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </main>

@@ -7,6 +7,9 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { useTheme } from '@/contexts/ThemeContext';
 import { Chapter, Lesson, Character, getChapterById } from '@/data/storyData';
+import { aiFundamentalsContent, getUnitById, LearningUnit, CharacterProgression as CharacterProgressionType, Superpower } from '@/data/unifiedContent';
+import { UnifiedLearningUnit } from './UnifiedLearningUnit';
+import { CharacterProgression } from './CharacterProgression';
 import { BookOpen, Code, Play, CheckCircle, Star, Trophy, Target, Clock, Video } from 'lucide-react';
 import YouTubeSegment from './YouTubeSegment';
 
@@ -27,9 +30,23 @@ export function StoryInterface({
   const themeClasses = getThemeClasses();
   const [currentChapter, setCurrentChapter] = useState<Chapter | null>(null);
   const [currentLesson, setCurrentLesson] = useState<Lesson | null>(null);
+  const [currentUnit, setCurrentUnit] = useState<LearningUnit | null>(null);
   const [completedLessons, setCompletedLessons] = useState<Set<string>>(new Set());
-  // const [userProgress] = useState(0);
   const [showNarrative, setShowNarrative] = useState(true);
+  const [showCharacterProgression, setShowCharacterProgression] = useState(false);
+  
+  // Character progression state
+  const [characterProgression, setCharacterProgression] = useState<CharacterProgressionType>({
+    characterId: character.name.toLowerCase().replace(/\s+/g, '-'),
+    name: character.name,
+    level: 1,
+    xp: 0,
+    superpowers: [],
+    achievements: [],
+    completedLessons: [],
+    currentStreak: 0,
+    totalLearningTime: 0
+  });
 
   useEffect(() => {
     // Load chapter data (in real app, this would come from API)
@@ -57,6 +74,32 @@ export function StoryInterface({
     )) {
       onChapterComplete(currentChapter.id);
     }
+  };
+
+  const handleUnitComplete = (unitId: string, xpEarned: number, superpower?: Superpower) => {
+    setCharacterProgression(prev => {
+      const newXP = prev.xp + xpEarned;
+      const newLevel = Math.floor(newXP / 100) + 1;
+      const newSuperpowers = superpower ? [...prev.superpowers, superpower] : prev.superpowers;
+      const newCompletedLessons = [...prev.completedLessons, unitId];
+      
+      return {
+        ...prev,
+        xp: newXP,
+        level: newLevel,
+        superpowers: newSuperpowers,
+        completedLessons: newCompletedLessons,
+        totalLearningTime: prev.totalLearningTime + 30 // Assume 30 min per unit
+      };
+    });
+    
+    setCurrentUnit(null);
+    setShowNarrative(true);
+  };
+
+  const startUnit = (unit: LearningUnit) => {
+    setCurrentUnit(unit);
+    setShowNarrative(false);
   };
 
   const getLessonIcon = (type: string) => {
@@ -91,9 +134,24 @@ export function StoryInterface({
     );
   }
 
+  if (currentUnit) {
+    return (
+      <UnifiedLearningUnit
+        unit={currentUnit}
+        isStoryMode={true}
+        characterName={character.name}
+        onComplete={handleUnitComplete}
+        onBack={() => {
+          setCurrentUnit(null);
+          setShowNarrative(true);
+        }}
+      />
+    );
+  }
+
   if (currentLesson) {
     return (
-      <LessonInterface 
+      <LessonInterface
         lesson={currentLesson}
         character={character}
         onComplete={() => {
@@ -109,6 +167,31 @@ export function StoryInterface({
     );
   }
 
+  if (showCharacterProgression) {
+    return (
+      <div className="max-w-4xl mx-auto py-8 px-4">
+        <div className="flex justify-between items-center mb-6">
+          <h2 className={`text-2xl font-bold ${themeClasses.text}`}>
+            {character.name}&apos;s AI Superpowers
+          </h2>
+          <Button
+            onClick={() => setShowCharacterProgression(false)}
+            variant="outline"
+          >
+            Back to Story
+          </Button>
+        </div>
+        <CharacterProgression
+          character={characterProgression}
+          onShare={() => {
+            // Handle sharing logic
+            console.log('Sharing character progression');
+          }}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className={`min-h-screen ${themeClasses.background} p-8`}>
       <div className="max-w-6xl mx-auto">
@@ -116,7 +199,7 @@ export function StoryInterface({
         <div className={`${themeClasses.card} backdrop-blur-sm rounded-2xl p-6 mb-8 border ${themeClasses.border}`}>
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
-              <div className="text-4xl">🧙‍♂️</div>
+              <div className="text-4xl">🤖</div>
               <div>
                 <h1 className={`text-2xl font-bold ${themeClasses.text}`}>
                   Welcome, {character.name}!
@@ -126,15 +209,24 @@ export function StoryInterface({
                 </p>
               </div>
             </div>
-            <div className="text-right">
-              <div className="flex items-center space-x-2 mb-2">
-                <Star className="h-5 w-5 text-yellow-400" />
-                <span className={`${themeClasses.text} font-bold`}>1,250 XP</span>
+            <div className="flex items-center space-x-4">
+              <div className="text-right">
+                <div className="flex items-center space-x-2 mb-2">
+                  <Star className="h-5 w-5 text-yellow-400" />
+                  <span className={`${themeClasses.text} font-bold`}>{characterProgression.xp} XP</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Trophy className="h-5 w-5 text-purple-400" />
+                  <span className={`${themeClasses.text}/70`}>Level {characterProgression.level} AI Explorer</span>
+                </div>
               </div>
-              <div className="flex items-center space-x-2">
-                <Trophy className="h-5 w-5 text-purple-400" />
-                <span className={`${themeClasses.text}/70`}>Level 3 Explorer</span>
-              </div>
+              <Button
+                onClick={() => setShowCharacterProgression(true)}
+                className="bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white"
+              >
+                <Trophy className="h-4 w-4 mr-2" />
+                View Superpowers
+              </Button>
             </div>
           </div>
         </div>

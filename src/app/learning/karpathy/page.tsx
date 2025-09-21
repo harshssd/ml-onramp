@@ -87,7 +87,7 @@ export default function KarpathyLearningPage() {
     }
   };
 
-  const renderInteractiveWidget = (widget: any, onComplete?: () => void) => {
+  const renderInteractiveWidget = (widget: { type: string }, onComplete?: () => void) => {
     switch (widget.type) {
       case 'derivative_calculator':
         return <DerivativeCalculator onComplete={onComplete} />;
@@ -111,7 +111,7 @@ export default function KarpathyLearningPage() {
               🧠 Neural Networks: Zero to Hero
             </h1>
             <p className={`text-xl ${themeClasses.text}/70`}>
-              Master neural networks with Andrej Karpathy's legendary course, enhanced with interactive learning
+              Master neural networks with Andrej Karpathy&apos;s legendary course, enhanced with interactive learning
             </p>
           </div>
 

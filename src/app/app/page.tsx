@@ -391,7 +391,7 @@ export default function AppPage() {
               🧠 Neural Networks: Zero to Hero
             </CardTitle>
             <CardDescription className={`${themeClasses.text}/70`}>
-              Master neural networks with Andrej Karpathy's legendary course, enhanced with interactive learning
+              Master neural networks with Andrej Karpathy&apos;s legendary course, enhanced with interactive learning
             </CardDescription>
           </CardHeader>
           <CardContent>

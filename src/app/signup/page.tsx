@@ -51,7 +51,7 @@ export default function SignupPage() {
           mode="signup"
           onSubmit={handleSignup}
           isLoading={isLoading}
-          error={error}
+          error={error || undefined}
         />
         
         <div className="text-center">

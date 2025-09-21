@@ -49,7 +49,7 @@ export default function LoginPage() {
           mode="login"
           onSubmit={handleLogin}
           isLoading={isLoading}
-          error={error}
+          error={error || undefined}
         />
         
         <div className="text-center">

@@ -21,7 +21,7 @@ export default function PyodideRunner({
   const [output, setOutput] = useState("");
   const [isRunning, setIsRunning] = useState(false);
   const [showHints, setShowHints] = useState(false);
-  const [pyodide, setPyodide] = useState<unknown>(null);
+  const [pyodide, setPyodide] = useState<any>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const outputRef = useRef<HTMLDivElement>(null);
 

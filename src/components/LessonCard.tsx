@@ -10,6 +10,12 @@ export interface Lesson {
   difficulty: 'beginner' | 'intermediate' | 'advanced';
   slug: string;
   isCompleted?: boolean;
+  content?: {
+    sections?: Array<{
+      title: string;
+      content: string;
+    }>;
+  };
 }
 
 interface LessonCardProps {

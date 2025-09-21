@@ -150,7 +150,7 @@ export default function KarpathyLearningPage() {
                   </div>
                   
                   <div className="mt-4">
-                    <h4 className={`font-semibold ${themeClasses.text} mb-2`}>What you'll learn:</h4>
+                    <h4 className={`font-semibold ${themeClasses.text} mb-2`}>What you&apos;ll learn:</h4>
                     <ul className={`text-sm ${themeClasses.text}/70 space-y-1`}>
                       {track.outcomes.slice(0, 3).map((outcome, index) => (
                         <li key={index} className="flex items-center">

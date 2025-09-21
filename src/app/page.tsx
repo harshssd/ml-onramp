@@ -59,12 +59,20 @@ export default function Home() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-              <Link href="/signup">
+              <Link href="/learning">
                 <Button 
                   size="lg" 
                   className="w-full sm:w-auto bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-black font-bold text-lg px-8 py-4 rounded-xl shadow-2xl transform hover:scale-105 transition-all duration-200"
                 >
                   🎮 Start Your Quest
+                </Button>
+              </Link>
+              <Link href="/signup">
+                <Button 
+                  size="lg" 
+                  className="w-full sm:w-auto bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-bold text-lg px-8 py-4 rounded-xl shadow-2xl transform hover:scale-105 transition-all duration-200"
+                >
+                  🧙‍♂️ Join Academy
                 </Button>
               </Link>
               <Link href="/login">

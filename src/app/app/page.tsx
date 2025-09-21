@@ -6,15 +6,117 @@ import { createClient } from '@/lib/supabase/client';
 import { type Lesson } from '@/components/LessonCard';
 import { ProgressRing } from '@/components/ProgressRing';
 import { ThemeSelector } from '@/components/ThemeSelector';
-import { LogOut, User, Trophy, Star, Target } from 'lucide-react';
+import { LogOut, User, Trophy, Star, Target, BookOpen, Play, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 import { useTheme } from '@/contexts/ThemeContext';
+
+// Learning Paths Data
+const learningPaths = [
+  {
+    id: 'data-explorer',
+    title: 'The Data Explorer\'s Journey',
+    description: 'Begin your adventure in the Academy of Data! Learn the fundamentals of Machine Learning from the ground up.',
+    story: 'Welcome to the Academy of Data! You are a curious explorer who has discovered the ancient art of Machine Learning.',
+    difficulty: 'beginner',
+    estimatedTime: '8-12 weeks',
+    chapters: 5,
+    skills: ['Python Basics', 'Data Analysis', 'Visualization', 'ML Fundamentals', 'First Model'],
+    prerequisites: [],
+    rewards: {
+      xp: 1000,
+      badges: ['Data Explorer', 'Python Initiate', 'Visualization Artist', 'Model Builder'],
+      unlocks: ['ML Practitioner Track', 'Advanced Algorithms', 'Community Access']
+    },
+    icon: '🌟',
+    color: 'bg-gradient-to-r from-blue-500 to-purple-600',
+    status: 'available'
+  },
+  {
+    id: 'ml-practitioner',
+    title: 'The ML Practitioner\'s Quest',
+    description: 'Master the art of Machine Learning! Build real models and solve practical problems.',
+    story: 'You are an aspiring ML Practitioner! The Academy has recognized your potential.',
+    difficulty: 'intermediate',
+    estimatedTime: '12-16 weeks',
+    chapters: 8,
+    skills: ['Advanced Python', 'Feature Engineering', 'Model Selection', 'Evaluation', 'Deployment'],
+    prerequisites: ['data-explorer'],
+    rewards: {
+      xp: 2000,
+      badges: ['ML Practitioner', 'Algorithm Master', 'Model Deployer', 'Problem Solver'],
+      unlocks: ['ML Engineer Track', 'Specialization Tracks', 'Mentor Program']
+    },
+    icon: '🧙‍♂️',
+    color: 'bg-gradient-to-r from-green-500 to-teal-600',
+    status: 'locked'
+  },
+  {
+    id: 'ml-engineer',
+    title: 'The ML Engineer\'s Odyssey',
+    description: 'Bridge the gap between data science and production! Learn MLOps and system design.',
+    story: 'You are a skilled developer who has been chosen to become an ML Engineer!',
+    difficulty: 'advanced',
+    estimatedTime: '16-20 weeks',
+    chapters: 10,
+    skills: ['Docker', 'Kubernetes', 'MLOps', 'Cloud ML', 'System Design'],
+    prerequisites: ['ml-practitioner'],
+    rewards: {
+      xp: 3000,
+      badges: ['ML Engineer', 'System Architect', 'DevOps Master', 'Cloud Expert'],
+      unlocks: ['ML Architect Track', 'Leadership Program', 'Industry Mentorship']
+    },
+    icon: '⚙️',
+    color: 'bg-gradient-to-r from-orange-500 to-red-600',
+    status: 'locked'
+  },
+  {
+    id: 'deep-learning-sage',
+    title: 'The Deep Learning Sage\'s Path',
+    description: 'Master the most powerful magic - Deep Learning! Explore neural networks and AI.',
+    story: 'You are a seasoned ML practitioner seeking to master the most powerful magic - Deep Learning!',
+    difficulty: 'advanced',
+    estimatedTime: '20-24 weeks',
+    chapters: 12,
+    skills: ['Neural Networks', 'TensorFlow', 'PyTorch', 'Computer Vision', 'NLP'],
+    prerequisites: ['ml-practitioner'],
+    rewards: {
+      xp: 4000,
+      badges: ['Deep Learning Sage', 'Neural Network Master', 'AI Visionary', 'Research Pioneer'],
+      unlocks: ['Research Track', 'AI Ethics Program', 'Industry Leadership']
+    },
+    icon: '🧠',
+    color: 'bg-gradient-to-r from-purple-500 to-pink-600',
+    status: 'locked'
+  },
+  {
+    id: 'ml-architect',
+    title: 'The ML Architect\'s Legacy',
+    description: 'Design and build enterprise-scale ML systems! Lead the future of AI.',
+    story: 'You are a Master of ML who must design and build enterprise-scale ML systems!',
+    difficulty: 'expert',
+    estimatedTime: '24-30 weeks',
+    chapters: 15,
+    skills: ['System Design', 'MLOps', 'Model Optimization', 'AI Ethics', 'Leadership'],
+    prerequisites: ['ml-engineer', 'deep-learning-sage'],
+    rewards: {
+      xp: 5000,
+      badges: ['ML Architect', 'System Designer', 'AI Leader', 'Industry Expert'],
+      unlocks: ['Master\'s Program', 'Executive Track', 'Industry Advisory']
+    },
+    icon: '🏛️',
+    color: 'bg-gradient-to-r from-indigo-500 to-purple-600',
+    status: 'locked'
+  }
+];
 
 export default function AppPage() {
   const [user, setUser] = useState<any>(null); // eslint-disable-line @typescript-eslint/no-explicit-any
   const [lessons, setLessons] = useState<Lesson[]>([]);
   const [userProgress, setUserProgress] = useState<Record<string, number>>({});
   const [isLoading, setIsLoading] = useState(true);
+  const [showLearningPaths, setShowLearningPaths] = useState(false);
   const router = useRouter();
   const supabase = createClient();
   const { getThemeClasses } = useTheme();
@@ -71,6 +173,34 @@ export default function AppPage() {
 
   const handleStartLesson = (slug: string) => {
     router.push(`/lesson/${slug}`);
+  };
+
+  const handleStartLearningPath = (pathId: string) => {
+    router.push(`/learning?path=${pathId}`);
+  };
+
+  const handleStartStorytelling = () => {
+    router.push('/learning');
+  };
+
+  const getDifficultyColor = (difficulty: string) => {
+    switch (difficulty) {
+      case 'beginner': return 'bg-green-500';
+      case 'intermediate': return 'bg-yellow-500';
+      case 'advanced': return 'bg-orange-500';
+      case 'expert': return 'bg-red-500';
+      default: return 'bg-gray-500';
+    }
+  };
+
+  const getStatusIcon = (status: string) => {
+    switch (status) {
+      case 'completed': return '✅';
+      case 'in-progress': return '🔄';
+      case 'available': return '🚀';
+      case 'locked': return '🔒';
+      default: return '❓';
+    }
   };
 
   const calculateOverallProgress = () => {
@@ -198,6 +328,209 @@ export default function AppPage() {
                 </div>
               </div>
             </div>
+          </div>
+
+          {/* Learning Paths Section */}
+          <div className="mb-8">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className={`text-2xl font-bold ${themeClasses.text} flex items-center`}>
+                <BookOpen className="h-6 w-6 mr-2 text-blue-400" />
+                Learning Paths
+              </h3>
+              <Button
+                onClick={handleStartStorytelling}
+                className="bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white font-semibold"
+              >
+                <Play className="h-4 w-4 mr-2" />
+                Start Storytelling Journey
+              </Button>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {learningPaths.slice(0, 3).map((path) => (
+                <Card
+                  key={path.id}
+                  className={`${themeClasses.card} backdrop-blur-sm border ${themeClasses.border} hover:${themeClasses.card.replace('/10', '/20')} transition-all duration-300 transform hover:scale-105 cursor-pointer`}
+                  onClick={() => handleStartLearningPath(path.id)}
+                >
+                  <CardHeader>
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center space-x-2">
+                        <span className="text-2xl">{path.icon}</span>
+                        <span className="text-sm">{getStatusIcon(path.status)}</span>
+                      </div>
+                      <Badge className={`${getDifficultyColor(path.difficulty)} text-white`}>
+                        {path.difficulty}
+                      </Badge>
+                    </div>
+                    <CardTitle className={`text-lg ${themeClasses.text}`}>
+                      {path.title}
+                    </CardTitle>
+                    <CardDescription className={`${themeClasses.text}/70`}>
+                      {path.description}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between text-sm">
+                        <span className={`${themeClasses.text}/70`}>Chapters:</span>
+                        <span className={`${themeClasses.text}`}>{path.chapters}</span>
+                      </div>
+                      <div className="flex items-center justify-between text-sm">
+                        <span className={`${themeClasses.text}/70`}>Duration:</span>
+                        <span className={`${themeClasses.text}`}>{path.estimatedTime}</span>
+                      </div>
+                      <div className="flex items-center justify-between text-sm">
+                        <span className={`${themeClasses.text}/70`}>XP Reward:</span>
+                        <span className={`${themeClasses.text}`}>{path.rewards.xp}</span>
+                      </div>
+                      
+                      <div className="flex flex-wrap gap-1 mt-3">
+                        {path.skills.slice(0, 3).map((skill, index) => (
+                          <Badge key={index} variant="outline" className="text-xs">
+                            {skill}
+                          </Badge>
+                        ))}
+                        {path.skills.length > 3 && (
+                          <Badge variant="outline" className="text-xs">
+                            +{path.skills.length - 3} more
+                          </Badge>
+                        )}
+                      </div>
+                      
+                      <Button
+                        className={`w-full ${path.color} hover:opacity-90 text-white font-semibold`}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleStartLearningPath(path.id);
+                        }}
+                      >
+                        {path.status === 'available' ? 'Start Journey' : 
+                         path.status === 'in-progress' ? 'Continue Journey' : 'Locked'}
+                        <ArrowRight className="h-4 w-4 ml-2" />
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+            
+            <div className="text-center mt-6">
+              <Button
+                onClick={() => setShowLearningPaths(!showLearningPaths)}
+                variant="outline"
+                className={`${themeClasses.border} ${themeClasses.text} hover:${themeClasses.card.replace('/10', '/20')}`}
+              >
+                {showLearningPaths ? 'Show Less' : 'View All Learning Paths'}
+                <ArrowRight className={`h-4 w-4 ml-2 transition-transform ${showLearningPaths ? 'rotate-180' : ''}`} />
+              </Button>
+            </div>
+            
+            {/* Expanded Learning Paths View */}
+            {showLearningPaths && (
+              <div className="mt-8">
+                <h4 className={`text-xl font-bold ${themeClasses.text} mb-6`}>
+                  All Available Learning Paths
+                </h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {learningPaths.map((path) => (
+                    <Card
+                      key={path.id}
+                      className={`${themeClasses.card} backdrop-blur-sm border ${themeClasses.border} hover:${themeClasses.card.replace('/10', '/20')} transition-all duration-300 transform hover:scale-105 cursor-pointer`}
+                      onClick={() => handleStartLearningPath(path.id)}
+                    >
+                      <CardHeader>
+                        <div className="flex items-center justify-between mb-2">
+                          <div className="flex items-center space-x-2">
+                            <span className="text-2xl">{path.icon}</span>
+                            <span className="text-sm">{getStatusIcon(path.status)}</span>
+                          </div>
+                          <Badge className={`${getDifficultyColor(path.difficulty)} text-white`}>
+                            {path.difficulty}
+                          </Badge>
+                        </div>
+                        <CardTitle className={`text-xl ${themeClasses.text}`}>
+                          {path.title}
+                        </CardTitle>
+                        <CardDescription className={`${themeClasses.text}/70`}>
+                          {path.description}
+                        </CardDescription>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="space-y-4">
+                          <div className={`${themeClasses.card.replace('/10', '/5')} rounded-lg p-3`}>
+                            <p className={`text-sm ${themeClasses.text}/80 italic`}>
+                              &ldquo;{path.story.substring(0, 120)}...&rdquo;
+                            </p>
+                          </div>
+                          
+                          <div className="grid grid-cols-2 gap-4 text-sm">
+                            <div className="flex items-center justify-between">
+                              <span className={`${themeClasses.text}/70`}>Chapters:</span>
+                              <span className={`${themeClasses.text}`}>{path.chapters}</span>
+                            </div>
+                            <div className="flex items-center justify-between">
+                              <span className={`${themeClasses.text}/70`}>Duration:</span>
+                              <span className={`${themeClasses.text}`}>{path.estimatedTime}</span>
+                            </div>
+                            <div className="flex items-center justify-between">
+                              <span className={`${themeClasses.text}/70`}>XP Reward:</span>
+                              <span className={`${themeClasses.text}`}>{path.rewards.xp}</span>
+                            </div>
+                            <div className="flex items-center justify-between">
+                              <span className={`${themeClasses.text}/70`}>Status:</span>
+                              <span className={`${themeClasses.text}`}>{path.status}</span>
+                            </div>
+                          </div>
+                          
+                          <div>
+                            <h5 className={`text-sm font-semibold ${themeClasses.text} mb-2`}>
+                              Skills You&apos;ll Learn:
+                            </h5>
+                            <div className="flex flex-wrap gap-1">
+                              {path.skills.map((skill, index) => (
+                                <Badge key={index} variant="outline" className="text-xs">
+                                  {skill}
+                                </Badge>
+                              ))}
+                            </div>
+                          </div>
+                          
+                          {path.prerequisites.length > 0 && (
+                            <div>
+                              <h5 className={`text-sm font-semibold ${themeClasses.text} mb-2`}>
+                                Prerequisites:
+                              </h5>
+                              <div className="flex flex-wrap gap-1">
+                                {path.prerequisites.map((prereq, index) => (
+                                  <Badge key={index} variant="outline" className="text-xs">
+                                    {prereq}
+                                  </Badge>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                          
+                          <Button
+                            className={`w-full ${path.color} hover:opacity-90 text-white font-semibold`}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleStartLearningPath(path.id);
+                            }}
+                            disabled={path.status === 'locked'}
+                          >
+                            {path.status === 'available' ? 'Start Journey' : 
+                             path.status === 'in-progress' ? 'Continue Journey' : 
+                             path.status === 'completed' ? 'Review Journey' : 'Locked'}
+                            <ArrowRight className="h-4 w-4 ml-2" />
+                          </Button>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Achievements Section */}

@@ -329,7 +329,7 @@ export function UnifiedLearningUnit({
           </CardHeader>
           <CardContent>
             <FlashcardSystem
-              flashcards={unit.flashcards}
+              track="fundamentals"
               onComplete={() => handleSectionComplete('flashcards')}
             />
           </CardContent>

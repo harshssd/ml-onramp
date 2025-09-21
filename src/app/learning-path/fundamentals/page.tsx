@@ -60,7 +60,7 @@ export default function FundamentalsPathPage() {
           lessons: allLessons.filter((lesson: { frontmatter: { id: string } }) => 
             lesson.frontmatter.id.includes('ch1') || 
             lesson.frontmatter.id.includes('lesson-1')
-          ).map((lesson: { frontmatter: { id: string; title: string; duration_min: number; tags: string[]; goals: string[] }; content: string }) => ({
+          ).map((lesson: { frontmatter: { id: string; title: string; duration_min: number; tags: string[]; goals: string[]; prereqs: string[] }; content: string }) => ({
             id: lesson.frontmatter.id,
             title: lesson.frontmatter.title,
             duration_min: lesson.frontmatter.duration_min,
@@ -77,7 +77,7 @@ export default function FundamentalsPathPage() {
           lessons: allLessons.filter((lesson: { frontmatter: { id: string } }) => 
             lesson.frontmatter.id.includes('ch2') || 
             lesson.frontmatter.id.includes('lesson-2')
-          ).map((lesson: { frontmatter: { id: string; title: string; duration_min: number; tags: string[]; goals: string[] }; content: string }) => ({
+          ).map((lesson: { frontmatter: { id: string; title: string; duration_min: number; tags: string[]; goals: string[]; prereqs: string[] }; content: string }) => ({
             id: lesson.frontmatter.id,
             title: lesson.frontmatter.title,
             duration_min: lesson.frontmatter.duration_min,
@@ -94,7 +94,7 @@ export default function FundamentalsPathPage() {
           lessons: allLessons.filter((lesson: { frontmatter: { id: string } }) => 
             lesson.frontmatter.id.includes('ch3') || 
             lesson.frontmatter.id.includes('lesson-3')
-          ).map((lesson: { frontmatter: { id: string; title: string; duration_min: number; tags: string[]; goals: string[] }; content: string }) => ({
+          ).map((lesson: { frontmatter: { id: string; title: string; duration_min: number; tags: string[]; goals: string[]; prereqs: string[] }; content: string }) => ({
             id: lesson.frontmatter.id,
             title: lesson.frontmatter.title,
             duration_min: lesson.frontmatter.duration_min,
@@ -111,7 +111,7 @@ export default function FundamentalsPathPage() {
           lessons: allLessons.filter((lesson: { frontmatter: { id: string } }) => 
             lesson.frontmatter.id.includes('ch4') || 
             lesson.frontmatter.id.includes('lesson-4')
-          ).map((lesson: { frontmatter: { id: string; title: string; duration_min: number; tags: string[]; goals: string[] }; content: string }) => ({
+          ).map((lesson: { frontmatter: { id: string; title: string; duration_min: number; tags: string[]; goals: string[]; prereqs: string[] }; content: string }) => ({
             id: lesson.frontmatter.id,
             title: lesson.frontmatter.title,
             duration_min: lesson.frontmatter.duration_min,

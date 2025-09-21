@@ -9,7 +9,7 @@ import { AuthForm } from '@/components/AuthForm';
 export default function SignupPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const router = useRouter();
+  // const router = useRouter(); // eslint-disable-line @typescript-eslint/no-unused-vars
   const supabase = createClient();
 
   const handleSignup = async (email: string, password: string) => {
@@ -32,7 +32,7 @@ export default function SignupPage() {
 
       // Show success message or redirect
       setError('Check your email for a confirmation link!');
-    } catch (err) {
+      } catch {
       setError('An unexpected error occurred');
     } finally {
       setIsLoading(false);

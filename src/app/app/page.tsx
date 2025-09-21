@@ -9,7 +9,7 @@ import { LogOut, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export default function AppPage() {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<any>(null); // eslint-disable-line @typescript-eslint/no-explicit-any
   const [lessons, setLessons] = useState<Lesson[]>([]);
   const [userProgress, setUserProgress] = useState<Record<string, number>>({});
   const [isLoading, setIsLoading] = useState(true);

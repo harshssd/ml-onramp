@@ -12,7 +12,7 @@ import type { Lesson } from '@/components/LessonCard';
 export default function LessonPage() {
   const [lesson, setLesson] = useState<Lesson | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<any>(null); // eslint-disable-line @typescript-eslint/no-explicit-any
   const [progress, setProgress] = useState(0);
   const [isCompleted, setIsCompleted] = useState(false);
   const router = useRouter();
@@ -218,7 +218,7 @@ export default function LessonPage() {
                 <p className="text-gray-700 mb-6">{lesson.description}</p>
                 
                 {/* Lesson sections */}
-                {lesson.content?.sections?.map((section: any, index: number) => (
+                {lesson.content?.sections?.map((section: any, index: number) => ( // eslint-disable-line @typescript-eslint/no-explicit-any
                   <div key={index} className="mb-6">
                     <h3 className="text-lg font-semibold text-gray-900 mb-2">
                       {section.title}

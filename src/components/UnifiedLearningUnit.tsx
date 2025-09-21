@@ -310,7 +310,8 @@ export function UnifiedLearningUnit({
           </CardHeader>
           <CardContent>
             <PyodideRunner
-              initialCode={unit.coding.starterCode}
+              starterCode={unit.coding.starterCode}
+              solution={unit.coding.solution}
               onComplete={() => handleSectionComplete('coding')}
             />
           </CardContent>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import { type Lesson } from '@/components/LessonCard';
@@ -16,22 +16,7 @@ export default function AppPage() {
   const router = useRouter();
   const supabase = createClient();
 
-  useEffect(() => {
-    const getUser = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) {
-        router.push('/login');
-        return;
-      }
-      setUser(user);
-      await loadLessons();
-      await loadUserProgress(user.id);
-    };
-
-    getUser();
-  }, [router, supabase.auth, loadLessons, loadUserProgress]);
-
-  const loadLessons = async () => {
+  const loadLessons = useCallback(async () => {
     try {
       const response = await fetch('/api/lessons');
       const data = await response.json();
@@ -39,9 +24,9 @@ export default function AppPage() {
     } catch (error) {
       console.error('Error loading lessons:', error);
     }
-  };
+  }, []);
 
-  const loadUserProgress = async (userId: string) => {
+  const loadUserProgress = useCallback(async (userId: string) => {
     try {
       const { data } = await supabase
         .from('user_progress')
@@ -58,7 +43,22 @@ export default function AppPage() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [supabase]);
+
+  useEffect(() => {
+    const getUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        router.push('/login');
+        return;
+      }
+      setUser(user);
+      await loadLessons();
+      await loadUserProgress(user.id);
+    };
+
+    getUser();
+  }, [router, supabase.auth, loadLessons, loadUserProgress]);
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();

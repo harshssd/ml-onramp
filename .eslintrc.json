@@ -1,5 +1,11 @@
 {
   "extends": "next/core-web-vitals",
+  "ignorePatterns": [
+    "seed-database.js",
+    "node_modules/",
+    ".next/",
+    "dist/"
+  ],
   "rules": {
     "react-hooks/exhaustive-deps": "warn",
     "@typescript-eslint/no-explicit-any": "warn",

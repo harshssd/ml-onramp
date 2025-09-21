@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import { RegressionPlayground } from '@/components/RegressionPlayground';
@@ -20,57 +20,7 @@ export default function LessonPage() {
   const params = useParams();
   const supabase = createClient();
 
-  useEffect(() => {
-    const getUser = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) {
-        router.push('/login');
-        return;
-      }
-      setUser(user);
-    };
-
-    getUser();
-  }, [router, supabase.auth]);
-
-  useEffect(() => {
-    if (user && params?.slug) {
-      loadLesson();
-    }
-  }, [user, params?.slug, loadLesson]);
-
-  // Refresh progress when user or lesson changes
-  useEffect(() => {
-    if (user && lesson) {
-      loadUserProgress(lesson.id);
-    }
-  }, [user, lesson, loadUserProgress]);
-
-  const loadLesson = async () => {
-    if (!params?.slug) return;
-    
-    try {
-      const response = await fetch(`/api/lessons/${params.slug}`);
-      if (!response.ok) {
-        router.push('/app');
-        return;
-      }
-      const data = await response.json();
-      setLesson(data);
-      
-      // Load user progress for this lesson
-      if (user) {
-        await loadUserProgress(data.id);
-      }
-    } catch (error) {
-      console.error('Error loading lesson:', error);
-      router.push('/app');
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const loadUserProgress = async (lessonId: string) => {
+  const loadUserProgress = useCallback(async (lessonId: string) => {
     try {
       const { data, error } = await supabase
         .from('user_progress')
@@ -97,7 +47,57 @@ export default function LessonPage() {
       setProgress(0);
       setIsCompleted(false);
     }
-  };
+  }, [user, supabase]);
+
+  const loadLesson = useCallback(async () => {
+    if (!params?.slug) return;
+    
+    try {
+      const response = await fetch(`/api/lessons/${params.slug}`);
+      if (!response.ok) {
+        router.push('/app');
+        return;
+      }
+      const data = await response.json();
+      setLesson(data);
+      
+      // Load user progress for this lesson
+      if (user) {
+        await loadUserProgress(data.id);
+      }
+    } catch (error) {
+      console.error('Error loading lesson:', error);
+      router.push('/app');
+    } finally {
+      setIsLoading(false);
+    }
+  }, [params?.slug, router, user, loadUserProgress]);
+
+  useEffect(() => {
+    const getUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        router.push('/login');
+        return;
+      }
+      setUser(user);
+    };
+
+    getUser();
+  }, [router, supabase.auth]);
+
+  useEffect(() => {
+    if (user && params?.slug) {
+      loadLesson();
+    }
+  }, [user, params?.slug, loadLesson]);
+
+  // Refresh progress when user or lesson changes
+  useEffect(() => {
+    if (user && lesson) {
+      loadUserProgress(lesson.id);
+    }
+  }, [user, lesson, loadUserProgress]);
 
   const updateProgress = async (newProgress: number) => {
     if (!user || !lesson) {

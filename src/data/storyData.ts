@@ -218,11 +218,11 @@ print(data.dtypes)`,
             content: 'Discover how video learning can transform your AI education journey.',
             instructions: 'Watch the introduction video and complete the interactive elements.',
             video: {
-              id: 'VIDEO_ID_INTRO',
-              title: 'AI Learning Through Video',
+              id: 'VMj-3S1tku0',
+              title: 'The spelled-out intro to neural networks and backpropagation: building micrograd',
               start: 0,
               end: 300,
-              description: 'An introduction to video-based AI learning'
+              description: 'Andrej Karpathy introduces AI learning through neural networks'
             },
             resources: [
               {
@@ -239,11 +239,11 @@ print(data.dtypes)`,
             content: 'Learn how to use interactive video features to enhance your learning.',
             instructions: 'Complete the interactive video tutorial and practice with the controls.',
             video: {
-              id: 'VIDEO_ID_INTERACTIVE',
-              title: 'Interactive Video Tutorial',
+              id: 'VMj-3S1tku0',
+              title: 'The spelled-out intro to neural networks and backpropagation: building micrograd',
               start: 30,
               end: 450,
-              description: 'Hands-on tutorial for interactive video features'
+              description: 'Andrej Karpathy demonstrates interactive AI learning with hands-on coding'
             }
           }
         ]
@@ -265,11 +265,11 @@ print(data.dtypes)`,
             content: 'A comprehensive video explanation of AI concepts with visual examples.',
             instructions: 'Watch the video and take notes on key concepts.',
             video: {
-              id: 'VIDEO_ID_AI_BASICS',
-              title: 'Understanding AI Fundamentals',
+              id: 'VMj-3S1tku0',
+              title: 'The spelled-out intro to neural networks and backpropagation: building micrograd',
               start: 60,
               end: 600,
-              description: 'Core AI concepts explained through video'
+              description: 'Andrej Karpathy explains core AI concepts through neural networks'
             }
           },
           {
@@ -279,11 +279,11 @@ print(data.dtypes)`,
             content: 'See machine learning algorithms in action with real-world examples.',
             instructions: 'Watch the demonstrations and try the interactive exercises.',
             video: {
-              id: 'VIDEO_ID_ML_DEMO',
-              title: 'ML Algorithms in Practice',
+              id: 'kCc8FmEb1nY',
+              title: 'Let\'s build GPT: from scratch, in code, spelled out.',
               start: 120,
               end: 720,
-              description: 'Live demonstrations of ML algorithms'
+              description: 'Andrej Karpathy demonstrates ML algorithms in practice with GPT'
             }
           }
         ]

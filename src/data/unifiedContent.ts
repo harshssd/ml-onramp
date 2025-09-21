@@ -114,12 +114,12 @@ export const aiFundamentalsContent: Week[] = [
         difficulty: 'beginner',
         type: 'video',
         video: {
-          id: 'VIDEO_ID_AI_BASICS',
-          title: 'Understanding AI Fundamentals',
+          id: 'VMj-3S1tku0',
+          title: 'The spelled-out intro to neural networks and backpropagation: building micrograd',
           start: 60,
           end: 420,
-          description: 'Core AI concepts explained through video',
-          transcript: 'In this video, we explore what artificial intelligence really means...'
+          description: 'Andrej Karpathy explains the fundamentals of neural networks and how they learn',
+          transcript: 'In this video, we explore what artificial intelligence really means through the lens of neural networks and backpropagation...'
         },
         quiz: {
           questions: [
@@ -154,11 +154,11 @@ export const aiFundamentalsContent: Week[] = [
         difficulty: 'beginner',
         type: 'interactive',
         video: {
-          id: 'VIDEO_ID_DAILY_AI',
-          title: 'AI in Daily Life',
+          id: 'VMj-3S1tku0',
+          title: 'The spelled-out intro to neural networks and backpropagation: building micrograd',
           start: 30,
           end: 390,
-          description: 'How AI appears in everyday applications'
+          description: 'Andrej Karpathy shows how neural networks power everyday AI applications'
         },
         quiz: {
           questions: [
@@ -193,11 +193,11 @@ export const aiFundamentalsContent: Week[] = [
         difficulty: 'beginner',
         type: 'coding',
         video: {
-          id: 'VIDEO_ID_PYTHON_BASICS',
-          title: 'Python for AI',
+          id: 'VMj-3S1tku0',
+          title: 'The spelled-out intro to neural networks and backpropagation: building micrograd',
           start: 10,
           end: 210,
-          description: 'Introduction to Python programming for AI'
+          description: 'Andrej Karpathy demonstrates Python coding for AI with micrograd implementation'
         },
         coding: {
           starterCode: `# Your first AI code
@@ -249,11 +249,11 @@ print("Median:", median)`,
         difficulty: 'beginner',
         type: 'interactive',
         video: {
-          id: 'VIDEO_ID_DATA_EXPLORATION',
-          title: 'Data Exploration Techniques',
+          id: 'VMj-3S1tku0',
+          title: 'The spelled-out intro to neural networks and backpropagation: building micrograd',
           start: 45,
           end: 480,
-          description: 'How to explore and understand your data'
+          description: 'Andrej Karpathy shows data exploration through neural network training examples'
         },
         quiz: {
           questions: [
@@ -299,11 +299,11 @@ print("Median:", median)`,
         difficulty: 'beginner',
         type: 'video',
         video: {
-          id: 'VIDEO_ID_SUPERVISED_LEARNING',
-          title: 'Supervised Learning Explained',
+          id: 'kCc8FmEb1nY',
+          title: 'Let\'s build GPT: from scratch, in code, spelled out.',
           start: 0,
           end: 600,
-          description: 'Understanding supervised learning algorithms'
+          description: 'Andrej Karpathy explains supervised learning through building GPT from scratch'
         },
         quiz: {
           questions: [

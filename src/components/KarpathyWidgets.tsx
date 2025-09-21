@@ -73,7 +73,7 @@ export function DerivativeCalculator({ onComplete }: DerivativeCalculatorProps) 
               value={userAnswer}
               onChange={(e) => setUserAnswer(e.target.value)}
               placeholder="Enter the derivative..."
-              className={`${themeClasses.input}`}
+              className={`${themeClasses.text} bg-white/10 border ${themeClasses.border} rounded px-3 py-2`}
             />
             <Button onClick={handleCheck} className="bg-blue-500 hover:bg-blue-600">
               Check

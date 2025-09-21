@@ -8,7 +8,7 @@ import { ArrowLeft, Loader2 } from "lucide-react";
 
 export default function LessonPage() {
   const params = useParams();
-  const [lesson, setLesson] = useState<any>(null);
+  const [lesson, setLesson] = useState<{ frontmatter: any; content: string } | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -46,7 +46,7 @@ export default function LessonPage() {
         const response = await fetch(`/api/lessons?slug=${slug}`);
         if (response.ok) {
           const lessons = await response.json();
-          const lessonData = lessons.find((l: any) => l.slug === slug);
+          const lessonData = lessons.find((l: { slug: string }) => l.slug === slug);
           if (lessonData) {
             setLesson(lessonData);
             return;

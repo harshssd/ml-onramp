@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import YouTubeSegment from "./YouTubeSegment";
 import CheckpointQuiz from "./CheckpointQuiz";
 import PyodideRunner from "./PyodideRunner";
@@ -8,10 +8,9 @@ import RegressionPlayground from "./RegressionPlayground";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { Badge } from "./ui/badge";
-import { ProgressRing } from "./ProgressRing";
-import { ArrowLeft, Clock, BookOpen, Star, CheckCircle, Play, Pause, Volume2, VolumeX, Trophy, Target, Zap, Crown, Shield, Sword } from "lucide-react";
+import { ArrowLeft, Clock, BookOpen, Star, Play, Volume2, VolumeX, Trophy, Target, Zap, Crown, Shield, Sword } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
-import type { LessonContent, LessonFrontmatter } from "@/lib/content-parser";
+import type { LessonContent } from "@/lib/content-parser";
 
 interface LessonTemplateProps {
   lesson: LessonContent;
@@ -29,8 +28,8 @@ export default function LessonTemplate({ lesson, onComplete, onNext }: LessonTem
   const [showSimpleExplanation, setShowSimpleExplanation] = useState(true);
   const [currentQuizIndex, setCurrentQuizIndex] = useState(0);
   const [userXP, setUserXP] = useState(1250); // Mock XP
-  const [userLevel, setUserLevel] = useState(3); // Mock level
-  const [currentStreak, setCurrentStreak] = useState(7); // Mock streak
+  const [userLevel] = useState(3); // Mock level
+  const [currentStreak] = useState(7); // Mock streak
 
   const { frontmatter, content } = lesson;
 
@@ -257,7 +256,7 @@ print("Median:", median)`}
           <div className="bg-gradient-to-br from-yellow-400 to-orange-500 rounded-2xl p-8 text-center shadow-2xl transform animate-bounce">
             <div className="text-6xl mb-4">🎉</div>
             <h2 className="text-3xl font-bold text-white mb-2">Quest Complete!</h2>
-            <p className="text-white/90 mb-4">You've gained experience and leveled up!</p>
+            <p className="text-white/90 mb-4">You&apos;ve gained experience and leveled up!</p>
             <div className="bg-white/20 backdrop-blur-sm rounded-lg p-4">
               <div className="flex items-center justify-center space-x-4 text-white">
                 <Star className="h-6 w-6" />
@@ -485,7 +484,7 @@ print("Median:", median)`}
                 Quest Complete! What's Next?
               </CardTitle>
               <CardDescription className="text-green-800">
-                You've mastered this quest! Ready to continue your AI learning journey?
+                You&apos;ve mastered this quest! Ready to continue your AI learning journey?
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -494,7 +493,7 @@ print("Median:", median)`}
                   <div className="text-4xl">🎉</div>
                   <div>
                     <h3 className="text-lg font-semibold text-green-900">Congratulations!</h3>
-                    <p className="text-green-700">You've gained valuable experience and knowledge.</p>
+                    <p className="text-green-700">You&apos;ve gained valuable experience and knowledge.</p>
                   </div>
                 </div>
                 <Button 

@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle, Clock, BookOpen, Star, Play, Target, Trophy, Crown, Zap, Shield, Sword } from "lucide-react";
+import { CheckCircle, Clock, BookOpen, Star, Play, Target, Trophy, Zap } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 import Link from "next/link";
 
@@ -31,9 +31,9 @@ export default function FundamentalsPathPage() {
   
   const [weeks, setWeeks] = useState<Week[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [userXP, setUserXP] = useState(1250); // Mock XP
-  const [userLevel, setUserLevel] = useState(3); // Mock level
-  const [currentStreak, setCurrentStreak] = useState(7); // Mock streak
+  const [userXP] = useState(1250); // Mock XP
+  const [userLevel] = useState(3); // Mock level
+  const [currentStreak] = useState(7); // Mock streak
 
   // Calculate level and XP
   const calculateLevel = (xp: number) => Math.floor(xp / 500) + 1;
@@ -57,10 +57,10 @@ export default function FundamentalsPathPage() {
           description: "Get comfortable with AI concepts and your first code",
           duration: "4 lessons • 2-3 hours",
           focus: "Building mental models and first steps",
-          lessons: allLessons.filter((lesson: any) => 
+          lessons: allLessons.filter((lesson: { frontmatter: { id: string } }) => 
             lesson.frontmatter.id.includes('ch1') || 
             lesson.frontmatter.id.includes('lesson-1')
-          ).map((lesson: any) => ({
+          ).map((lesson: { frontmatter: any; content: string }) => ({
             id: lesson.frontmatter.id,
             title: lesson.frontmatter.title,
             duration_min: lesson.frontmatter.duration_min,
@@ -74,10 +74,10 @@ export default function FundamentalsPathPage() {
           description: "Master the fuel that powers AI systems",
           duration: "4 lessons • 3-4 hours", 
           focus: "Data quality, exploration, and preparation",
-          lessons: allLessons.filter((lesson: any) => 
-            lesson.frontmatter.id.includes('ch2') ||
+          lessons: allLessons.filter((lesson: { frontmatter: { id: string } }) => 
+            lesson.frontmatter.id.includes('ch2') || 
             lesson.frontmatter.id.includes('lesson-2')
-          ).map((lesson: any) => ({
+          ).map((lesson: { frontmatter: any; content: string }) => ({
             id: lesson.frontmatter.id,
             title: lesson.frontmatter.title,
             duration_min: lesson.frontmatter.duration_min,
@@ -91,10 +91,10 @@ export default function FundamentalsPathPage() {
           description: "Build and evaluate your first machine learning models",
           duration: "4 lessons • 4-5 hours",
           focus: "Supervised learning and model evaluation",
-          lessons: allLessons.filter((lesson: any) => 
-            lesson.frontmatter.id.includes('ch3') ||
+          lessons: allLessons.filter((lesson: { frontmatter: { id: string } }) => 
+            lesson.frontmatter.id.includes('ch3') || 
             lesson.frontmatter.id.includes('lesson-3')
-          ).map((lesson: any) => ({
+          ).map((lesson: { frontmatter: any; content: string }) => ({
             id: lesson.frontmatter.id,
             title: lesson.frontmatter.title,
             duration_min: lesson.frontmatter.duration_min,
@@ -108,10 +108,10 @@ export default function FundamentalsPathPage() {
           description: "Real-world applications and responsible AI",
           duration: "4 lessons • 3-4 hours",
           focus: "Practical applications and ethical considerations",
-          lessons: allLessons.filter((lesson: any) => 
-            lesson.frontmatter.id.includes('ch4') ||
+          lessons: allLessons.filter((lesson: { frontmatter: { id: string } }) => 
+            lesson.frontmatter.id.includes('ch4') || 
             lesson.frontmatter.id.includes('lesson-4')
-          ).map((lesson: any) => ({
+          ).map((lesson: { frontmatter: any; content: string }) => ({
             id: lesson.frontmatter.id,
             title: lesson.frontmatter.title,
             duration_min: lesson.frontmatter.duration_min,

@@ -21,7 +21,7 @@ export default function PyodideRunner({
   const [output, setOutput] = useState("");
   const [isRunning, setIsRunning] = useState(false);
   const [showHints, setShowHints] = useState(false);
-  const [pyodide, setPyodide] = useState<any>(null);
+  const [pyodide, setPyodide] = useState<unknown>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const outputRef = useRef<HTMLDivElement>(null);
 
@@ -29,7 +29,7 @@ export default function PyodideRunner({
   useEffect(() => {
     const loadPyodide = async () => {
       try {
-        // @ts-ignore
+        // @ts-expect-error - Pyodide types not available
         const pyodide = await loadPyodide({
           indexURL: "https://cdn.jsdelivr.net/pyodide/v0.24.1/full/",
         });
@@ -86,8 +86,8 @@ export default function PyodideRunner({
         }
       }
 
-    } catch (error: any) {
-      const errorMessage = error.message || "An error occurred while running your code.";
+    } catch (error: unknown) {
+      const errorMessage = (error as Error)?.message || "An error occurred while running your code.";
       setOutput(`Error: ${errorMessage}`);
       
       if (onRun) {

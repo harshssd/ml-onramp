@@ -2,9 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import { Button } from "./ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
-import { Badge } from "./ui/badge";
-import { RotateCcw, ChevronLeft, ChevronRight, CheckCircle, XCircle, Trophy, Star, Zap, Crown, Target } from "lucide-react";
+import { Card, CardContent } from "./ui/card";
+import { RotateCcw, ChevronLeft, ChevronRight, CheckCircle, XCircle, Trophy, Star, Zap, Target } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 
 interface Flashcard {
@@ -29,8 +28,8 @@ export default function FlashcardSystem({ track, onComplete }: FlashcardSystemPr
   const [incorrectCount, setIncorrectCount] = useState(0);
   const [reviewedCards, setReviewedCards] = useState<Set<number>>(new Set());
   const [isLoading, setIsLoading] = useState(true);
-  const [userXP, setUserXP] = useState(1250); // Mock XP
-  const [streak, setStreak] = useState(0); // Current session streak
+  const [userXP] = useState(1250); // Mock XP
+  const [streak] = useState(0); // Current session streak
 
   useEffect(() => {
     loadFlashcards();
@@ -278,7 +277,7 @@ export default function FlashcardSystem({ track, onComplete }: FlashcardSystemPr
               Quest Complete! Memory Training Mastered!
             </h3>
             <p className="text-green-700 mb-4 text-lg">
-              You've reviewed all {cards.length} flashcards!
+              You&apos;ve reviewed all {cards.length} flashcards!
             </p>
             <div className="bg-white/50 backdrop-blur-sm rounded-lg p-4 mb-6">
               <div className="flex justify-center space-x-6">

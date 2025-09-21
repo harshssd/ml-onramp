@@ -21,6 +21,7 @@ export default function PyodideRunner({
   const [output, setOutput] = useState("");
   const [isRunning, setIsRunning] = useState(false);
   const [showHints, setShowHints] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [pyodide, setPyodide] = useState<any>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const outputRef = useRef<HTMLDivElement>(null);

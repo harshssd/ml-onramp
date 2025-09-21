@@ -52,7 +52,7 @@ export interface LessonContent {
   resources: Array<{
     title: string;
     url: string;
-    type: 'article' | 'video' | 'tutorial' | 'dataset';
+    type: 'article' | 'video' | 'tutorial' | 'dataset' | 'interactive';
     description: string;
   }>;
   

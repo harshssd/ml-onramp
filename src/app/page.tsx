@@ -46,16 +46,17 @@ export default function Home() {
           {/* Hero Section */}
           <div className="mb-12">
             <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-6">
-              <span className="text-white/90 text-sm font-medium">🚀 Level Up Your ML Skills</span>
+              <span className="text-white/90 text-sm font-medium">🤖 Learn AI & Machine Learning</span>
             </div>
             
             <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
-              ML <span className="bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">Onramp</span>
+              AI Learning for <span className="bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">Everybody</span>
             </h1>
             
             <p className="text-xl md:text-2xl text-white/80 mb-8 max-w-3xl mx-auto leading-relaxed">
-              Transform into a <span className="text-yellow-400 font-semibold">Machine Learning Wizard</span> through 
-              interactive quests, hands-on challenges, and epic achievements!
+              Master <span className="text-yellow-400 font-semibold">Artificial Intelligence</span> and 
+              <span className="text-yellow-400 font-semibold"> Machine Learning</span> from scratch! 
+              Interactive courses, hands-on projects, and real-world applications for everyone.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
@@ -64,7 +65,7 @@ export default function Home() {
                   size="lg" 
                   className="w-full sm:w-auto bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-black font-bold text-lg px-8 py-4 rounded-xl shadow-2xl transform hover:scale-105 transition-all duration-200"
                 >
-                  🎮 Start Your Quest
+                  🚀 Start Learning AI
                 </Button>
               </Link>
               <Link href="/signup">
@@ -72,7 +73,7 @@ export default function Home() {
                   size="lg" 
                   className="w-full sm:w-auto bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-bold text-lg px-8 py-4 rounded-xl shadow-2xl transform hover:scale-105 transition-all duration-200"
                 >
-                  🧙‍♂️ Join Academy
+                  📚 Join Free
                 </Button>
               </Link>
               <Link href="/login">
@@ -81,48 +82,48 @@ export default function Home() {
                   size="lg" 
                   className="w-full sm:w-auto border-2 border-white/30 text-white hover:bg-white/10 font-semibold text-lg px-8 py-4 rounded-xl backdrop-blur-sm"
                 >
-                  ⚡ Continue Journey
+                  🔑 Sign In
                 </Button>
               </Link>
             </div>
           </div>
 
-          {/* Game Features */}
+          {/* Learning Features */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
             <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 hover:bg-white/20 transition-all duration-300 transform hover:scale-105">
               <div className="text-4xl mb-4">🎯</div>
               <h3 className="text-xl font-bold text-white mb-3">
-                Interactive Quests
+                Interactive Learning
               </h3>
               <p className="text-white/80">
-                Complete hands-on challenges and interactive playgrounds that make learning feel like gaming!
+                Hands-on coding challenges, interactive playgrounds, and real-world projects that make AI learning engaging!
               </p>
             </div>
             
             <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 hover:bg-white/20 transition-all duration-300 transform hover:scale-105">
               <div className="text-4xl mb-4">🏆</div>
               <h3 className="text-xl font-bold text-white mb-3">
-                Achievements & XP
+                Achievements & Progress
               </h3>
               <p className="text-white/80">
-                Earn badges, level up, and unlock new content as you master machine learning concepts!
+                Earn badges, track your progress, and celebrate milestones as you master AI and machine learning!
               </p>
             </div>
             
             <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 hover:bg-white/20 transition-all duration-300 transform hover:scale-105">
-              <div className="text-4xl mb-4">📈</div>
+              <div className="text-4xl mb-4">🌍</div>
               <h3 className="text-xl font-bold text-white mb-3">
-                Progress Tracking
+                For Everyone
               </h3>
               <p className="text-white/80">
-                Visualize your learning journey with detailed stats, streaks, and progress indicators!
+                No prerequisites needed! Start from zero and build your AI expertise with our comprehensive curriculum!
               </p>
             </div>
           </div>
 
           {/* Stats Section */}
           <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
-            <h3 className="text-2xl font-bold text-white mb-6">Join the ML Quest!</h3>
+            <h3 className="text-2xl font-bold text-white mb-6">Join the AI Learning Community!</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
               <div>
                 <div className="text-3xl font-bold text-yellow-400 mb-2">1000+</div>

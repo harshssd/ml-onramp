@@ -16,9 +16,9 @@ import { useTheme } from '@/contexts/ThemeContext';
 const learningPaths = [
   {
     id: 'data-explorer',
-    title: 'The Data Explorer\'s Journey',
-    description: 'Begin your adventure in the Academy of Data! Learn the fundamentals of Machine Learning from the ground up.',
-    story: 'Welcome to the Academy of Data! You are a curious explorer who has discovered the ancient art of Machine Learning.',
+    title: 'AI Fundamentals for Everyone',
+    description: 'Start your AI journey from scratch! Learn the basics of Artificial Intelligence and Machine Learning with no prior experience needed.',
+    story: 'Welcome to the world of AI! You are about to embark on an exciting journey into Artificial Intelligence and Machine Learning. No prior experience needed - we\'ll guide you every step of the way.',
     difficulty: 'beginner',
     estimatedTime: '8-12 weeks',
     chapters: 5,
@@ -35,14 +35,14 @@ const learningPaths = [
   },
   {
     id: 'ml-practitioner',
-    title: 'The ML Practitioner\'s Quest',
-    description: 'Master the art of Machine Learning! Build real models and solve practical problems.',
-    story: 'You are an aspiring ML Practitioner! The Academy has recognized your potential.',
+    title: 'AI Applications & Projects',
+    description: 'Build real AI projects and applications! Learn advanced machine learning techniques through hands-on projects.',
+    story: 'You\'ve learned the fundamentals! Now it\'s time to build real AI applications and solve practical problems with machine learning.',
     difficulty: 'intermediate',
     estimatedTime: '12-16 weeks',
     chapters: 8,
     skills: ['Advanced Python', 'Feature Engineering', 'Model Selection', 'Evaluation', 'Deployment'],
-    prerequisites: ['data-explorer'],
+    prerequisites: [],
     rewards: {
       xp: 2000,
       badges: ['ML Practitioner', 'Algorithm Master', 'Model Deployer', 'Problem Solver'],
@@ -50,18 +50,18 @@ const learningPaths = [
     },
     icon: '🧙‍♂️',
     color: 'bg-gradient-to-r from-green-500 to-teal-600',
-    status: 'locked'
+    status: 'available'
   },
   {
     id: 'ml-engineer',
-    title: 'The ML Engineer\'s Odyssey',
-    description: 'Bridge the gap between data science and production! Learn MLOps and system design.',
-    story: 'You are a skilled developer who has been chosen to become an ML Engineer!',
+    title: 'AI Systems & Deployment',
+    description: 'Master AI system design and deployment! Learn to build, deploy, and maintain AI systems in production.',
+    story: 'You\'re ready for the big leagues! Learn to design, build, and deploy AI systems that work in the real world.',
     difficulty: 'advanced',
     estimatedTime: '16-20 weeks',
     chapters: 10,
     skills: ['Docker', 'Kubernetes', 'MLOps', 'Cloud ML', 'System Design'],
-    prerequisites: ['ml-practitioner'],
+    prerequisites: [],
     rewards: {
       xp: 3000,
       badges: ['ML Engineer', 'System Architect', 'DevOps Master', 'Cloud Expert'],
@@ -69,7 +69,7 @@ const learningPaths = [
     },
     icon: '⚙️',
     color: 'bg-gradient-to-r from-orange-500 to-red-600',
-    status: 'locked'
+    status: 'available'
   },
   {
     id: 'deep-learning-sage',
@@ -88,7 +88,7 @@ const learningPaths = [
     },
     icon: '🧠',
     color: 'bg-gradient-to-r from-purple-500 to-pink-600',
-    status: 'locked'
+    status: 'available'
   },
   {
     id: 'ml-architect',
@@ -107,7 +107,7 @@ const learningPaths = [
     },
     icon: '🏛️',
     color: 'bg-gradient-to-r from-indigo-500 to-purple-600',
-    status: 'locked'
+    status: 'available'
   }
 ];
 
@@ -249,14 +249,14 @@ export default function AppPage() {
       <div className="relative z-10">
         {/* Game Header */}
         <header className={`${themeClasses.card} backdrop-blur-sm border-b ${themeClasses.border}`}>
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center h-20">
               <div className="flex items-center space-x-4">
-                <div className="text-3xl">🧙‍♂️</div>
+                <div className="text-3xl">🤖</div>
                 <div>
-                  <h1 className={`text-2xl font-bold ${themeClasses.text}`}>ML Quest</h1>
+                  <h1 className={`text-2xl font-bold ${themeClasses.text}`}>AI Learning Hub</h1>
                   <p className={`${themeClasses.text}/70 text-sm`}>Level {calculateLevel()} • {calculateXP()} XP</p>
-                </div>
+            </div>
               </div>
               
               <div className="flex items-center space-x-4">
@@ -286,13 +286,13 @@ export default function AppPage() {
                   size="sm"
                   className={`${themeClasses.border} ${themeClasses.text} hover:${themeClasses.card.replace('bg-', 'bg-').replace('/10', '/20')} border-2`}
                 >
-                  <LogOut className="h-4 w-4 mr-2" />
+                <LogOut className="h-4 w-4 mr-2" />
                   Exit Quest
-                </Button>
-              </div>
+              </Button>
             </div>
           </div>
-        </header>
+        </div>
+      </header>
 
         <main className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
           {/* Hero Stats Section */}
@@ -335,14 +335,14 @@ export default function AppPage() {
             <div className="flex items-center justify-between mb-6">
               <h3 className={`text-2xl font-bold ${themeClasses.text} flex items-center`}>
                 <BookOpen className="h-6 w-6 mr-2 text-blue-400" />
-                Learning Paths
+                AI Learning Paths
               </h3>
               <Button
                 onClick={handleStartStorytelling}
                 className="bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white font-semibold"
               >
                 <Play className="h-4 w-4 mr-2" />
-                Start Storytelling Journey
+                Start AI Learning Journey
               </Button>
             </div>
             
@@ -430,7 +430,7 @@ export default function AppPage() {
             {showLearningPaths && (
               <div className="mt-8">
                 <h4 className={`text-xl font-bold ${themeClasses.text} mb-6`}>
-                  All Available Learning Paths
+                  All Available AI Learning Paths
                 </h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {learningPaths.map((path) => (
@@ -630,7 +630,7 @@ export default function AppPage() {
             </div>
           </div>
         </main>
-      </div>
+        </div>
     </div>
   );
 }

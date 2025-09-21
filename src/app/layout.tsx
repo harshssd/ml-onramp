@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "ML Onramp - Quest-Based Learning",
-  description: "Transform into a Machine Learning Wizard through interactive quests and hands-on challenges!",
+  title: "AI Learning for Everybody - Master AI & Machine Learning",
+  description: "Learn AI and Machine Learning from scratch! Interactive courses, hands-on projects, and real-world applications for everyone.",
 };
 
 export default function RootLayout({

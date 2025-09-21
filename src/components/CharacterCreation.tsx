@@ -134,11 +134,11 @@ export function CharacterCreation({ onComplete }: CharacterCreationProps) {
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className={`text-4xl font-bold ${themeClasses.text} mb-4`}>
-            Welcome to the Academy of Data! 🏛️
+            Welcome to AI Learning for Everybody! 🤖
           </h1>
-          <p className={`text-xl ${themeClasses.text}/80`}>
-            Let&apos;s create your character and begin your journey into Machine Learning
-          </p>
+        <p className={`text-xl ${themeClasses.text}/80`}>
+          Let&apos;s create your character and begin your journey into AI and Machine Learning
+        </p>
         </div>
 
         {/* Progress Bar */}

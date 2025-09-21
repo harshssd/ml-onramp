@@ -58,8 +58,8 @@ export function DerivativeCalculator({ onComplete }: DerivativeCalculatorProps) 
   return (
     <Card className={`${themeClasses.card} backdrop-blur-sm`}>
       <CardHeader>
-        <CardTitle className={`${themeClasses.text} flex items-center`>
-          🧮 Derivative Calculator
+        <CardTitle className={`${themeClasses.text} flex items-center`}>
+          <span className="mr-2">🧮</span> Derivative Calculator
         </CardTitle>
         <CardDescription className={`${themeClasses.text}/70`}>
           Practice computing derivatives using the power rule and basic rules
@@ -193,7 +193,7 @@ export function GradientVisualizer({ onComplete }: GradientVisualizerProps) {
     <Card className={`${themeClasses.card} backdrop-blur-sm`}>
       <CardHeader>
         <CardTitle className={`${themeClasses.text} flex items-center`}>
-          🌊 Gradient Flow Visualizer
+          <span className="mr-2">🌊</span> Gradient Flow Visualizer
         </CardTitle>
         <CardDescription className={`${themeClasses.text}/70`}>
           Watch how gradients flow backward through a neural network
@@ -262,7 +262,7 @@ export function NeuralNetworkBuilder({ onComplete }: NeuralNetworkBuilderProps) 
     <Card className={`${themeClasses.card} backdrop-blur-sm`}>
       <CardHeader>
         <CardTitle className={`${themeClasses.text} flex items-center`}>
-          🏗️ Neural Network Builder
+          <span className="mr-2">🏗️</span> Neural Network Builder
         </CardTitle>
         <CardDescription className={`${themeClasses.text}/70`}>
           Build and visualize simple neural networks
@@ -377,7 +377,7 @@ export function BackpropSimulator({ onComplete }: BackpropSimulatorProps) {
     <Card className={`${themeClasses.card} backdrop-blur-sm`}>
       <CardHeader>
         <CardTitle className={`${themeClasses.text} flex items-center`}>
-          ⚙️ Backpropagation Simulator
+          <span className="mr-2">⚙️</span> Backpropagation Simulator
         </CardTitle>
         <CardDescription className={`${themeClasses.text}/70`}>
           Step through backpropagation with a simple 2-input network

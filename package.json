@@ -1,0 +1,30 @@
+{
+  "name": "ml-onramp",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
+    "test": "turbo run test",
+    "test:e2e": "turbo run test:e2e",
+    "clean": "turbo run clean",
+    "seed": "node seed-database.js"
+  },
+  "devDependencies": {
+    "@turbo/gen": "^1.10.12",
+    "prettier": "^3.0.3",
+    "turbo": "^1.10.12",
+    "@supabase/supabase-js": "^2.57.4",
+    "dotenv": "^16.0.0"
+  },
+  "packageManager": "npm@9.6.7",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

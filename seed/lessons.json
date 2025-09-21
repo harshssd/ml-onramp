@@ -1,0 +1,146 @@
+[
+  {
+    "id": "1",
+    "title": "Introduction to Machine Learning",
+    "description": "Learn the fundamentals of machine learning, including supervised and unsupervised learning, and common algorithms.",
+    "duration": 30,
+    "difficulty": "beginner",
+    "slug": "introduction-to-machine-learning",
+    "content": {
+      "sections": [
+        {
+          "title": "What is Machine Learning?",
+          "content": "Machine learning is a subset of artificial intelligence that enables computers to learn and make decisions from data without being explicitly programmed for every task."
+        },
+        {
+          "title": "Types of Machine Learning",
+          "content": "There are three main types: supervised learning (learning with labeled data), unsupervised learning (finding patterns in unlabeled data), and reinforcement learning (learning through interaction with an environment)."
+        },
+        {
+          "title": "Common Algorithms",
+          "content": "Popular algorithms include linear regression, decision trees, neural networks, and clustering algorithms like k-means."
+        }
+      ]
+    }
+  },
+  {
+    "id": "2",
+    "title": "Linear Regression Fundamentals",
+    "description": "Dive deep into linear regression, one of the most fundamental algorithms in machine learning.",
+    "duration": 45,
+    "difficulty": "beginner",
+    "slug": "linear-regression-fundamentals",
+    "content": {
+      "sections": [
+        {
+          "title": "Understanding Linear Regression",
+          "content": "Linear regression is a statistical method that models the relationship between a dependent variable and one or more independent variables using a linear equation."
+        },
+        {
+          "title": "The Math Behind It",
+          "content": "The equation y = mx + b represents a simple linear regression, where m is the slope and b is the y-intercept. In multiple regression, we have y = b0 + b1x1 + b2x2 + ... + bnxn."
+        },
+        {
+          "title": "Cost Function and Gradient Descent",
+          "content": "We use the Mean Squared Error (MSE) as our cost function and gradient descent to minimize it and find the best parameters."
+        }
+      ]
+    }
+  },
+  {
+    "id": "3",
+    "title": "Data Preprocessing Techniques",
+    "description": "Master the art of preparing your data for machine learning models with various preprocessing techniques.",
+    "duration": 40,
+    "difficulty": "intermediate",
+    "slug": "data-preprocessing-techniques",
+    "content": {
+      "sections": [
+        {
+          "title": "Data Cleaning",
+          "content": "Remove missing values, handle outliers, and ensure data quality before feeding it to your models."
+        },
+        {
+          "title": "Feature Scaling",
+          "content": "Normalize and standardize your features to ensure all variables contribute equally to the model."
+        },
+        {
+          "title": "Feature Engineering",
+          "content": "Create new features from existing ones to improve model performance and capture more complex patterns."
+        }
+      ]
+    }
+  },
+  {
+    "id": "4",
+    "title": "Classification Algorithms",
+    "description": "Explore various classification algorithms including logistic regression, decision trees, and random forests.",
+    "duration": 50,
+    "difficulty": "intermediate",
+    "slug": "classification-algorithms",
+    "content": {
+      "sections": [
+        {
+          "title": "Logistic Regression",
+          "content": "A classification algorithm that uses the logistic function to model the probability of categorical outcomes."
+        },
+        {
+          "title": "Decision Trees",
+          "content": "Tree-like models that make decisions by asking a series of questions about the input features."
+        },
+        {
+          "title": "Random Forest",
+          "content": "An ensemble method that combines multiple decision trees to improve accuracy and reduce overfitting."
+        }
+      ]
+    }
+  },
+  {
+    "id": "5",
+    "title": "Neural Networks and Deep Learning",
+    "description": "Introduction to neural networks, backpropagation, and the basics of deep learning.",
+    "duration": 60,
+    "difficulty": "advanced",
+    "slug": "neural-networks-and-deep-learning",
+    "content": {
+      "sections": [
+        {
+          "title": "Perceptron and Neural Networks",
+          "content": "Learn about the basic building blocks of neural networks, including perceptrons and how they combine to form complex networks."
+        },
+        {
+          "title": "Backpropagation",
+          "content": "Understand how neural networks learn by adjusting weights through backpropagation of errors."
+        },
+        {
+          "title": "Deep Learning Applications",
+          "content": "Explore how deep neural networks are used in computer vision, natural language processing, and other domains."
+        }
+      ]
+    }
+  },
+  {
+    "id": "6",
+    "title": "Model Evaluation and Validation",
+    "description": "Learn how to properly evaluate your machine learning models and avoid common pitfalls.",
+    "duration": 35,
+    "difficulty": "intermediate",
+    "slug": "model-evaluation-and-validation",
+    "content": {
+      "sections": [
+        {
+          "title": "Train-Test Split",
+          "content": "Split your data into training and testing sets to evaluate model performance on unseen data."
+        },
+        {
+          "title": "Cross-Validation",
+          "content": "Use k-fold cross-validation to get a more robust estimate of model performance."
+        },
+        {
+          "title": "Metrics and Evaluation",
+          "content": "Understand different evaluation metrics like accuracy, precision, recall, and F1-score for classification problems."
+        }
+      ]
+    }
+  }
+]

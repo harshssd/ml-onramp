@@ -1,36 +1,151 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ML Onramp - Quest-Based Machine Learning Platform
 
-## Getting Started
+A gamified machine learning education platform with both web and mobile applications, featuring interactive quests, achievements, and hands-on learning experiences.
 
-First, run the development server:
+## 🚀 Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **🎮 Gamified Learning**: Quest-based interface with XP, levels, and achievements
+- **📱 Cross-Platform**: Web app (Next.js) and Mobile app (React Native)
+- **🎨 6 Beautiful Themes**: Dark Quest, Light Mode, Neon Cyber, Ocean Depths, Forest Quest, Sunset Magic
+- **🔐 Authentication**: Supabase-powered user management
+- **📊 Progress Tracking**: Visual progress indicators and statistics
+- **🎯 Interactive Content**: Hands-on playgrounds and challenges
+
+## 📁 Project Structure
+
+```
+ml-onramp/
+├── src/                    # Web app (Next.js)
+│   ├── app/               # App Router pages
+│   ├── components/        # Reusable UI components
+│   ├── contexts/          # React contexts (Theme, etc.)
+│   └── lib/               # Utilities and configurations
+├── mobile/                # Mobile app (React Native)
+│   ├── src/               # Mobile app source code
+│   ├── screens/           # Mobile screens
+│   └── navigation/        # Navigation configuration
+└── supabase/              # Database schema and migrations
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🌐 Web Application
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Getting Started
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. **Install dependencies:**
+   ```bash
+   npm install
+   ```
 
-## Learn More
+2. **Configure Supabase:**
+   - Create a `.env.local` file with your Supabase credentials
+   - Run the database schema from `supabase/schema.sql`
 
-To learn more about Next.js, take a look at the following resources:
+3. **Start development server:**
+   ```bash
+   npm run dev
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+4. **Open [http://localhost:3000](http://localhost:3000)** to see the web app
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Deployment
+- **Live Demo**: [https://ml-onramp.vercel.app](https://ml-onramp.vercel.app)
+- **Platform**: Vercel
+- **Status**: ✅ Deployed and running
 
-## Deploy on Vercel
+## 📱 Mobile Application
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Getting Started
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. **Navigate to mobile directory:**
+   ```bash
+   cd mobile
+   ```
+
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+
+3. **Configure Supabase:**
+   - Update `src/config/supabase.ts` with your credentials
+   - **Important**: Never commit real credentials to git!
+
+4. **Start development server:**
+   ```bash
+   npx expo start
+   ```
+
+5. **Test on device:**
+   - Install Expo Go app on your phone
+   - Scan QR code or use manual connection
+   - Test on iOS Simulator or Android Emulator
+
+### Testing Platforms
+- ✅ **Web Browser**: `npm run web`
+- ✅ **Physical Device**: Expo Go app
+- ✅ **iOS Simulator**: `npm run ios` (requires Xcode)
+- ✅ **Android Emulator**: `npm run android` (requires Android Studio)
+
+## 🛠️ Technology Stack
+
+### Web App
+- **Framework**: Next.js 15 with App Router
+- **Styling**: Tailwind CSS
+- **Backend**: Supabase (PostgreSQL + Auth)
+- **Deployment**: Vercel
+
+### Mobile App
+- **Framework**: React Native with Expo
+- **Navigation**: React Navigation
+- **Styling**: StyleSheet with theme system
+- **State Management**: React Context
+- **Backend**: Supabase (shared with web app)
+
+## 🎨 Theme System
+
+Both web and mobile apps feature 6 beautiful themes:
+- **Dark Quest** 🌙 - Classic dark theme with purple accents
+- **Light Mode** ☀️ - Clean and bright interface
+- **Neon Cyber** ⚡ - Cyberpunk vibes with neon colors
+- **Ocean Depths** 🌊 - Deep blue ocean theme
+- **Forest Quest** 🌲 - Nature-inspired green theme
+- **Sunset Magic** 🌅 - Warm orange and red tones
+
+## 🔧 Development
+
+### Prerequisites
+- Node.js 18+
+- npm or yarn
+- Supabase account
+- For mobile: Expo CLI, iOS Simulator (optional), Android Studio (optional)
+
+### Scripts
+```bash
+# Web app
+npm run dev          # Start development server
+npm run build        # Build for production
+npm run start        # Start production server
+
+# Mobile app
+cd mobile
+npm run web          # Run in web browser
+npm run ios          # Run on iOS Simulator
+npm run android      # Run on Android Emulator
+npx expo start       # Start Expo development server
+```
+
+## 📄 License
+
+MIT License - see LICENSE file for details.
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
+
+## 📞 Support
+
+For questions or support, please open an issue on GitHub.

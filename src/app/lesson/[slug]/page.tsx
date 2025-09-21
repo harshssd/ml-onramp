@@ -6,7 +6,7 @@ import { createClient } from '@/lib/supabase/client';
 import { RegressionPlayground } from '@/components/RegressionPlayground';
 import { ProgressRing } from '@/components/ProgressRing';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, CheckCircle, Clock, BookOpen, Star, Trophy, Zap, Target, Award, Flame } from 'lucide-react';
+import { ArrowLeft, CheckCircle, Clock, BookOpen, Star, Trophy, Target } from 'lucide-react';
 import type { Lesson } from '@/components/LessonCard';
 
 export default function LessonPage() {
@@ -37,14 +37,14 @@ export default function LessonPage() {
     if (user && params?.slug) {
       loadLesson();
     }
-  }, [user, params?.slug]);
+  }, [user, params?.slug, loadLesson]);
 
   // Refresh progress when user or lesson changes
   useEffect(() => {
     if (user && lesson) {
       loadUserProgress(lesson.id);
     }
-  }, [user, lesson]);
+  }, [user, lesson, loadUserProgress]);
 
   const loadLesson = async () => {
     if (!params?.slug) return;
@@ -337,7 +337,7 @@ export default function LessonPage() {
                   <div className="text-4xl mb-4">⚔️</div>
                   <h3 className="text-2xl font-bold text-white mb-4">Ready to Complete This Quest?</h3>
                   <p className="text-white/80 mb-6">
-                    You've learned the fundamentals! Mark this quest as complete to earn XP and unlock new challenges.
+                    You&apos;ve learned the fundamentals! Mark this quest as complete to earn XP and unlock new challenges.
                   </p>
                   <Button 
                     onClick={markAsComplete} 
@@ -352,7 +352,7 @@ export default function LessonPage() {
                   <div className="text-4xl mb-4">🎉</div>
                   <h3 className="text-2xl font-bold text-white mb-4">Quest Completed!</h3>
                   <p className="text-white/80 mb-6">
-                    Congratulations! You've mastered this quest and earned valuable XP.
+                    Congratulations! You&apos;ve mastered this quest and earned valuable XP.
                   </p>
                   <div className="flex justify-center space-x-4">
                     <Button 

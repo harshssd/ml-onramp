@@ -3,9 +3,9 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
-import { LessonCard, type Lesson } from '@/components/LessonCard';
+import { type Lesson } from '@/components/LessonCard';
 import { ProgressRing } from '@/components/ProgressRing';
-import { LogOut, User, Trophy, Star, Zap, Target, Award, Flame } from 'lucide-react';
+import { LogOut, User, Trophy, Star, Target } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export default function AppPage() {
@@ -29,7 +29,7 @@ export default function AppPage() {
     };
 
     getUser();
-  }, [router, supabase.auth]);
+  }, [router, supabase.auth, loadLessons, loadUserProgress]);
 
   const loadLessons = async () => {
     try {

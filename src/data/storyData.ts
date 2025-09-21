@@ -16,13 +16,20 @@ export interface Chapter {
 export interface Lesson {
   id: string;
   title: string;
-  type: 'theory' | 'interactive' | 'coding' | 'project' | 'quiz';
+  type: 'theory' | 'interactive' | 'coding' | 'project' | 'quiz' | 'video';
   content: string;
   instructions: string;
   hints?: string[];
   code?: string;
   solution?: string;
   expectedOutput?: string;
+  video?: {
+    id: string;
+    title: string;
+    start: number;
+    end: number;
+    description: string;
+  };
   resources?: Array<{
     title: string;
     url: string;
@@ -175,6 +182,113 @@ print(data.dtypes)`,
     color: 'bg-gradient-to-r from-purple-500 to-pink-600',
     status: 'available',
     chapters: []
+  },
+  {
+    id: 'video-mastery',
+    title: 'AI Video Mastery Journey',
+    description: 'Learn AI through immersive video experiences and interactive storytelling',
+    story: 'Welcome to the Video Mastery Journey! You\'ll explore AI concepts through carefully curated video content, interactive experiences, and hands-on projects. Each video is designed to build your understanding step by step.',
+    difficulty: 'beginner',
+    estimatedTime: '6-8 weeks',
+    skills: ['Video Learning', 'Interactive Content', 'Visual Learning', 'Storytelling', 'AI Concepts'],
+    prerequisites: [],
+    rewards: {
+      xp: 1500,
+      badges: ['Video Learner', 'Visual Thinker', 'Story Master', 'AI Explorer'],
+      unlocks: ['Advanced Video Content', 'Interactive Projects', 'Community Access']
+    },
+    icon: '🎬',
+    color: 'bg-gradient-to-r from-red-500 to-orange-600',
+    status: 'available',
+    chapters: [
+      {
+        id: 'video-intro',
+        title: 'Chapter 1: The Video Learning Experience',
+        storyText: 'In this chapter, you\'ll discover how video learning can accelerate your AI understanding. We\'ll explore different types of video content and how to make the most of each format.',
+        objectives: [
+          'Understand the power of video learning',
+          'Learn to navigate video content effectively',
+          'Practice with interactive video elements'
+        ],
+        lessons: [
+          {
+            id: 'video-intro-1',
+            title: 'Welcome to Video Learning',
+            type: 'video',
+            content: 'Discover how video learning can transform your AI education journey.',
+            instructions: 'Watch the introduction video and complete the interactive elements.',
+            video: {
+              id: 'VIDEO_ID_INTRO',
+              title: 'AI Learning Through Video',
+              start: 0,
+              end: 300,
+              description: 'An introduction to video-based AI learning'
+            },
+            resources: [
+              {
+                title: 'Video Learning Best Practices',
+                url: 'https://example.com/video-learning',
+                type: 'article'
+              }
+            ]
+          },
+          {
+            id: 'video-intro-2',
+            title: 'Interactive Video Elements',
+            type: 'interactive',
+            content: 'Learn how to use interactive video features to enhance your learning.',
+            instructions: 'Complete the interactive video tutorial and practice with the controls.',
+            video: {
+              id: 'VIDEO_ID_INTERACTIVE',
+              title: 'Interactive Video Tutorial',
+              start: 30,
+              end: 450,
+              description: 'Hands-on tutorial for interactive video features'
+            }
+          }
+        ]
+      },
+      {
+        id: 'video-ai-concepts',
+        title: 'Chapter 2: AI Concepts Through Video',
+        storyText: 'Now we\'ll dive into core AI concepts using video explanations, visual demonstrations, and interactive examples.',
+        objectives: [
+          'Learn AI fundamentals through video',
+          'Practice with visual AI demonstrations',
+          'Complete interactive AI exercises'
+        ],
+        lessons: [
+          {
+            id: 'video-ai-1',
+            title: 'What is Artificial Intelligence?',
+            type: 'video',
+            content: 'A comprehensive video explanation of AI concepts with visual examples.',
+            instructions: 'Watch the video and take notes on key concepts.',
+            video: {
+              id: 'VIDEO_ID_AI_BASICS',
+              title: 'Understanding AI Fundamentals',
+              start: 60,
+              end: 600,
+              description: 'Core AI concepts explained through video'
+            }
+          },
+          {
+            id: 'video-ai-2',
+            title: 'Machine Learning in Action',
+            type: 'video',
+            content: 'See machine learning algorithms in action with real-world examples.',
+            instructions: 'Watch the demonstrations and try the interactive exercises.',
+            video: {
+              id: 'VIDEO_ID_ML_DEMO',
+              title: 'ML Algorithms in Practice',
+              start: 120,
+              end: 720,
+              description: 'Live demonstrations of ML algorithms'
+            }
+          }
+        ]
+      }
+    ]
   }
 ];
 

@@ -7,7 +7,8 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { useTheme } from '@/contexts/ThemeContext';
 import { Chapter, Lesson, Character, getChapterById } from '@/data/storyData';
-import { BookOpen, Code, Play, CheckCircle, Star, Trophy, Target, Clock } from 'lucide-react';
+import { BookOpen, Code, Play, CheckCircle, Star, Trophy, Target, Clock, Video } from 'lucide-react';
+import YouTubeSegment from './YouTubeSegment';
 
 interface StoryInterfaceProps {
   character: Character;
@@ -65,6 +66,7 @@ export function StoryInterface({
       case 'interactive': return <Play className="h-5 w-5" />;
       case 'project': return <Target className="h-5 w-5" />;
       case 'quiz': return <CheckCircle className="h-5 w-5" />;
+      case 'video': return <Video className="h-5 w-5" />;
       default: return <BookOpen className="h-5 w-5" />;
     }
   };
@@ -356,6 +358,46 @@ function LessonInterface({ lesson, character, onComplete, onBack }: LessonInterf
                     className="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700"
                   >
                     Complete Lesson
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Video Content */}
+          {lesson.type === 'video' && lesson.video && (
+            <Card className={`${themeClasses.card} backdrop-blur-sm`}>
+              <CardHeader>
+                <CardTitle className={`${themeClasses.text} flex items-center`}>
+                  <Video className="h-5 w-5 mr-2 text-red-500" />
+                  Video Lesson
+                </CardTitle>
+                <CardDescription className={`${themeClasses.text}/70`}>
+                  {lesson.video.description}
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <YouTubeSegment
+                  videoId={lesson.video.id}
+                  start={lesson.video.start}
+                  end={lesson.video.end}
+                  title={lesson.video.title}
+                />
+                <div className="mt-4">
+                  <h4 className={`text-lg font-semibold ${themeClasses.text} mb-2`}>
+                    What to Watch For:
+                  </h4>
+                  <p className={`${themeClasses.text}/80 text-sm`}>
+                    {lesson.instructions}
+                  </p>
+                </div>
+                <div className="mt-6">
+                  <Button
+                    onClick={onComplete}
+                    className="bg-gradient-to-r from-red-500 to-orange-600 hover:from-red-600 hover:to-orange-700"
+                  >
+                    <CheckCircle className="h-4 w-4 mr-2" />
+                    Complete Video Lesson
                   </Button>
                 </div>
               </CardContent>

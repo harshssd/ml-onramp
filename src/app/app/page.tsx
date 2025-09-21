@@ -330,335 +330,46 @@ export default function AppPage() {
             </div>
           </div>
 
-          {/* Learning Paths Section */}
+          {/* RPG Learning Experience Section */}
           <div className="mb-8">
-        <div className="flex items-center justify-between mb-6">
-          <h3 className={`text-2xl font-bold ${themeClasses.text} flex items-center`}>
-            <BookOpen className="h-6 w-6 mr-2 text-blue-400" />
-            AI Learning Paths
-          </h3>
-          <div className="flex space-x-3">
-            <Button
-              onClick={() => router.push('/learning-path/fundamentals')}
-              className="bg-gradient-to-r from-green-500 to-teal-600 hover:from-green-600 hover:to-teal-700 text-white font-semibold"
-            >
-              <BookOpen className="h-4 w-4 mr-2" />
-              4-Week Fundamentals
-            </Button>
-            <Button
-              onClick={handleStartStorytelling}
-              className="bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white font-semibold"
-            >
-              <Play className="h-4 w-4 mr-2" />
-              Start AI Learning Journey
-            </Button>
-          </div>
-        </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {learningPaths.slice(0, 3).map((path) => (
-                <Card
-                  key={path.id}
-                  className={`${themeClasses.card} backdrop-blur-sm border ${themeClasses.border} hover:${themeClasses.card.replace('/10', '/20')} transition-all duration-300 transform hover:scale-105 cursor-pointer`}
-                  onClick={() => handleStartLearningPath(path.id)}
+            <div className="flex items-center justify-between mb-6">
+              <h3 className={`text-2xl font-bold ${themeClasses.text} flex items-center`}>
+                <BookOpen className="h-6 w-6 mr-2 text-blue-400" />
+                🎮 AI Learning Quest
+              </h3>
+              <div className="flex space-x-3">
+                <Button
+                  onClick={() => router.push('/learning-path/fundamentals')}
+                  className="bg-gradient-to-r from-green-500 to-teal-600 hover:from-green-600 hover:to-teal-700 text-white font-semibold"
                 >
-                  <CardHeader>
-                    <div className="flex items-center justify-between mb-2">
-                      <div className="flex items-center space-x-2">
-                        <span className="text-2xl">{path.icon}</span>
-                        <span className="text-sm">{getStatusIcon(path.status)}</span>
-                      </div>
-                      <Badge className={`${getDifficultyColor(path.difficulty)} text-white`}>
-                        {path.difficulty}
-                      </Badge>
-                    </div>
-                    <CardTitle className={`text-lg ${themeClasses.text}`}>
-                      {path.title}
-                    </CardTitle>
-                    <CardDescription className={`${themeClasses.text}/70`}>
-                      {path.description}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-3">
-                      <div className="flex items-center justify-between text-sm">
-                        <span className={`${themeClasses.text}/70`}>Chapters:</span>
-                        <span className={`${themeClasses.text}`}>{path.chapters}</span>
-                      </div>
-                      <div className="flex items-center justify-between text-sm">
-                        <span className={`${themeClasses.text}/70`}>Duration:</span>
-                        <span className={`${themeClasses.text}`}>{path.estimatedTime}</span>
-                      </div>
-                      <div className="flex items-center justify-between text-sm">
-                        <span className={`${themeClasses.text}/70`}>XP Reward:</span>
-                        <span className={`${themeClasses.text}`}>{path.rewards.xp}</span>
-                      </div>
-                      
-                      <div className="flex flex-wrap gap-1 mt-3">
-                        {path.skills.slice(0, 3).map((skill, index) => (
-                          <Badge key={index} variant="outline" className="text-xs">
-                            {skill}
-                          </Badge>
-                        ))}
-                        {path.skills.length > 3 && (
-                          <Badge variant="outline" className="text-xs">
-                            +{path.skills.length - 3} more
-                          </Badge>
-                        )}
-                      </div>
-                      
-                      <Button
-                        className={`w-full ${path.color} hover:opacity-90 text-white font-semibold`}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleStartLearningPath(path.id);
-                        }}
-                      >
-                        {path.status === 'available' ? 'Start Journey' : 
-                         path.status === 'in-progress' ? 'Continue Journey' : 'Locked'}
-                        <ArrowRight className="h-4 w-4 ml-2" />
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+                  <BookOpen className="h-4 w-4 mr-2" />
+                  Start 4-Week Quest
+                </Button>
+                <Button
+                  onClick={handleStartStorytelling}
+                  className="bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white font-semibold"
+                >
+                  <Play className="h-4 w-4 mr-2" />
+                  Story Mode
+                </Button>
+              </div>
             </div>
             
-            <div className="text-center mt-6">
-              <Button
-                onClick={() => setShowLearningPaths(!showLearningPaths)}
-                variant="outline"
-                className={`${themeClasses.border} ${themeClasses.text} hover:${themeClasses.card.replace('/10', '/20')}`}
-              >
-                {showLearningPaths ? 'Show Less' : 'View All Learning Paths'}
-                <ArrowRight className={`h-4 w-4 ml-2 transition-transform ${showLearningPaths ? 'rotate-180' : ''}`} />
-              </Button>
-            </div>
-            
-            {/* Expanded Learning Paths View */}
-            {showLearningPaths && (
-              <div className="mt-8">
-                <h4 className={`text-xl font-bold ${themeClasses.text} mb-6`}>
-                  All Available AI Learning Paths
-                </h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {learningPaths.map((path) => (
-                    <Card
-                      key={path.id}
-                      className={`${themeClasses.card} backdrop-blur-sm border ${themeClasses.border} hover:${themeClasses.card.replace('/10', '/20')} transition-all duration-300 transform hover:scale-105 cursor-pointer`}
-                      onClick={() => handleStartLearningPath(path.id)}
-                    >
-                      <CardHeader>
-                        <div className="flex items-center justify-between mb-2">
-                          <div className="flex items-center space-x-2">
-                            <span className="text-2xl">{path.icon}</span>
-                            <span className="text-sm">{getStatusIcon(path.status)}</span>
-                          </div>
-                          <Badge className={`${getDifficultyColor(path.difficulty)} text-white`}>
-                            {path.difficulty}
-                          </Badge>
-                        </div>
-                        <CardTitle className={`text-xl ${themeClasses.text}`}>
-                          {path.title}
-                        </CardTitle>
-                        <CardDescription className={`${themeClasses.text}/70`}>
-                          {path.description}
-                        </CardDescription>
-                      </CardHeader>
-                      <CardContent>
-                        <div className="space-y-4">
-                          <div className={`${themeClasses.card.replace('/10', '/5')} rounded-lg p-3`}>
-                            <p className={`text-sm ${themeClasses.text}/80 italic`}>
-                              &ldquo;{path.story.substring(0, 120)}...&rdquo;
-                            </p>
-                          </div>
-                          
-                          <div className="grid grid-cols-2 gap-4 text-sm">
-                            <div className="flex items-center justify-between">
-                              <span className={`${themeClasses.text}/70`}>Chapters:</span>
-                              <span className={`${themeClasses.text}`}>{path.chapters}</span>
-                            </div>
-                            <div className="flex items-center justify-between">
-                              <span className={`${themeClasses.text}/70`}>Duration:</span>
-                              <span className={`${themeClasses.text}`}>{path.estimatedTime}</span>
-                            </div>
-                            <div className="flex items-center justify-between">
-                              <span className={`${themeClasses.text}/70`}>XP Reward:</span>
-                              <span className={`${themeClasses.text}`}>{path.rewards.xp}</span>
-                            </div>
-                            <div className="flex items-center justify-between">
-                              <span className={`${themeClasses.text}/70`}>Status:</span>
-                              <span className={`${themeClasses.text}`}>{path.status}</span>
-                            </div>
-                          </div>
-                          
-                          <div>
-                            <h5 className={`text-sm font-semibold ${themeClasses.text} mb-2`}>
-                              Skills You&apos;ll Learn:
-                            </h5>
-                            <div className="flex flex-wrap gap-1">
-                              {path.skills.map((skill, index) => (
-                                <Badge key={index} variant="outline" className="text-xs">
-                                  {skill}
-                                </Badge>
-                              ))}
-                            </div>
-                          </div>
-                          
-                          {path.prerequisites.length > 0 && (
-                            <div>
-                              <h5 className={`text-sm font-semibold ${themeClasses.text} mb-2`}>
-                                Prerequisites:
-                              </h5>
-                              <div className="flex flex-wrap gap-1">
-                                {path.prerequisites.map((prereq, index) => (
-                                  <Badge key={index} variant="outline" className="text-xs">
-                                    {prereq}
-                                  </Badge>
-                                ))}
-                              </div>
-                            </div>
-                          )}
-                          
-                          <Button
-                            className={`w-full ${path.color} hover:opacity-90 text-white font-semibold`}
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleStartLearningPath(path.id);
-                            }}
-                            disabled={path.status === 'locked'}
-                          >
-                            {path.status === 'available' ? 'Start Journey' : 
-                             path.status === 'in-progress' ? 'Continue Journey' : 
-                             path.status === 'completed' ? 'Review Journey' : 'Locked'}
-                            <ArrowRight className="h-4 w-4 ml-2" />
-                          </Button>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Achievements Section */}
-          <div className="mb-8">
-            <h3 className={`text-2xl font-bold ${themeClasses.text} mb-6 flex items-center`}>
-              <Trophy className="h-6 w-6 mr-2 text-yellow-400" />
-              Recent Achievements
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="bg-gradient-to-r from-yellow-400/20 to-orange-500/20 backdrop-blur-sm rounded-2xl p-6 border border-yellow-400/30">
-                <div className="flex items-center space-x-3">
-                  <div className="text-2xl">🎯</div>
-                  <div>
-                    <div className={`${themeClasses.text} font-semibold`}>First Quest</div>
-                    <div className={`${themeClasses.text}/70 text-sm`}>Complete your first lesson</div>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="bg-gradient-to-r from-green-400/20 to-emerald-500/20 backdrop-blur-sm rounded-2xl p-6 border border-green-400/30">
-                <div className="flex items-center space-x-3">
-                  <div className="text-2xl">⚡</div>
-                  <div>
-                    <div className={`${themeClasses.text} font-semibold`}>Streak Master</div>
-                    <div className={`${themeClasses.text}/70 text-sm`}>3 day learning streak</div>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="bg-gradient-to-r from-purple-400/20 to-pink-500/20 backdrop-blur-sm rounded-2xl p-6 border border-purple-400/30">
-                <div className="flex items-center space-x-3">
-                  <div className="text-2xl">🏆</div>
-                  <div>
-                    <div className={`${themeClasses.text} font-semibold`}>Progress Champion</div>
-                    <div className={`${themeClasses.text}/70 text-sm`}>50% overall progress</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Lessons Grid */}
-          <div className="mb-8">
-            <h3 className={`text-2xl font-bold ${themeClasses.text} mb-6 flex items-center`}>
-              <Target className="h-6 w-6 mr-2 text-blue-400" />
-              Available Quests
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {lessons.map((lesson, index) => (
-                <div key={lesson.id} className="group">
-                  <div className={`${themeClasses.card} backdrop-blur-sm rounded-2xl p-6 border ${themeClasses.border} hover:${themeClasses.card.replace('/10', '/20')} transition-all duration-300 transform hover:scale-105 hover:shadow-2xl`}>
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="text-2xl">
-                        {lesson.title.includes('Regression') ? '📊' : 
-                         lesson.title.includes('Classification') ? '🎯' : 
-                         lesson.title.includes('Clustering') ? '🔍' : '📚'}
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        {userProgress[lesson.id] === 100 && (
-                          <div className="text-green-400 text-xl">✅</div>
-                        )}
-                        <div className={`${themeClasses.text}/60 text-sm`}>Quest #{index + 1}</div>
-                      </div>
-                    </div>
-                    
-                    <h4 className={`text-xl font-bold ${themeClasses.text} mb-3 group-hover:text-yellow-400 transition-colors`}>
-                      {lesson.title}
-                    </h4>
-                    
-                    <p className={`${themeClasses.text}/70 mb-4 text-sm leading-relaxed`}>
-                      {lesson.description}
-                    </p>
-                    
-                    <div className="mb-4">
-                      <div className={`flex justify-between text-sm ${themeClasses.text}/60 mb-1`}>
-                        <span>Progress</span>
-                        <span>{userProgress[lesson.id] || 0}%</span>
-                      </div>
-                      <div className="w-full bg-white/20 rounded-full h-2">
-                        <div 
-                          className="bg-gradient-to-r from-blue-400 to-purple-500 h-2 rounded-full transition-all duration-500"
-                          style={{ width: `${userProgress[lesson.id] || 0}%` }}
-                        ></div>
-                      </div>
-                    </div>
-                    
-                    <Button
-                      onClick={() => handleStartLesson(lesson.slug)}
-                      className={`w-full ${themeClasses.button} text-white font-semibold py-3 rounded-xl transition-all duration-200 transform hover:scale-105`}
-                    >
-                      {userProgress[lesson.id] === 100 ? '🔄 Replay Quest' : 
-                       userProgress[lesson.id] > 0 ? '⚡ Continue Quest' : '🚀 Start Quest'}
-                    </Button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* New Content System Section */}
-          <div className="mb-8">
-            <h3 className={`text-2xl font-bold ${themeClasses.text} mb-6`}>
-              🆕 New Interactive Learning System
-            </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <Card className={`${themeClasses.card} backdrop-blur-sm border ${themeClasses.border} hover:${themeClasses.card.replace('/10', '/20')} transition-all duration-300 transform hover:scale-105 cursor-pointer`}
                 onClick={() => router.push('/learning-path/fundamentals')}>
                 <CardHeader>
                   <CardTitle className={`text-xl ${themeClasses.text} flex items-center`}>
-                    📚 4-Week Fundamentals Course
+                    📚 4-Week AI Fundamentals Quest
                   </CardTitle>
                   <CardDescription className={`${themeClasses.text}/70`}>
-                    Structured learning path with interactive lessons, videos, and hands-on exercises
+                    Embark on an epic journey through AI fundamentals with RPG-style progression
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between">
-                      <span className={`${themeClasses.text}/70`}>Lessons:</span>
+                      <span className={`${themeClasses.text}/70`}>Quests:</span>
                       <span className={`${themeClasses.text}`}>16</span>
                     </div>
                     <div className="flex justify-between">
@@ -666,32 +377,32 @@ export default function AppPage() {
                       <span className={`${themeClasses.text}`}>12-16 hours</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className={`${themeClasses.text}/70`}>Features:</span>
-                      <span className={`${themeClasses.text}`}>Videos, Quizzes, Code</span>
+                      <span className={`${themeClasses.text}/70`}>XP Available:</span>
+                      <span className={`${themeClasses.text}`}>2,000+</span>
                     </div>
                   </div>
                 </CardContent>
               </Card>
 
               <Card className={`${themeClasses.card} backdrop-blur-sm border ${themeClasses.border} hover:${themeClasses.card.replace('/10', '/20')} transition-all duration-300 transform hover:scale-105 cursor-pointer`}
-                onClick={() => router.push('/lesson/fundamentals-ch1-lesson2')}>
+                onClick={() => router.push('/lesson/fundamentals-ch1-lesson1')}>
                 <CardHeader>
                   <CardTitle className={`text-xl ${themeClasses.text} flex items-center`}>
-                    🎯 Try Sample Lesson
+                    🎯 Try Sample Quest
                   </CardTitle>
                   <CardDescription className={`${themeClasses.text}/70`}>
-                    Experience the new interactive lesson format with videos, quizzes, and coding
+                    Experience the RPG-style lesson format with interactive elements
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between">
                       <span className={`${themeClasses.text}/70`}>Topic:</span>
-                      <span className={`${themeClasses.text}`}>AI in Daily Life</span>
+                      <span className={`${themeClasses.text}`}>What is AI?</span>
                     </div>
                     <div className="flex justify-between">
                       <span className={`${themeClasses.text}/70`}>Duration:</span>
-                      <span className={`${themeClasses.text}`}>25 minutes</span>
+                      <span className={`${themeClasses.text}`}>20 minutes</span>
                     </div>
                     <div className="flex justify-between">
                       <span className={`${themeClasses.text}/70`}>Level:</span>
@@ -705,10 +416,10 @@ export default function AppPage() {
                 onClick={() => router.push('/flashcards/fundamentals')}>
                 <CardHeader>
                   <CardTitle className={`text-xl ${themeClasses.text} flex items-center`}>
-                    🃏 Practice with Flashcards
+                    🃏 Memory Training Arena
                   </CardTitle>
                   <CardDescription className={`${themeClasses.text}/70`}>
-                    Reinforce your learning with spaced repetition flashcards
+                    Master AI concepts with gamified flashcard practice
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -722,14 +433,15 @@ export default function AppPage() {
                       <span className={`${themeClasses.text}`}>Spaced Repetition</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className={`${themeClasses.text}/70`}>Track:</span>
-                      <span className={`${themeClasses.text}`}>Fundamentals</span>
+                      <span className={`${themeClasses.text}/70`}>Streak:</span>
+                      <span className={`${themeClasses.text}`}>Track Progress</span>
                     </div>
                   </div>
                 </CardContent>
               </Card>
             </div>
           </div>
+
         </main>
         </div>
     </div>

@@ -356,33 +356,61 @@ export default function AppPage() {
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <Card className={`${themeClasses.card} backdrop-blur-sm border ${themeClasses.border} hover:${themeClasses.card.replace('/10', '/20')} transition-all duration-300 transform hover:scale-105 cursor-pointer`}
-                onClick={() => router.push('/learning-path/fundamentals')}>
-                <CardHeader>
-                  <CardTitle className={`text-xl ${themeClasses.text} flex items-center`}>
-                    📚 4-Week AI Fundamentals Quest
-                  </CardTitle>
-                  <CardDescription className={`${themeClasses.text}/70`}>
-                    Embark on an epic journey through AI fundamentals with RPG-style progression
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-2 text-sm">
-                    <div className="flex justify-between">
-                      <span className={`${themeClasses.text}/70`}>Quests:</span>
-                      <span className={`${themeClasses.text}`}>16</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className={`${themeClasses.text}/70`}>Duration:</span>
-                      <span className={`${themeClasses.text}`}>12-16 hours</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className={`${themeClasses.text}/70`}>XP Available:</span>
-                      <span className={`${themeClasses.text}`}>2,000+</span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+        <Card className={`${themeClasses.card} backdrop-blur-sm border ${themeClasses.border} hover:${themeClasses.card.replace('/10', '/20')} transition-all duration-300 transform hover:scale-105 cursor-pointer`}
+          onClick={() => router.push('/learning-path/fundamentals')}>
+          <CardHeader>
+            <CardTitle className={`text-xl ${themeClasses.text} flex items-center`}>
+              📚 4-Week AI Fundamentals Quest
+            </CardTitle>
+            <CardDescription className={`${themeClasses.text}/70`}>
+              Embark on an epic journey through AI fundamentals with RPG-style progression
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-2 text-sm">
+              <div className="flex justify-between">
+                <span className={`${themeClasses.text}/70`}>Quests:</span>
+                <span className={`${themeClasses.text}`}>16</span>
+              </div>
+              <div className="flex justify-between">
+                <span className={`${themeClasses.text}/70`}>Duration:</span>
+                <span className={`${themeClasses.text}`}>12-16 hours</span>
+              </div>
+              <div className="flex justify-between">
+                <span className={`${themeClasses.text}/70`}>XP Available:</span>
+                <span className={`${themeClasses.text}`}>2,000+</span>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className={`${themeClasses.card} backdrop-blur-sm border ${themeClasses.border} hover:${themeClasses.card.replace('/10', '/20')} transition-all duration-300 transform hover:scale-105 cursor-pointer`}
+          onClick={() => router.push('/learning/karpathy')}>
+          <CardHeader>
+            <CardTitle className={`text-xl ${themeClasses.text} flex items-center`}>
+              🧠 Neural Networks: Zero to Hero
+            </CardTitle>
+            <CardDescription className={`${themeClasses.text}/70`}>
+              Master neural networks with Andrej Karpathy's legendary course, enhanced with interactive learning
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-2 text-sm">
+              <div className="flex justify-between">
+                <span className={`${themeClasses.text}/70`}>Tracks:</span>
+                <span className={`${themeClasses.text}`}>2 (Beginner/Advanced)</span>
+              </div>
+              <div className="flex justify-between">
+                <span className={`${themeClasses.text}/70`}>Duration:</span>
+                <span className={`${themeClasses.text}`}>20-35 hours</span>
+              </div>
+              <div className="flex justify-between">
+                <span className={`${themeClasses.text}/70`}>Features:</span>
+                <span className={`${themeClasses.text}`}>Interactive Widgets</span>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
 
               <Card className={`${themeClasses.card} backdrop-blur-sm border ${themeClasses.border} hover:${themeClasses.card.replace('/10', '/20')} transition-all duration-300 transform hover:scale-105 cursor-pointer`}
                 onClick={() => router.push('/lesson/fundamentals-ch1-lesson1')}>

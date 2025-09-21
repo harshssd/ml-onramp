@@ -80,11 +80,37 @@ export function UnifiedLearningUnit({
   const handleUnitComplete = () => {
     const totalXP = 100 + (completedSections.size * 25);
     setEarnedXP(totalXP);
-    setUnlockedSuperpower(unit.superpower || null);
+    
+    // Convert unit superpower to Superpower type
+    if (unit.superpower) {
+      const superpower: Superpower = {
+        id: unit.superpower.id,
+        name: unit.superpower.name,
+        description: unit.superpower.description,
+        icon: unit.superpower.icon,
+        color: unit.superpower.color,
+        unlockedAt: unit.id,
+        level: 1,
+        maxLevel: 5
+      };
+      setUnlockedSuperpower(superpower);
+    } else {
+      setUnlockedSuperpower(null);
+    }
+    
     setShowCelebration(true);
     
     if (onComplete) {
-      onComplete(unit.id, totalXP, unit.superpower || undefined);
+      onComplete(unit.id, totalXP, unit.superpower ? {
+        id: unit.superpower.id,
+        name: unit.superpower.name,
+        description: unit.superpower.description,
+        icon: unit.superpower.icon,
+        color: unit.superpower.color,
+        unlockedAt: unit.id,
+        level: 1,
+        maxLevel: 5
+      } : undefined);
     }
   };
 

@@ -10,7 +10,33 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/
 import { Badge } from "./ui/badge";
 import { ArrowLeft, Clock, BookOpen, Star, Play, Volume2, VolumeX, Trophy, Target, Zap, Crown, Shield, Sword } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
-import type { LessonContent } from "@/lib/content-parser";
+interface LessonContent {
+  frontmatter: {
+    id: string;
+    title: string;
+    duration_min: number;
+    prereqs: string[];
+    tags: string[];
+    video?: {
+      platform: string;
+      id: string;
+      start: number;
+      end: number;
+    };
+    widgets: string[];
+    goals: string[];
+    quiz: Array<{
+      q: string;
+      options: string[];
+      answer: number;
+      explain: string;
+    }>;
+    tasks: string[];
+    reflection: string[];
+    next: string;
+  };
+  content: string;
+}
 
 interface LessonTemplateProps {
   lesson: LessonContent;

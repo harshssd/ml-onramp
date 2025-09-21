@@ -1,11 +1,11 @@
 export { AuthForm } from './AuthForm';
 export { LessonCard } from './LessonCard';
 export { ProgressRing } from './ProgressRing';
-export { RegressionPlayground } from './RegressionPlayground';
-export { YouTubeSegment } from './YouTubeSegment';
-export { CheckpointQuiz } from './CheckpointQuiz';
-export { PyodideRunner } from './PyodideRunner';
-export { LessonTemplate } from './LessonTemplate';
-export { FlashcardSystem } from './FlashcardSystem';
+export { default as RegressionPlayground } from './RegressionPlayground';
+export { default as YouTubeSegment } from './YouTubeSegment';
+export { default as CheckpointQuiz } from './CheckpointQuiz';
+export { default as PyodideRunner } from './PyodideRunner';
+export { default as LessonTemplate } from './LessonTemplate';
+export { default as FlashcardSystem } from './FlashcardSystem';
 export type { Lesson } from './LessonCard';
 export type { QuizOption, QuizProps } from './CheckpointQuiz';

@@ -3,7 +3,8 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
-import { LessonCard, ProgressRing, type Lesson } from '@/components/LessonCard';
+import { LessonCard, type Lesson } from '@/components/LessonCard';
+import { ProgressRing } from '@/components/ProgressRing';
 import { LogOut, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 

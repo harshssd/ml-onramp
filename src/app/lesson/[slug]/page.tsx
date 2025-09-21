@@ -3,7 +3,8 @@
 import { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
-import { RegressionPlayground, ProgressRing } from '@/components/RegressionPlayground';
+import { RegressionPlayground } from '@/components/RegressionPlayground';
+import { ProgressRing } from '@/components/ProgressRing';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, CheckCircle, Clock, BookOpen } from 'lucide-react';
 import type { Lesson } from '@/components/LessonCard';

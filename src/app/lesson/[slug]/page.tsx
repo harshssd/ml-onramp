@@ -8,7 +8,7 @@ import { ArrowLeft, Loader2 } from "lucide-react";
 
 export default function LessonPage() {
   const params = useParams();
-  const [lesson, setLesson] = useState<{ frontmatter: any; content: string } | null>(null);
+  const [lesson, setLesson] = useState<{ frontmatter: { id: string; title: string; duration_min: number; tags: string[]; goals: string[] }; content: string } | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 

@@ -32,7 +32,7 @@ export default function FundamentalsPathPage() {
   const [weeks, setWeeks] = useState<Week[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [userXP] = useState(1250); // Mock XP
-  const [userLevel] = useState(3); // Mock level
+  // const [userLevel] = useState(3); // Mock level
   const [currentStreak] = useState(7); // Mock streak
 
   // Calculate level and XP
@@ -60,7 +60,7 @@ export default function FundamentalsPathPage() {
           lessons: allLessons.filter((lesson: { frontmatter: { id: string } }) => 
             lesson.frontmatter.id.includes('ch1') || 
             lesson.frontmatter.id.includes('lesson-1')
-          ).map((lesson: { frontmatter: any; content: string }) => ({
+          ).map((lesson: { frontmatter: { id: string; title: string; duration_min: number; tags: string[]; goals: string[] }; content: string }) => ({
             id: lesson.frontmatter.id,
             title: lesson.frontmatter.title,
             duration_min: lesson.frontmatter.duration_min,
@@ -77,7 +77,7 @@ export default function FundamentalsPathPage() {
           lessons: allLessons.filter((lesson: { frontmatter: { id: string } }) => 
             lesson.frontmatter.id.includes('ch2') || 
             lesson.frontmatter.id.includes('lesson-2')
-          ).map((lesson: { frontmatter: any; content: string }) => ({
+          ).map((lesson: { frontmatter: { id: string; title: string; duration_min: number; tags: string[]; goals: string[] }; content: string }) => ({
             id: lesson.frontmatter.id,
             title: lesson.frontmatter.title,
             duration_min: lesson.frontmatter.duration_min,
@@ -94,7 +94,7 @@ export default function FundamentalsPathPage() {
           lessons: allLessons.filter((lesson: { frontmatter: { id: string } }) => 
             lesson.frontmatter.id.includes('ch3') || 
             lesson.frontmatter.id.includes('lesson-3')
-          ).map((lesson: { frontmatter: any; content: string }) => ({
+          ).map((lesson: { frontmatter: { id: string; title: string; duration_min: number; tags: string[]; goals: string[] }; content: string }) => ({
             id: lesson.frontmatter.id,
             title: lesson.frontmatter.title,
             duration_min: lesson.frontmatter.duration_min,
@@ -111,7 +111,7 @@ export default function FundamentalsPathPage() {
           lessons: allLessons.filter((lesson: { frontmatter: { id: string } }) => 
             lesson.frontmatter.id.includes('ch4') || 
             lesson.frontmatter.id.includes('lesson-4')
-          ).map((lesson: { frontmatter: any; content: string }) => ({
+          ).map((lesson: { frontmatter: { id: string; title: string; duration_min: number; tags: string[]; goals: string[] }; content: string }) => ({
             id: lesson.frontmatter.id,
             title: lesson.frontmatter.title,
             duration_min: lesson.frontmatter.duration_min,
@@ -328,7 +328,7 @@ export default function FundamentalsPathPage() {
                       <div className="text-center py-8 text-gray-500">
                         <BookOpen className="h-12 w-12 mx-auto mb-4 text-gray-300" />
                         <p>Lessons coming soon!</p>
-                        <p className="text-sm">This week's content is being prepared.</p>
+                        <p className="text-sm">This week&apos;s content is being prepared.</p>
                       </div>
                     )}
                   </div>

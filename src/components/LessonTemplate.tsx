@@ -28,7 +28,7 @@ export default function LessonTemplate({ lesson, onComplete, onNext }: LessonTem
   const [showSimpleExplanation, setShowSimpleExplanation] = useState(true);
   const [currentQuizIndex, setCurrentQuizIndex] = useState(0);
   const [userXP, setUserXP] = useState(1250); // Mock XP
-  const [userLevel] = useState(3); // Mock level
+  // const [userLevel] = useState(3); // Mock level
   const [currentStreak] = useState(7); // Mock streak
 
   const { frontmatter, content } = lesson;
@@ -450,7 +450,7 @@ print("Median:", median)`}
                 Wisdom Reflection
               </CardTitle>
               <CardDescription className={`${themeClasses.text}/70`}>
-                Think deeply about what you've learned and how it applies to your journey
+                Think deeply about what you&apos;ve learned and how it applies to your journey
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -481,7 +481,7 @@ print("Median:", median)`}
             <CardHeader>
               <CardTitle className={`text-2xl font-bold text-green-900 flex items-center`}>
                 <Trophy className="h-6 w-6 mr-3 text-green-600" />
-                Quest Complete! What's Next?
+                Quest Complete! What&apos;s Next?
               </CardTitle>
               <CardDescription className="text-green-800">
                 You&apos;ve mastered this quest! Ready to continue your AI learning journey?

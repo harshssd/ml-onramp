@@ -244,7 +244,7 @@ export default function RegressionPlayground({
         )}
 
         <div className={`text-sm ${themeClasses.text}/70`}>
-          <p><strong>What you're learning:</strong> This is exactly how neural networks work! They adjust their parameters (like slope and intercept) to minimize error on data. The process of finding the best parameters is called "training" or "learning".</p>
+          <p><strong>What you&apos;re learning:</strong> This is exactly how neural networks work! They adjust their parameters (like slope and intercept) to minimize error on data. The process of finding the best parameters is called &quot;training&quot; or &quot;learning&quot;.</p>
         </div>
 
         {onComplete && (

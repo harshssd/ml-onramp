@@ -15,7 +15,7 @@ export interface PrerequisiteLesson {
     type: 'python_playground' | 'math_visualizer' | 'concept_explorer' | 'quiz';
     title: string;
     description: string;
-    config?: any;
+    config?: Record<string, unknown>;
   };
   quiz: Array<{
     question: string;

@@ -69,7 +69,7 @@ export default function KarpathyChapter1Page() {
     }
   };
 
-  const renderInteractiveWidget = (widget: any, onComplete?: () => void) => {
+  const renderInteractiveWidget = (widget: { type: string }, onComplete?: () => void) => {
     switch (widget.type) {
       case 'regression_playground':
         return <RegressionPlayground onComplete={onComplete} />;

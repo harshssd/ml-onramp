@@ -34,7 +34,7 @@ export interface InteractiveWidget {
   type: 'regression_playground' | 'derivative_calculator' | 'gradient_visualizer' | 'micrograd_builder' | 'training_simulator';
   title: string;
   description: string;
-  config?: any;
+  config?: Record<string, unknown>;
 }
 
 export interface Lesson {

@@ -128,6 +128,13 @@ export default function Dashboard() {
               </div>
             </div>
             <div className="flex items-center space-x-4">
+              <Button 
+                onClick={() => router.push('/')}
+                variant="outline"
+                className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800"
+              >
+                🏠 Home
+              </Button>
               <ThemeSelector />
               {user ? (
                 <div className="flex items-center space-x-3">

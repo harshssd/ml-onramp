@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { useTheme } from '@/contexts/ThemeContext';
 import { karpathyTracks, getKarpathyTrackById, getKarpathyChapterById, getKarpathyLessonById } from '@/data/karpathyContent';
+import { karpathyChapter1 } from '@/data/karpathyChapter1';
 import { DerivativeCalculator, GradientVisualizer, NeuralNetworkBuilder, BackpropSimulator } from '@/components/KarpathyWidgets';
 import YouTubeSegment from '@/components/YouTubeSegment';
 import CheckpointQuiz from '@/components/CheckpointQuiz';
@@ -115,7 +116,65 @@ export default function KarpathyLearningPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Chapter 1 - Detailed Implementation */}
+            <Card className={`${themeClasses.card} backdrop-blur-sm border ${themeClasses.border} hover:${themeClasses.card.replace('/10', '/20')} transition-all duration-300 transform hover:scale-105 cursor-pointer`}
+              onClick={() => window.location.href = '/learning/karpathy/chapter1'}>
+              <CardHeader>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="text-4xl">🧠</div>
+                  <Badge className="bg-blue-500 text-white">
+                    Featured
+                  </Badge>
+                </div>
+                <CardTitle className={`text-2xl ${themeClasses.text}`}>
+                  Chapter 1: What is a Neural Network?
+                </CardTitle>
+                <CardDescription className={`${themeClasses.text}/70`}>
+                  Complete implementation with precise timestamps, interactive widgets, and comprehensive learning structure
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3">
+                  <div className="flex justify-between">
+                    <span className={`${themeClasses.text}/70`}>Duration:</span>
+                    <span className={`${themeClasses.text}`}>2h 30m</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className={`${themeClasses.text}/70`}>Lessons:</span>
+                    <span className={`${themeClasses.text}`}>6 detailed lessons</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className={`${themeClasses.text}/70`}>Features:</span>
+                    <span className={`${themeClasses.text}`}>Interactive widgets</span>
+                  </div>
+                </div>
+                
+                <div className="mt-4">
+                  <h4 className={`font-semibold ${themeClasses.text} mb-2`}>What you&apos;ll learn:</h4>
+                  <ul className={`text-sm ${themeClasses.text}/70 space-y-1`}>
+                    <li className="flex items-center">
+                      <CheckCircle className="h-4 w-4 text-green-400 mr-2" />
+                      Neural network fundamentals
+                    </li>
+                    <li className="flex items-center">
+                      <CheckCircle className="h-4 w-4 text-green-400 mr-2" />
+                      Forward pass and backpropagation
+                    </li>
+                    <li className="flex items-center">
+                      <CheckCircle className="h-4 w-4 text-green-400 mr-2" />
+                      Hands-on micrograd implementation
+                    </li>
+                  </ul>
+                </div>
+
+                <Button className="w-full mt-6 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white">
+                  Start Chapter 1
+                  <ArrowLeft className="h-4 w-4 ml-2 rotate-180" />
+                </Button>
+              </CardContent>
+            </Card>
+
             {karpathyTracks.map((track) => (
               <Card key={track.id} className={`${themeClasses.card} backdrop-blur-sm border ${themeClasses.border} hover:${themeClasses.card.replace('/10', '/20')} transition-all duration-300 transform hover:scale-105 cursor-pointer`}
                 onClick={() => handleTrackSelect(track.id)}>

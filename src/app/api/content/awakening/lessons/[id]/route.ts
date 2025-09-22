@@ -5,10 +5,10 @@ import matter from 'gray-matter';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = params;
+    const { id } = await params;
     
     // Try all chapters and search by frontmatter ID
     const chapters = ['chapter1', 'chapter2', 'chapter3', 'chapter4'];

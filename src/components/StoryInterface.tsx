@@ -185,7 +185,7 @@ export function StoryInterface({
           character={characterProgression}
           onShare={() => {
             // Handle sharing logic
-            console.log('Sharing character progression');
+            // Character progression shared
           }}
         />
       </div>

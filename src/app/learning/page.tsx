@@ -190,7 +190,7 @@ export default function LearningPage() {
           <CharacterProgression
             character={characterProgression}
             onShare={() => {
-              console.log('Sharing character progression');
+              // Character progression shared
             }}
           />
         </div>

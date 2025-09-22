@@ -11,7 +11,7 @@ import { prerequisiteLessons, getPrerequisiteLessonById } from '@/data/karpathyP
 import YouTubeSegment from '@/components/YouTubeSegment';
 import CheckpointQuiz from '@/components/CheckpointQuiz';
 import RegressionPlayground from '@/components/RegressionPlayground';
-import DerivativeCalculator from '@/components/KarpathyWidgets';
+import { DerivativeCalculator } from '@/components/KarpathyWidgets';
 import { ArrowLeft, Play, Code, Brain, BookOpen, Clock, Star, Trophy, CheckCircle, Video, Zap, Target } from 'lucide-react';
 
 type AppState = 'prerequisites' | 'chapter-overview' | 'lesson' | 'completed';

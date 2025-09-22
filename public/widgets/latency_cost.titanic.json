@@ -1,0 +1,339 @@
+{
+  "title": "Latency Cost Dashboard",
+  "data_url": "/data/titanic_demo.csv",
+  "target": "Survived",
+  "deployment_strategies": [
+    {
+      "name": "Batch Job",
+      "type": "batch",
+      "baseline_metrics": {
+        "latency_ms": 3600000,
+        "cost_per_prediction": 0.001,
+        "throughput_per_second": 1000,
+        "scalability_score": 0.8,
+        "reliability_score": 0.9,
+        "complexity_score": 0.3
+      },
+      "scaling_impact": {
+        "latency_ms": 0,
+        "cost_per_prediction": -0.0005,
+        "throughput_per_second": 500,
+        "scalability_score": 0.1,
+        "reliability_score": 0.05,
+        "complexity_score": 0.1
+      },
+      "optimization_options": [
+        {
+          "name": "Parallel Processing",
+          "description": "Process multiple batches in parallel",
+          "impact": {
+            "latency_ms": -1800000,
+            "cost_per_prediction": 0.0002,
+            "throughput_per_second": 2000,
+            "scalability_score": 0.2,
+            "reliability_score": 0.1,
+            "complexity_score": 0.2
+          }
+        },
+        {
+          "name": "Resource Optimization",
+          "description": "Optimize compute resources for cost efficiency",
+          "impact": {
+            "latency_ms": 300000,
+            "cost_per_prediction": -0.0003,
+            "throughput_per_second": -200,
+            "scalability_score": 0.05,
+            "reliability_score": 0.02,
+            "complexity_score": 0.1
+          }
+        }
+      ]
+    },
+    {
+      "name": "Real-Time API",
+      "type": "realtime",
+      "baseline_metrics": {
+        "latency_ms": 150,
+        "cost_per_prediction": 0.01,
+        "throughput_per_second": 100,
+        "scalability_score": 0.6,
+        "reliability_score": 0.8,
+        "complexity_score": 0.7
+      },
+      "scaling_impact": {
+        "latency_ms": 50,
+        "cost_per_prediction": 0.005,
+        "throughput_per_second": 50,
+        "scalability_score": 0.2,
+        "reliability_score": 0.1,
+        "complexity_score": 0.1
+      },
+      "optimization_options": [
+        {
+          "name": "Caching",
+          "description": "Cache frequent predictions to reduce latency",
+          "impact": {
+            "latency_ms": -50,
+            "cost_per_prediction": -0.002,
+            "throughput_per_second": 200,
+            "scalability_score": 0.1,
+            "reliability_score": 0.05,
+            "complexity_score": 0.1
+          }
+        },
+        {
+          "name": "Auto-scaling",
+          "description": "Automatically scale based on demand",
+          "impact": {
+            "latency_ms": -20,
+            "cost_per_prediction": 0.003,
+            "throughput_per_second": 300,
+            "scalability_score": 0.3,
+            "reliability_score": 0.15,
+            "complexity_score": 0.2
+          }
+        },
+        {
+          "name": "Model Optimization",
+          "description": "Optimize model for faster inference",
+          "impact": {
+            "latency_ms": -30,
+            "cost_per_prediction": -0.001,
+            "throughput_per_second": 150,
+            "scalability_score": 0.1,
+            "reliability_score": 0.05,
+            "complexity_score": 0.15
+          }
+        }
+      ]
+    },
+    {
+      "name": "Streaming Service",
+      "type": "streaming",
+      "baseline_metrics": {
+        "latency_ms": 5000,
+        "cost_per_prediction": 0.005,
+        "throughput_per_second": 5000,
+        "scalability_score": 0.9,
+        "reliability_score": 0.7,
+        "complexity_score": 0.9
+      },
+      "scaling_impact": {
+        "latency_ms": 1000,
+        "cost_per_prediction": 0.002,
+        "throughput_per_second": 2000,
+        "scalability_score": 0.1,
+        "reliability_score": 0.1,
+        "complexity_score": 0.1
+      },
+      "optimization_options": [
+        {
+          "name": "Stream Partitioning",
+          "description": "Partition streams for parallel processing",
+          "impact": {
+            "latency_ms": -1000,
+            "cost_per_prediction": 0.001,
+            "throughput_per_second": 3000,
+            "scalability_score": 0.2,
+            "reliability_score": 0.1,
+            "complexity_score": 0.2
+          }
+        },
+        {
+          "name": "Backpressure Control",
+          "description": "Control flow to prevent system overload",
+          "impact": {
+            "latency_ms": 500,
+            "cost_per_prediction": -0.001,
+            "throughput_per_second": -1000,
+            "scalability_score": 0.1,
+            "reliability_score": 0.2,
+            "complexity_score": 0.1
+          }
+        }
+      ]
+    }
+  ],
+  "environments": [
+    {
+      "name": "Cloud",
+      "baseline_metrics": {
+        "latency_ms": 200,
+        "cost_per_prediction": 0.008,
+        "throughput_per_second": 500,
+        "scalability_score": 0.9,
+        "reliability_score": 0.95,
+        "complexity_score": 0.4
+      },
+      "scaling_impact": {
+        "latency_ms": 100,
+        "cost_per_prediction": 0.004,
+        "throughput_per_second": 300,
+        "scalability_score": 0.1,
+        "reliability_score": 0.05,
+        "complexity_score": 0.1
+      }
+    },
+    {
+      "name": "Edge",
+      "baseline_metrics": {
+        "latency_ms": 50,
+        "cost_per_prediction": 0.002,
+        "throughput_per_second": 100,
+        "scalability_score": 0.3,
+        "reliability_score": 0.7,
+        "complexity_score": 0.6
+      },
+      "scaling_impact": {
+        "latency_ms": 20,
+        "cost_per_prediction": 0.001,
+        "throughput_per_second": 50,
+        "scalability_score": 0.1,
+        "reliability_score": 0.1,
+        "complexity_score": 0.1
+      }
+    },
+    {
+      "name": "Hybrid",
+      "baseline_metrics": {
+        "latency_ms": 100,
+        "cost_per_prediction": 0.005,
+        "throughput_per_second": 800,
+        "scalability_score": 0.8,
+        "reliability_score": 0.9,
+        "complexity_score": 0.8
+      },
+      "scaling_impact": {
+        "latency_ms": 50,
+        "cost_per_prediction": 0.002,
+        "throughput_per_second": 400,
+        "scalability_score": 0.1,
+        "reliability_score": 0.05,
+        "complexity_score": 0.1
+      }
+    }
+  ],
+  "dimensions": [
+    {
+      "name": "latency_ms",
+      "display_name": "Latency",
+      "description": "Time to process a single prediction",
+      "unit": "ms",
+      "higher_is_better": false,
+      "weight": 0.25
+    },
+    {
+      "name": "cost_per_prediction",
+      "display_name": "Cost per Prediction",
+      "description": "Cost to process a single prediction",
+      "unit": "$",
+      "higher_is_better": false,
+      "weight": 0.2
+    },
+    {
+      "name": "throughput_per_second",
+      "display_name": "Throughput",
+      "description": "Number of predictions per second",
+      "unit": "req/s",
+      "higher_is_better": true,
+      "weight": 0.2
+    },
+    {
+      "name": "scalability_score",
+      "display_name": "Scalability",
+      "description": "Ability to handle increased load",
+      "unit": "score",
+      "higher_is_better": true,
+      "weight": 0.15
+    },
+    {
+      "name": "reliability_score",
+      "display_name": "Reliability",
+      "description": "System uptime and consistency",
+      "unit": "score",
+      "higher_is_better": true,
+      "weight": 0.15
+    },
+    {
+      "name": "complexity_score",
+      "display_name": "Complexity",
+      "description": "Implementation and maintenance complexity",
+      "unit": "score",
+      "higher_is_better": false,
+      "weight": 0.05
+    }
+  ],
+  "scenarios": [
+    {
+      "name": "High-Volume E-commerce",
+      "description": "E-commerce platform with millions of daily users",
+      "requirements": {
+        "latency_ms": 200,
+        "cost_per_prediction": 0.01,
+        "throughput_per_second": 1000,
+        "scalability_score": 0.8,
+        "reliability_score": 0.9
+      },
+      "recommended_strategy": "Real-Time API",
+      "recommended_environment": "Cloud",
+      "reason": "Balances latency, cost, and scalability for high-volume e-commerce"
+    },
+    {
+      "name": "IoT Manufacturing",
+      "description": "Real-time monitoring of manufacturing equipment",
+      "requirements": {
+        "latency_ms": 100,
+        "cost_per_prediction": 0.005,
+        "throughput_per_second": 5000,
+        "scalability_score": 0.7,
+        "reliability_score": 0.8
+      },
+      "recommended_strategy": "Streaming Service",
+      "recommended_environment": "Edge",
+      "reason": "Requires low latency and high throughput for real-time equipment monitoring"
+    },
+    {
+      "name": "Mobile App Feature",
+      "description": "On-device image classification for mobile app",
+      "requirements": {
+        "latency_ms": 100,
+        "cost_per_prediction": 0.001,
+        "throughput_per_second": 10,
+        "scalability_score": 0.3,
+        "reliability_score": 0.6
+      },
+      "recommended_strategy": "Real-Time API",
+      "recommended_environment": "Edge",
+      "reason": "Requires low latency and cost for mobile app with offline capability"
+    },
+    {
+      "name": "Daily Analytics",
+      "description": "Daily business intelligence and reporting",
+      "requirements": {
+        "latency_ms": 3600000,
+        "cost_per_prediction": 0.001,
+        "throughput_per_second": 10000,
+        "scalability_score": 0.6,
+        "reliability_score": 0.7
+      },
+      "recommended_strategy": "Batch Job",
+      "recommended_environment": "Cloud",
+      "reason": "Cost-optimized for high-volume, non-urgent processing"
+    }
+  ],
+  "visualization": {
+    "show_radar_chart": true,
+    "show_scatter_plot": true,
+    "show_cost_analysis": true,
+    "show_latency_analysis": true,
+    "show_throughput_analysis": true,
+    "show_trade_off_matrix": true
+  },
+  "hints": [
+    "Consider latency requirements for your use case",
+    "Balance cost with performance needs",
+    "Choose batch for cost optimization, real-time for user experience",
+    "Use streaming for continuous data processing",
+    "Test different configurations to find optimal balance"
+  ]
+}

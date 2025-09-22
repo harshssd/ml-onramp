@@ -1,0 +1,40 @@
+{
+  "title": "Impute Lab — Strategies & Leakage Guard",
+  "data_url": "/data/titanic_demo.csv",
+  "target": "Survived",
+  "strategies": {
+    "numeric": ["mean", "median"],
+    "categorical": ["most_frequent"]
+  },
+  "indicator_cols": ["Age", "Cabin"],
+  "experiment_grid": [
+    {
+      "name": "Baseline (median/mode + indicators)",
+      "numeric_imputer": "median",
+      "categorical_imputer": "most_frequent",
+      "add_indicators": true
+    },
+    {
+      "name": "No indicators (median/mode)",
+      "numeric_imputer": "median",
+      "categorical_imputer": "most_frequent",
+      "add_indicators": false
+    },
+    {
+      "name": "Mean (numeric) + mode (categorical) + indicators",
+      "numeric_imputer": "mean",
+      "categorical_imputer": "most_frequent",
+      "add_indicators": true
+    }
+  ],
+  "evaluation": {
+    "model": "logreg_l2",
+    "metric": "f1_macro",
+    "cv_folds": 5
+  },
+  "leakage_guard": true,
+  "notes": [
+    "Fit imputers on train folds only; transform validation folds.",
+    "Add indicators when missingness may be informative."
+  ]
+}

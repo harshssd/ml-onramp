@@ -1,0 +1,190 @@
+{
+  "title": "Drift Detection Lab",
+  "data_url": "/data/titanic_demo.csv",
+  "target": "Survived",
+  "drift_methods": [
+    {
+      "name": "PSI",
+      "display_name": "Population Stability Index",
+      "description": "Measures the stability of population distributions",
+      "formula": "PSI = Σ(actual% - expected%) * ln(actual% / expected%)",
+      "threshold": 0.1,
+      "interpretation": "PSI < 0.1: No significant change, PSI > 0.2: Significant change",
+      "pros": ["Easy to interpret", "Widely used", "Good for categorical features"],
+      "cons": ["Sensitive to binning", "May miss subtle changes", "Requires baseline data"]
+    },
+    {
+      "name": "KL_divergence",
+      "display_name": "Kullback-Leibler Divergence",
+      "description": "Measures the difference between two probability distributions",
+      "formula": "KL(P||Q) = Σ P(x) * log(P(x) / Q(x))",
+      "threshold": 0.01,
+      "interpretation": "KL < 0.01: Similar distributions, KL > 0.1: Very different",
+      "pros": ["Theoretically sound", "Handles continuous features", "Symmetric variant available"],
+      "cons": ["Can be unstable", "Requires probability distributions", "Sensitive to outliers"]
+    },
+    {
+      "name": "Chi-square",
+      "display_name": "Chi-Square Test",
+      "description": "Tests independence between categorical variables",
+      "formula": "χ² = Σ (observed - expected)² / expected",
+      "threshold": 0.05,
+      "interpretation": "p-value < 0.05: Significant difference, p-value > 0.05: No significant difference",
+      "pros": ["Statistical significance", "Good for categorical data", "Well-established"],
+      "cons": ["Requires sufficient sample size", "Sensitive to small frequencies", "Only for categorical data"]
+    },
+    {
+      "name": "Wasserstein",
+      "display_name": "Wasserstein Distance",
+      "description": "Measures the minimum cost to transform one distribution into another",
+      "formula": "W(P,Q) = inf E[|X-Y|] where X~P, Y~Q",
+      "threshold": 0.1,
+      "interpretation": "W < 0.1: Similar distributions, W > 0.5: Very different",
+      "pros": ["Handles continuous data", "Robust to outliers", "Intuitive interpretation"],
+      "cons": ["Computationally expensive", "May be sensitive to scaling", "Requires optimization"]
+    }
+  ],
+  "features": [
+    {
+      "name": "Age",
+      "type": "continuous",
+      "baseline_distribution": {
+        "mean": 29.7,
+        "std": 14.5,
+        "min": 0.42,
+        "max": 80.0,
+        "percentiles": {"25": 20.0, "50": 28.0, "75": 38.0}
+      },
+      "current_distribution": {
+        "mean": 31.2,
+        "std": 15.1,
+        "min": 0.42,
+        "max": 80.0,
+        "percentiles": {"25": 22.0, "50": 30.0, "75": 40.0}
+      },
+      "drift_detected": true,
+      "drift_score": 0.15
+    },
+    {
+      "name": "Fare",
+      "type": "continuous",
+      "baseline_distribution": {
+        "mean": 32.2,
+        "std": 49.8,
+        "min": 0.0,
+        "max": 512.3,
+        "percentiles": {"25": 7.9, "50": 14.5, "75": 31.0}
+      },
+      "current_distribution": {
+        "mean": 35.8,
+        "std": 52.1,
+        "min": 0.0,
+        "max": 512.3,
+        "percentiles": {"25": 8.5, "50": 16.0, "75": 33.0}
+      },
+      "drift_detected": true,
+      "drift_score": 0.12
+    },
+    {
+      "name": "Pclass",
+      "type": "categorical",
+      "baseline_distribution": {
+        "1": 0.24,
+        "2": 0.21,
+        "3": 0.55
+      },
+      "current_distribution": {
+        "1": 0.26,
+        "2": 0.19,
+        "3": 0.55
+      },
+      "drift_detected": false,
+      "drift_score": 0.05
+    },
+    {
+      "name": "Sex",
+      "type": "categorical",
+      "baseline_distribution": {
+        "male": 0.65,
+        "female": 0.35
+      },
+      "current_distribution": {
+        "male": 0.64,
+        "female": 0.36
+      },
+      "drift_detected": false,
+      "drift_score": 0.02
+    }
+  ],
+  "drift_scenarios": [
+    {
+      "name": "Gradual Drift",
+      "description": "Slow, gradual change in data distribution over time",
+      "simulation": {
+        "age_mean_shift": 2.0,
+        "fare_mean_shift": 5.0,
+        "pclass_shift": 0.05
+      },
+      "expected_drift_score": 0.08,
+      "detection_difficulty": "medium"
+    },
+    {
+      "name": "Sudden Drift",
+      "description": "Abrupt change in data distribution",
+      "simulation": {
+        "age_mean_shift": 10.0,
+        "fare_mean_shift": 20.0,
+        "pclass_shift": 0.20
+      },
+      "expected_drift_score": 0.35,
+      "detection_difficulty": "easy"
+    },
+    {
+      "name": "Seasonal Drift",
+      "description": "Periodic changes in data distribution",
+      "simulation": {
+        "age_mean_shift": 3.0,
+        "fare_mean_shift": 8.0,
+        "pclass_shift": 0.10
+      },
+      "expected_drift_score": 0.15,
+      "detection_difficulty": "hard"
+    },
+    {
+      "name": "No Drift",
+      "description": "No significant change in data distribution",
+      "simulation": {
+        "age_mean_shift": 0.5,
+        "fare_mean_shift": 1.0,
+        "pclass_shift": 0.02
+      },
+      "expected_drift_score": 0.03,
+      "detection_difficulty": "easy"
+    }
+  ],
+  "detection_results": {
+    "overall_drift_detected": true,
+    "drift_severity": "medium",
+    "affected_features": ["Age", "Fare"],
+    "recommended_actions": [
+      "Investigate data source changes",
+      "Retrain model with new data",
+      "Update feature engineering pipeline",
+      "Monitor performance closely"
+    ]
+  },
+  "visualization": {
+    "show_distribution_comparison": true,
+    "show_drift_scores": true,
+    "show_feature_importance": true,
+    "show_temporal_drift": true,
+    "show_statistical_tests": true
+  },
+  "hints": [
+    "Use multiple drift detection methods for robust detection",
+    "Set appropriate thresholds based on your use case",
+    "Investigate drift in context of business changes",
+    "Consider both statistical and practical significance",
+    "Monitor drift trends over time, not just point-in-time"
+  ]
+}

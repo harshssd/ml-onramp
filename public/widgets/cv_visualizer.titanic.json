@@ -1,0 +1,169 @@
+{
+  "title": "Cross-Validation Visualizer",
+  "data_url": "/data/titanic_demo.csv",
+  "target": "Survived",
+  "models": [
+    {
+      "name": "Logistic Regression",
+      "type": "linear",
+      "description": "Linear model with regularization",
+      "hyperparameters": {
+        "C": 1.0,
+        "penalty": "l2",
+        "solver": "liblinear"
+      }
+    },
+    {
+      "name": "Random Forest",
+      "type": "tree",
+      "description": "Ensemble of decision trees",
+      "hyperparameters": {
+        "n_estimators": 100,
+        "max_depth": 10,
+        "min_samples_split": 2
+      }
+    },
+    {
+      "name": "Gradient Boosting",
+      "type": "tree",
+      "description": "Sequential ensemble with boosting",
+      "hyperparameters": {
+        "n_estimators": 100,
+        "learning_rate": 0.1,
+        "max_depth": 3
+      }
+    },
+    {
+      "name": "Neural Network",
+      "type": "neural",
+      "description": "Multi-layer perceptron classifier",
+      "hyperparameters": {
+        "hidden_layer_sizes": "(50,)",
+        "learning_rate": "constant",
+        "alpha": 0.0001
+      }
+    }
+  ],
+  "cv_strategies": [
+    {
+      "name": "kfold",
+      "display_name": "K-Fold CV",
+      "description": "Standard k-fold cross-validation",
+      "pros": ["Uses all data for training and validation", "Simple to implement", "Good for balanced datasets"],
+      "cons": ["Computationally expensive", "Can be slow for large datasets", "May not work well with imbalanced data"],
+      "best_for": "General purpose, balanced datasets",
+      "folds": [3, 5, 10],
+      "shuffle": true
+    },
+    {
+      "name": "stratified",
+      "display_name": "Stratified K-Fold CV",
+      "description": "Preserves class distribution in folds",
+      "pros": ["Maintains class balance", "Better for imbalanced datasets", "More reliable estimates"],
+      "cons": ["Slightly more complex", "May not work with some data types", "Requires categorical target"],
+      "best_for": "Classification with imbalanced classes",
+      "folds": [3, 5, 10],
+      "shuffle": true
+    },
+    {
+      "name": "timeseries",
+      "display_name": "Time-Series CV",
+      "description": "Respects temporal order for time-series data",
+      "pros": ["Realistic evaluation", "Prevents data leakage", "Good for temporal data"],
+      "cons": ["Less data per fold", "Cannot use future data", "May not work with non-temporal data"],
+      "best_for": "Time-series data, stock prices, weather prediction",
+      "folds": [3, 5, 10],
+      "shuffle": false
+    },
+    {
+      "name": "loocv",
+      "display_name": "Leave-One-Out CV",
+      "description": "Use all but one sample for training",
+      "pros": ["Uses maximum data", "Unbiased estimate", "Good for small datasets"],
+      "cons": ["Very expensive", "High variance", "Slow for large datasets"],
+      "best_for": "Small datasets where you need maximum data usage",
+      "folds": ["auto"],
+      "shuffle": true
+    }
+  ],
+  "metrics": ["accuracy", "precision", "recall", "f1", "auc"],
+  "visualization": {
+    "show_fold_scores": true,
+    "show_fold_variance": true,
+    "show_learning_curves": true,
+    "show_confusion_matrices": true,
+    "show_fold_distributions": true,
+    "show_performance_heatmap": true,
+    "show_fold_comparison": true
+  },
+  "analysis": {
+    "show_stability_metrics": true,
+    "show_fold_correlation": true,
+    "show_performance_trends": true,
+    "show_outlier_detection": true
+  },
+  "hints": [
+    "Use stratified CV for imbalanced datasets",
+    "Time-series CV is essential for temporal data",
+    "More folds give more reliable estimates but are slower",
+    "Check fold variance to assess model stability",
+    "Compare different CV strategies to understand their impact",
+    "Look for consistent performance across folds"
+  ],
+  "scenarios": [
+    {
+      "name": "Balanced Classification",
+      "description": "Dataset with roughly equal class distribution",
+      "recommended_strategy": "kfold",
+      "recommended_folds": 5,
+      "reason": "Standard k-fold CV works well for balanced datasets"
+    },
+    {
+      "name": "Imbalanced Classification",
+      "description": "Dataset with skewed class distribution (e.g., 90% vs 10%)",
+      "recommended_strategy": "stratified",
+      "recommended_folds": 5,
+      "reason": "Stratified CV ensures each fold maintains class balance"
+    },
+    {
+      "name": "Time-Series Data",
+      "description": "Data with temporal ordering (e.g., stock prices, weather)",
+      "recommended_strategy": "timeseries",
+      "recommended_folds": 5,
+      "reason": "Time-series CV respects temporal order and prevents data leakage"
+    },
+    {
+      "name": "Small Dataset",
+      "description": "Limited data where you need maximum usage",
+      "recommended_strategy": "loocv",
+      "recommended_folds": "auto",
+      "reason": "LOOCV uses maximum data for training while providing validation"
+    }
+  ],
+  "common_pitfalls": [
+    {
+      "pitfall": "Data Leakage",
+      "description": "Using future information to predict past events",
+      "solution": "Ensure proper temporal ordering and feature engineering within folds",
+      "example": "Using future stock prices to predict past prices"
+    },
+    {
+      "pitfall": "Overfitting to CV",
+      "description": "Optimizing hyperparameters too aggressively on CV scores",
+      "solution": "Use nested CV or separate validation set",
+      "example": "Tuning hyperparameters on the same CV splits used for evaluation"
+    },
+    {
+      "pitfall": "Wrong CV Strategy",
+      "description": "Using random CV for time-series data",
+      "solution": "Choose CV strategy that matches your data characteristics",
+      "example": "Using k-fold CV for stock price prediction"
+    },
+    {
+      "pitfall": "Insufficient Folds",
+      "description": "Using too few folds for small datasets",
+      "solution": "Use more folds or LOOCV for small datasets",
+      "example": "Using 3-fold CV on a dataset with only 30 samples"
+    }
+  ]
+}

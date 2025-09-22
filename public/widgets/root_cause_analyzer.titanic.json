@@ -1,0 +1,311 @@
+{
+  "title": "Root Cause Analyzer",
+  "data_url": "/data/titanic_demo.csv",
+  "target": "Survived",
+  "failure_modes": [
+    {
+      "name": "data_pipeline",
+      "display_name": "Data Pipeline Failure",
+      "description": "Issues with data ingestion, processing, or validation",
+      "common_causes": [
+        "Schema changes in upstream sources",
+        "Data quality degradation",
+        "Pipeline configuration errors",
+        "Resource exhaustion",
+        "Network connectivity issues"
+      ],
+      "symptoms": [
+        "Missing or malformed data",
+        "Pipeline execution failures",
+        "Data validation errors",
+        "Feature store inconsistencies",
+        "Model training failures"
+      ],
+      "investigation_steps": [
+        "Check pipeline logs and error messages",
+        "Verify data source connectivity",
+        "Validate data schema and format",
+        "Check resource utilization",
+        "Test pipeline components individually"
+      ],
+      "diagnostic_tools": [
+        "Pipeline monitoring dashboards",
+        "Log aggregation systems",
+        "Data quality checks",
+        "Schema validation tools",
+        "Resource monitoring"
+      ]
+    },
+    {
+      "name": "infrastructure",
+      "display_name": "Infrastructure Failure",
+      "description": "Issues with compute, storage, or network infrastructure",
+      "common_causes": [
+        "Server crashes or restarts",
+        "Memory leaks or resource exhaustion",
+        "Network connectivity issues",
+        "Storage failures",
+        "Scaling bottlenecks"
+      ],
+      "symptoms": [
+        "High latency or timeouts",
+        "Out-of-memory errors",
+        "Service unavailability",
+        "Resource exhaustion",
+        "Network errors"
+      ],
+      "investigation_steps": [
+        "Check system resource utilization",
+        "Review server logs and metrics",
+        "Test network connectivity",
+        "Verify storage availability",
+        "Check auto-scaling policies"
+      ],
+      "diagnostic_tools": [
+        "System monitoring dashboards",
+        "Resource utilization tools",
+        "Network diagnostic tools",
+        "Log analysis systems",
+        "Performance profiling tools"
+      ]
+    },
+    {
+      "name": "model_drift",
+      "display_name": "Model Drift",
+      "description": "Model performance degradation due to data or concept drift",
+      "common_causes": [
+        "Data distribution changes",
+        "Concept drift in relationships",
+        "Model overfitting",
+        "Training data quality issues",
+        "Feature engineering problems"
+      ],
+      "symptoms": [
+        "Accuracy drops over time",
+        "Prediction confidence decreases",
+        "Feature distribution changes",
+        "Business metrics decline",
+        "Model bias increases"
+      ],
+      "investigation_steps": [
+        "Analyze model performance trends",
+        "Check data drift detection results",
+        "Compare feature distributions",
+        "Review model predictions",
+        "Validate training data quality"
+      ],
+      "diagnostic_tools": [
+        "Model performance monitoring",
+        "Drift detection systems",
+        "Feature analysis tools",
+        "Prediction analysis tools",
+        "Data quality monitoring"
+      ]
+    },
+    {
+      "name": "bias",
+      "display_name": "Bias Issues",
+      "description": "Model shows unfair or biased predictions",
+      "common_causes": [
+        "Biased training data",
+        "Inadequate representation",
+        "Feature selection bias",
+        "Model architecture bias",
+        "Evaluation metric bias"
+      ],
+      "symptoms": [
+        "Different accuracy across groups",
+        "Fairness metric violations",
+        "User complaints about unfairness",
+        "Regulatory compliance issues",
+        "Ethical concerns"
+      ],
+      "investigation_steps": [
+        "Analyze predictions by demographic groups",
+        "Check fairness metrics",
+        "Review training data composition",
+        "Examine feature importance",
+        "Validate evaluation metrics"
+      ],
+      "diagnostic_tools": [
+        "Fairness analysis tools",
+        "Bias detection systems",
+        "Demographic analysis tools",
+        "Feature importance analysis",
+        "Fairness monitoring dashboards"
+      ]
+    }
+  ],
+  "investigation_methodology": {
+    "step_1": {
+      "name": "Gather Information",
+      "description": "Collect all relevant data about the incident",
+      "activities": [
+        "Review monitoring dashboards",
+        "Check alert notifications",
+        "Gather system logs",
+        "Collect user feedback",
+        "Document timeline"
+      ],
+      "duration": "10-15 minutes",
+      "outputs": ["Incident summary", "Timeline", "Initial symptoms"]
+    },
+    "step_2": {
+      "name": "Analyze Symptoms",
+      "description": "Analyze the symptoms to identify potential causes",
+      "activities": [
+        "Categorize symptoms by type",
+        "Identify patterns in symptoms",
+        "Check correlation with recent changes",
+        "Analyze severity and impact",
+        "Prioritize investigation areas"
+      ],
+      "duration": "15-20 minutes",
+      "outputs": ["Symptom analysis", "Potential causes", "Investigation plan"]
+    },
+    "step_3": {
+      "name": "Test Hypotheses",
+      "description": "Test different hypotheses about the root cause",
+      "activities": [
+        "Test data pipeline components",
+        "Verify infrastructure health",
+        "Check model performance",
+        "Validate data quality",
+        "Test system configurations"
+      ],
+      "duration": "20-30 minutes",
+      "outputs": ["Test results", "Confirmed issues", "Root cause identification"]
+    },
+    "step_4": {
+      "name": "Validate Root Cause",
+      "description": "Confirm the identified root cause",
+      "activities": [
+        "Reproduce the issue",
+        "Verify cause-effect relationship",
+        "Check impact scope",
+        "Validate fix effectiveness",
+        "Document findings"
+      ],
+      "duration": "10-15 minutes",
+      "outputs": ["Root cause confirmation", "Impact assessment", "Fix validation"]
+    }
+  },
+  "diagnostic_checklist": {
+    "data_pipeline": [
+      "Check data source connectivity",
+      "Verify data schema and format",
+      "Validate data quality metrics",
+      "Test pipeline components",
+      "Check resource utilization",
+      "Review recent configuration changes"
+    ],
+    "infrastructure": [
+      "Check system resource utilization",
+      "Review server logs and metrics",
+      "Test network connectivity",
+      "Verify storage availability",
+      "Check auto-scaling policies",
+      "Review recent deployments"
+    ],
+    "model_drift": [
+      "Analyze model performance trends",
+      "Check data drift detection results",
+      "Compare feature distributions",
+      "Review model predictions",
+      "Validate training data quality",
+      "Check recent model changes"
+    ],
+    "bias": [
+      "Analyze predictions by demographic groups",
+      "Check fairness metrics",
+      "Review training data composition",
+      "Examine feature importance",
+      "Validate evaluation metrics",
+      "Check recent data changes"
+    ]
+  },
+  "common_root_causes": [
+    {
+      "cause": "Schema Changes",
+      "description": "Upstream data source schema changes",
+      "failure_mode": "data_pipeline",
+      "frequency": "high",
+      "prevention": "Schema evolution handling, data validation"
+    },
+    {
+      "cause": "Resource Exhaustion",
+      "description": "Insufficient compute or memory resources",
+      "failure_mode": "infrastructure",
+      "frequency": "medium",
+      "prevention": "Resource monitoring, auto-scaling"
+    },
+    {
+      "cause": "Data Drift",
+      "description": "Input data distribution changes",
+      "failure_mode": "model_drift",
+      "frequency": "high",
+      "prevention": "Drift detection, regular retraining"
+    },
+    {
+      "cause": "Biased Training Data",
+      "description": "Training data contains bias",
+      "failure_mode": "bias",
+      "frequency": "medium",
+      "prevention": "Data diversity, bias testing"
+    },
+    {
+      "cause": "Configuration Errors",
+      "description": "Incorrect system or model configuration",
+      "failure_mode": "data_pipeline",
+      "frequency": "medium",
+      "prevention": "Configuration validation, testing"
+    },
+    {
+      "cause": "Network Issues",
+      "description": "Network connectivity or latency problems",
+      "failure_mode": "infrastructure",
+      "frequency": "low",
+      "prevention": "Network monitoring, redundancy"
+    }
+  ],
+  "analysis_tools": [
+    {
+      "name": "Log Analysis",
+      "description": "Analyze system and application logs",
+      "use_cases": ["Error identification", "Timeline reconstruction", "Pattern analysis"],
+      "tools": ["ELK Stack", "Splunk", "CloudWatch Logs"]
+    },
+    {
+      "name": "Performance Monitoring",
+      "description": "Monitor system and application performance",
+      "use_cases": ["Resource utilization", "Latency analysis", "Throughput monitoring"],
+      "tools": ["Prometheus", "Grafana", "New Relic"]
+    },
+    {
+      "name": "Data Quality Checks",
+      "description": "Validate data quality and consistency",
+      "use_cases": ["Schema validation", "Data completeness", "Quality metrics"],
+      "tools": ["Great Expectations", "Data Quality", "Custom validators"]
+    },
+    {
+      "name": "Model Analysis",
+      "description": "Analyze model performance and behavior",
+      "use_cases": ["Performance trends", "Prediction analysis", "Feature importance"],
+      "tools": ["MLflow", "Weights & Biases", "Custom analysis"]
+    }
+  ],
+  "visualization": {
+    "show_failure_modes": true,
+    "show_investigation_steps": true,
+    "show_diagnostic_tools": true,
+    "show_root_causes": true,
+    "show_prevention_measures": true
+  },
+  "hints": [
+    "Start with the most likely causes based on symptoms",
+    "Use systematic investigation methodology",
+    "Document all findings and hypotheses",
+    "Test hypotheses systematically",
+    "Validate root cause before implementing fixes"
+  ]
+}

@@ -1,0 +1,230 @@
+{
+  "title": "Optimization Lab",
+  "data_url": "/data/titanic_demo.csv",
+  "target": "Survived",
+  "models": [
+    {
+      "name": "Logistic Regression",
+      "type": "linear",
+      "description": "Linear model with regularization options",
+      "optimization_techniques": [
+        {
+          "name": "regularization",
+          "display_name": "Regularization",
+          "description": "L1/L2 regularization to prevent overfitting",
+          "parameters": {
+            "penalty": {"type": "categorical", "options": ["none", "l1", "l2", "elasticnet"], "default": "l2"},
+            "C": {"type": "float", "range": [0.001, 100], "default": 1.0, "log": true, "description": "Inverse regularization strength"}
+          },
+          "effects": ["Prevents overfitting", "L1 encourages sparsity", "L2 shrinks coefficients evenly"],
+          "best_for": "Preventing overfitting, feature selection (L1)"
+        }
+      ],
+      "hyperparameters": {
+        "C": 1.0,
+        "penalty": "l2",
+        "solver": "liblinear"
+      }
+    },
+    {
+      "name": "Random Forest",
+      "type": "tree",
+      "description": "Ensemble of decision trees with pruning options",
+      "optimization_techniques": [
+        {
+          "name": "pruning",
+          "display_name": "Tree Pruning",
+          "description": "Remove weak branches to prevent overfitting",
+          "parameters": {
+            "min_samples_split": {"type": "int", "range": [2, 20], "default": 2, "description": "Minimum samples to split a node"},
+            "min_samples_leaf": {"type": "int", "range": [1, 10], "default": 1, "description": "Minimum samples in a leaf"},
+            "max_depth": {"type": "int", "range": [1, 20], "default": 10, "description": "Maximum depth of trees"}
+          },
+          "effects": ["Prevents overfitting", "Reduces model complexity", "Improves generalization"],
+          "best_for": "Preventing overfitting in tree-based models"
+        }
+      ],
+      "hyperparameters": {
+        "n_estimators": 100,
+        "max_depth": 10,
+        "min_samples_split": 2
+      }
+    },
+    {
+      "name": "Neural Network",
+      "type": "neural",
+      "description": "Multi-layer perceptron with advanced optimization",
+      "optimization_techniques": [
+        {
+          "name": "dropout",
+          "display_name": "Dropout",
+          "description": "Randomly disable neurons during training",
+          "parameters": {
+            "dropout_rate": {"type": "float", "range": [0, 0.8], "default": 0.2, "description": "Fraction of neurons to drop"}
+          },
+          "effects": ["Prevents overfitting", "Reduces co-adaptation", "Improves generalization"],
+          "best_for": "Deep neural networks, overfitting prevention"
+        },
+        {
+          "name": "early_stopping",
+          "display_name": "Early Stopping",
+          "description": "Stop training when validation loss stops improving",
+          "parameters": {
+            "patience": {"type": "int", "range": [1, 20], "default": 5, "description": "Number of epochs to wait before stopping"},
+            "min_delta": {"type": "float", "range": [0.001, 0.1], "default": 0.001, "description": "Minimum change to qualify as improvement"}
+          },
+          "effects": ["Prevents overfitting", "Saves computational resources", "Finds optimal stopping point"],
+          "best_for": "Neural networks, iterative training methods"
+        },
+        {
+          "name": "lr_schedule",
+          "display_name": "Learning Rate Schedule",
+          "description": "Gradually decrease learning rate during training",
+          "parameters": {
+            "schedule_type": {"type": "categorical", "options": ["constant", "step_decay", "exponential"], "default": "constant", "description": "Type of learning rate schedule"},
+            "initial_lr": {"type": "float", "range": [0.001, 1.0], "default": 0.01, "description": "Initial learning rate"},
+            "decay_rate": {"type": "float", "range": [0.1, 0.99], "default": 0.9, "description": "Decay rate for learning rate"}
+          },
+          "effects": ["Improves convergence", "Prevents overshooting minima", "Stabilizes training"],
+          "best_for": "Deep learning, fine-tuning, optimization stability"
+        }
+      ],
+      "hyperparameters": {
+        "hidden_layer_sizes": "(50,)",
+        "learning_rate": "constant",
+        "alpha": 0.0001
+      }
+    },
+    {
+      "name": "Gradient Boosting",
+      "type": "tree",
+      "description": "Sequential ensemble with early stopping",
+      "optimization_techniques": [
+        {
+          "name": "early_stopping",
+          "display_name": "Early Stopping",
+          "description": "Stop boosting when validation performance plateaus",
+          "parameters": {
+            "n_iter_no_change": {"type": "int", "range": [1, 20], "default": 5, "description": "Number of iterations without improvement"},
+            "validation_fraction": {"type": "float", "range": [0.1, 0.3], "default": 0.2, "description": "Fraction of data for validation"}
+          },
+          "effects": ["Prevents overfitting", "Finds optimal number of trees", "Saves training time"],
+          "best_for": "Gradient boosting, ensemble methods"
+        }
+      ],
+      "hyperparameters": {
+        "n_estimators": 100,
+        "learning_rate": 0.1,
+        "max_depth": 3
+      }
+    }
+  ],
+  "techniques": [
+    {
+      "name": "regularization",
+      "display_name": "Regularization",
+      "description": "Prevent overfitting by constraining model complexity",
+      "applicable_models": ["LogisticRegression", "NeuralNetwork"],
+      "pros": ["Prevents overfitting", "Improves generalization", "Feature selection (L1)"],
+      "cons": ["May cause underfitting", "Requires tuning", "Can reduce interpretability"]
+    },
+    {
+      "name": "early_stopping",
+      "display_name": "Early Stopping",
+      "description": "Stop training when validation loss stops improving",
+      "applicable_models": ["NeuralNetwork", "GradientBoosting"],
+      "pros": ["Prevents overfitting", "Saves computation", "Automatic stopping"],
+      "cons": ["Requires validation set", "May stop too early", "Sensitive to patience parameter"]
+    },
+    {
+      "name": "dropout",
+      "display_name": "Dropout",
+      "description": "Randomly disable neurons during training",
+      "applicable_models": ["NeuralNetwork"],
+      "pros": ["Prevents overfitting", "Reduces co-adaptation", "Improves generalization"],
+      "cons": ["Neural networks only", "Requires tuning", "May slow convergence"]
+    },
+    {
+      "name": "pruning",
+      "display_name": "Pruning",
+      "description": "Remove weak connections to reduce model size",
+      "applicable_models": ["RandomForest", "DecisionTree"],
+      "pros": ["Reduces model size", "Prevents overfitting", "Faster inference"],
+      "cons": ["May reduce accuracy", "Requires careful tuning", "Complex implementation"]
+    },
+    {
+      "name": "lr_schedule",
+      "display_name": "Learning Rate Schedule",
+      "description": "Gradually decrease learning rate during training",
+      "applicable_models": ["NeuralNetwork"],
+      "pros": ["Improves convergence", "Prevents overshooting", "Stabilizes training"],
+      "cons": ["Requires tuning", "Neural networks only", "May slow initial learning"]
+    }
+  ],
+  "metrics": ["accuracy", "precision", "recall", "f1", "training_time", "model_size", "inference_time"],
+  "visualization": {
+    "show_learning_curves": true,
+    "show_optimization_impact": true,
+    "show_trade_off_analysis": true,
+    "show_technique_comparison": true
+  },
+  "hints": [
+    "Start with simple regularization before advanced techniques",
+    "Monitor validation loss to detect overfitting",
+    "Use early stopping to prevent wasted computation",
+    "Consider production constraints when optimizing",
+    "Test one technique at a time to understand individual effects"
+  ],
+  "scenarios": [
+    {
+      "name": "Prevent Overfitting",
+      "description": "Model is overfitting to training data",
+      "recommended_techniques": ["regularization", "dropout", "early_stopping"],
+      "reason": "These techniques help prevent the model from memorizing training data"
+    },
+    {
+      "name": "Reduce Model Size",
+      "description": "Need smaller model for deployment",
+      "recommended_techniques": ["pruning", "regularization"],
+      "reason": "These techniques reduce model complexity and size"
+    },
+    {
+      "name": "Improve Training Stability",
+      "description": "Training is unstable or slow to converge",
+      "recommended_techniques": ["lr_schedule", "early_stopping"],
+      "reason": "These techniques help stabilize and speed up training"
+    },
+    {
+      "name": "Production Optimization",
+      "description": "Optimize for real-world deployment",
+      "recommended_techniques": ["pruning", "regularization", "early_stopping"],
+      "reason": "These techniques balance accuracy with efficiency and reliability"
+    }
+  ],
+  "common_pitfalls": [
+    {
+      "pitfall": "Over-Regularization",
+      "description": "Using too much regularization causes underfitting",
+      "solution": "Use cross-validation to find optimal regularization strength",
+      "example": "Setting C=0.001 in logistic regression when C=1.0 works better"
+    },
+    {
+      "pitfall": "Premature Early Stopping",
+      "description": "Stopping training too early prevents model from learning",
+      "solution": "Set appropriate patience and monitor learning curves",
+      "example": "Setting patience=1 when the model needs 10+ epochs to converge"
+    },
+    {
+      "pitfall": "Ignoring Production Constraints",
+      "description": "Optimizing only for accuracy, ignoring deployment needs",
+      "solution": "Consider latency, memory, and computational requirements",
+      "example": "Using a 100-layer neural network for real-time predictions"
+    },
+    {
+      "pitfall": "Inconsistent Optimization",
+      "description": "Applying different techniques inconsistently",
+      "solution": "Use systematic approach and document all changes",
+      "example": "Applying dropout to some layers but not others without reason"
+    }
+  ]
+}

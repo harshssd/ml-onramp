@@ -1,0 +1,28 @@
+{
+  "title": "Titanic Demo — Dataset Explorer",
+  "data_url": "/data/titanic_demo.csv",
+  "primary_key": "PassengerId",
+  "target": "Survived",
+  "column_types": {
+    "PassengerId": "id",
+    "Survived": "target_binary",
+    "Pclass": "categorical_ordinal",
+    "Sex": "categorical_low_card",
+    "Age": "numeric",
+    "SibSp": "numeric",
+    "Parch": "numeric",
+    "Fare": "numeric",
+    "Embarked": "categorical_low_card",
+    "Ticket": "categorical_high_card",
+    "Cabin": "categorical_high_card"
+  },
+  "display": {
+    "show_missing_pct": true,
+    "sample_rows": 10,
+    "stats": ["min", "max", "mean", "std", "missing_pct"]
+  },
+  "hints": [
+    "High-cardinality IDs like Ticket/Cabin are usually dropped or encoded with care.",
+    "Consider adding a 'was_missing' indicator for Age and Cabin."
+  ]
+}

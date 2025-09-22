@@ -1,0 +1,26 @@
+{
+  "title": "Scaling Playground — Distance & Margin Models",
+  "data_url": "/data/titanic_demo.csv",
+  "target": "Survived",
+  "numeric_cols": ["Age", "SibSp", "Parch", "Fare"],
+  "scalers": [
+    { "name": "standard" },
+    { "name": "minmax", "feature_range": [0, 1] },
+    { "name": "robust" },
+    { "name": "log", "epsilon": 1e-3 }
+  ],
+  "models": [
+    { "name": "svm_linear", "C": 1.0 },
+    { "name": "knn", "k": 5 },
+    { "name": "logreg_l2", "C": 1.0 }
+  ],
+  "compare": {
+    "metric": "f1_macro",
+    "cv_folds": 5
+  },
+  "show_before_after_distributions": true,
+  "notes": [
+    "KNN & SVM benefit most from scaling; tree models usually don't.",
+    "Use log transform on highly skewed features (e.g., Fare)."
+  ]
+}

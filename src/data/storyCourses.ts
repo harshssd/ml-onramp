@@ -98,7 +98,7 @@ export const aiAwakeningCourse: StoryCourse = {
         resolution: 'You\'ll build models that can see patterns humans miss and make predictions that matter.'
       },
       path: '/learning/awakening/chapter3',
-      locked: true,
+      locked: false,
       completed: false
     },
     {
@@ -114,7 +114,7 @@ export const aiAwakeningCourse: StoryCourse = {
         resolution: 'You\'ll launch your first AI application and join the community of AI creators.'
       },
       path: '/learning/awakening/chapter4',
-      locked: true,
+      locked: false,
       completed: false
     }
   ],
@@ -213,33 +213,33 @@ export const neuralMasteryCourse: StoryCourse = {
   gradient: 'from-purple-500 to-pink-600'
 };
 
-// The AI Builder: Hands-On Implementation
+// The AI Builder: Advanced Machine Learning
 export const aiBuilderCourse: StoryCourse = {
   id: 'ai-builder',
   title: 'The AI Builder',
-  subtitle: 'From Theory to Production',
-  description: 'Transform your AI knowledge into real-world applications. Build, deploy, and scale AI systems that solve actual problems.',
+  subtitle: 'Advanced Machine Learning Mastery',
+  description: 'Master advanced machine learning techniques and feature engineering. Build sophisticated models that solve real-world problems.',
   icon: '🔨',
   difficulty: 'intermediate',
-  duration: '8-10 weeks',
-  estimatedHours: 50,
+  duration: '6-8 weeks',
+  estimatedHours: 40,
   story: {
-    hook: 'Knowledge without application is just theory. You\'re about to become a builder.',
-    journey: 'Take your AI knowledge and turn it into real applications. Learn the tools, techniques, and mindset of professional AI developers.',
-    outcome: 'You\'ll have a portfolio of AI applications and the skills to build AI products that matter.'
+    hook: 'You\'ve learned the basics. Now it\'s time to master advanced machine learning techniques.',
+    journey: 'Dive deep into advanced algorithms, feature engineering, and model optimization. Build sophisticated systems that outperform simple approaches.',
+    outcome: 'You\'ll master advanced ML techniques and have the skills to build production-ready AI systems.'
   },
   chapters: [
     {
       id: 'builder-ch1',
-      title: 'The Workshop',
-      description: 'Master the tools and environment of AI development',
-      icon: '🛠️',
+      title: 'Advanced Machine Learning',
+      description: 'Master advanced algorithms, ensembles, and neural networks',
+      icon: '🧠',
       duration: '4-5 hours',
       lessons: 4,
       story: {
-        setup: 'Every builder needs the right tools. You\'re about to set up your AI workshop.',
-        challenge: 'Can you create a professional development environment for AI?',
-        resolution: 'You\'ll have a complete AI development setup ready for any project.'
+        setup: 'You\'ve learned the basics. Now it\'s time to master advanced machine learning techniques.',
+        challenge: 'Can you build sophisticated models that outperform simple approaches?',
+        resolution: 'You\'ll master ensemble methods, neural networks, and advanced evaluation techniques.'
       },
       path: '/learning/builder/chapter1',
       locked: false,
@@ -247,34 +247,34 @@ export const aiBuilderCourse: StoryCourse = {
     },
     {
       id: 'builder-ch2',
-      title: 'The Data Engineer',
-      description: 'Master data pipelines and preprocessing for AI',
-      icon: '📊',
-      duration: '6-8 hours',
-      lessons: 5,
+      title: 'Feature Engineering Mastery',
+      description: 'Master data preprocessing and feature engineering for AI',
+      icon: '🔧',
+      duration: '4-5 hours',
+      lessons: 4,
       story: {
-        setup: 'Data is the fuel of AI. You\'re about to become a data engineer.',
-        challenge: 'Can you build robust data pipelines that feed your AI systems?',
-        resolution: 'You\'ll master the art of data engineering and create pipelines that scale.'
+        setup: 'Great models start with great features. You\'re about to become a feature engineering master.',
+        challenge: 'Can you transform raw data into model-ready features that maximize performance?',
+        resolution: 'You\'ll master the art of feature engineering and create pipelines that turn data into intelligence.'
       },
       path: '/learning/builder/chapter2',
-      locked: true,
+      locked: false,
       completed: false
     },
     {
       id: 'builder-ch3',
-      title: 'The Model Architect',
-      description: 'Design and optimize AI models for production',
+      title: 'Model Architecture & Optimization',
+      description: 'Master model selection, hyperparameter tuning, and optimization',
       icon: '🏗️',
-      duration: '8-10 hours',
-      lessons: 6,
+      duration: '4-5 hours',
+      lessons: 5,
       story: {
-        setup: 'Building models is one thing. Building models that work in production is another.',
-        challenge: 'Can you design AI systems that are fast, reliable, and scalable?',
-        resolution: 'You\'ll master model architecture and optimization for real-world deployment.'
+        setup: 'The right model architecture can make or break your AI system. You\'re about to master the art of model optimization.',
+        challenge: 'Can you build models that not only perform well but are ready for production?',
+        resolution: 'You\'ll master model selection, hyperparameter tuning, and optimization techniques.'
       },
       path: '/learning/builder/chapter3',
-      locked: true,
+      locked: false,
       completed: false
     },
     {
@@ -294,9 +294,9 @@ export const aiBuilderCourse: StoryCourse = {
       completed: false
     }
   ],
-  prerequisites: ['Neural Mastery course', 'Python programming', 'Basic DevOps knowledge'],
-  targetAudience: ['AI practitioners', 'Software developers', 'ML engineers', 'Product builders'],
-  skills: ['MLOps', 'Model deployment', 'Data engineering', 'System design', 'Cloud platforms', 'Monitoring'],
+  prerequisites: ['AI Awakening course', 'Python programming', 'Basic machine learning knowledge'],
+  targetAudience: ['AI practitioners', 'Data scientists', 'ML engineers', 'Developers'],
+  skills: ['Advanced ML algorithms', 'Feature engineering', 'Model evaluation', 'Ensemble methods', 'Neural networks', 'Data preprocessing'],
   color: 'green',
   gradient: 'from-green-500 to-teal-600'
 };

@@ -1,0 +1,278 @@
+{
+  "title": "MLOps Workflow Visualizer",
+  "data_url": "/data/titanic_demo.csv",
+  "target": "Survived",
+  "pipeline_stages": [
+    {
+      "name": "Data Ingestion",
+      "id": "data_ingestion",
+      "description": "Collect and validate raw data from various sources",
+      "icon": "database",
+      "color": "blue",
+      "position": {"x": 100, "y": 100},
+      "inputs": [],
+      "outputs": ["validated_data"],
+      "configurations": {
+        "schema_validation": true,
+        "data_quality_checks": true,
+        "drift_detection": true,
+        "data_lineage": true
+      },
+      "tools": ["Apache Airflow", "Prefect", "Great Expectations"],
+      "dependencies": [],
+      "estimated_duration": "30 minutes",
+      "cost": "low"
+    },
+    {
+      "name": "Feature Engineering",
+      "id": "feature_engineering",
+      "description": "Transform and engineer features for model training",
+      "icon": "settings",
+      "color": "green",
+      "position": {"x": 300, "y": 100},
+      "inputs": ["validated_data"],
+      "outputs": ["engineered_features"],
+      "configurations": {
+        "feature_extraction": true,
+        "feature_selection": true,
+        "feature_scaling": true,
+        "feature_store": true
+      },
+      "tools": ["Feast", "Tecton", "Apache Beam"],
+      "dependencies": ["data_ingestion"],
+      "estimated_duration": "45 minutes",
+      "cost": "medium"
+    },
+    {
+      "name": "Model Training",
+      "id": "model_training",
+      "description": "Train models with automated hyperparameter optimization",
+      "icon": "cpu",
+      "color": "purple",
+      "position": {"x": 500, "y": 100},
+      "inputs": ["engineered_features"],
+      "outputs": ["trained_model"],
+      "configurations": {
+        "automated_training": true,
+        "hyperparameter_optimization": true,
+        "experiment_tracking": true,
+        "model_versioning": true
+      },
+      "tools": ["MLflow", "Weights & Biases", "Kubeflow"],
+      "dependencies": ["feature_engineering"],
+      "estimated_duration": "2 hours",
+      "cost": "high"
+    },
+    {
+      "name": "Model Validation",
+      "id": "model_validation",
+      "description": "Validate model performance, fairness, and bias",
+      "icon": "check-circle",
+      "color": "orange",
+      "position": {"x": 700, "y": 100},
+      "inputs": ["trained_model"],
+      "outputs": ["validated_model"],
+      "configurations": {
+        "performance_validation": true,
+        "fairness_testing": true,
+        "bias_detection": true,
+        "a_b_testing": true
+      },
+      "tools": ["Great Expectations", "Evidently AI", "Fairlearn"],
+      "dependencies": ["model_training"],
+      "estimated_duration": "30 minutes",
+      "cost": "medium"
+    },
+    {
+      "name": "Model Deployment",
+      "id": "model_deployment",
+      "description": "Deploy validated model to staging and production",
+      "icon": "rocket",
+      "color": "red",
+      "position": {"x": 500, "y": 300},
+      "inputs": ["validated_model"],
+      "outputs": ["deployed_model"],
+      "configurations": {
+        "containerization": true,
+        "staging_deployment": true,
+        "production_deployment": true,
+        "rollback_capability": true
+      },
+      "tools": ["Docker", "Kubernetes", "ArgoCD"],
+      "dependencies": ["model_validation"],
+      "estimated_duration": "1 hour",
+      "cost": "high"
+    },
+    {
+      "name": "Model Monitoring",
+      "id": "model_monitoring",
+      "description": "Monitor model performance and trigger retraining",
+      "icon": "activity",
+      "color": "teal",
+      "position": {"x": 700, "y": 300},
+      "inputs": ["deployed_model"],
+      "outputs": ["monitoring_data"],
+      "configurations": {
+        "performance_monitoring": true,
+        "drift_detection": true,
+        "cost_monitoring": true,
+        "retraining_triggers": true
+      },
+      "tools": ["Prometheus", "Grafana", "Evidently AI"],
+      "dependencies": ["model_deployment"],
+      "estimated_duration": "continuous",
+      "cost": "medium"
+    }
+  ],
+  "workflow_templates": [
+    {
+      "name": "Basic ML Pipeline",
+      "description": "Simple pipeline for small-scale ML projects",
+      "stages": ["data_ingestion", "feature_engineering", "model_training", "model_validation"],
+      "estimated_duration": "4 hours",
+      "complexity": "low",
+      "cost": "medium"
+    },
+    {
+      "name": "Production ML Pipeline",
+      "description": "Full production pipeline with monitoring and retraining",
+      "stages": ["data_ingestion", "feature_engineering", "model_training", "model_validation", "model_deployment", "model_monitoring"],
+      "estimated_duration": "6 hours",
+      "complexity": "high",
+      "cost": "high"
+    },
+    {
+      "name": "Batch Processing Pipeline",
+      "description": "Optimized for large-scale batch processing",
+      "stages": ["data_ingestion", "feature_engineering", "model_training", "model_validation"],
+      "estimated_duration": "8 hours",
+      "complexity": "medium",
+      "cost": "low"
+    },
+    {
+      "name": "Real-time Pipeline",
+      "description": "Low-latency pipeline for real-time applications",
+      "stages": ["data_ingestion", "feature_engineering", "model_training", "model_validation", "model_deployment", "model_monitoring"],
+      "estimated_duration": "3 hours",
+      "complexity": "high",
+      "cost": "high"
+    }
+  ],
+  "interactions": [
+    {
+      "type": "drag_drop",
+      "description": "Drag and drop pipeline stages to build workflows",
+      "enabled": true
+    },
+    {
+      "type": "connect_blocks",
+      "description": "Connect stages to define data flow and dependencies",
+      "enabled": true
+    },
+    {
+      "type": "simulate_run",
+      "description": "Simulate pipeline execution to test workflows",
+      "enabled": true
+    },
+    {
+      "type": "configure_stages",
+      "description": "Configure individual stages with specific settings",
+      "enabled": true
+    }
+  ],
+  "scenarios": [
+    {
+      "name": "Data Drift Detection",
+      "description": "Simulate data drift and automatic retraining trigger",
+      "trigger": "data_drift_detected",
+      "actions": [
+        "Alert data team",
+        "Trigger retraining pipeline",
+        "Validate new model",
+        "Deploy if performance improved"
+      ],
+      "expected_outcome": "Automated retraining and deployment"
+    },
+    {
+      "name": "Model Performance Degradation",
+      "description": "Simulate model performance drop and remediation",
+      "trigger": "performance_degradation",
+      "actions": [
+        "Alert ML team",
+        "Investigate root cause",
+        "Trigger retraining if needed",
+        "Rollback if critical"
+      ],
+      "expected_outcome": "Quick remediation and model update"
+    },
+    {
+      "name": "New Data Source Integration",
+      "description": "Add new data source to existing pipeline",
+      "trigger": "new_data_source",
+      "actions": [
+        "Update data ingestion",
+        "Modify feature engineering",
+        "Retrain model with new data",
+        "Validate and deploy"
+      ],
+      "expected_outcome": "Seamless integration of new data"
+    },
+    {
+      "name": "Model Version Update",
+      "description": "Deploy new model version with A/B testing",
+      "trigger": "new_model_version",
+      "actions": [
+        "Deploy to staging",
+        "Run A/B test",
+        "Monitor performance",
+        "Gradual rollout"
+      ],
+      "expected_outcome": "Safe model version update"
+    }
+  ],
+  "best_practices": [
+    {
+      "category": "Pipeline Design",
+      "practices": [
+        "Design for reproducibility and versioning",
+        "Implement comprehensive error handling",
+        "Use modular and reusable components",
+        "Plan for scalability and performance"
+      ]
+    },
+    {
+      "category": "Data Management",
+      "practices": [
+        "Implement data quality checks",
+        "Track data lineage and versions",
+        "Monitor data drift continuously",
+        "Use feature stores for consistency"
+      ]
+    },
+    {
+      "category": "Model Management",
+      "practices": [
+        "Version control all model artifacts",
+        "Implement model validation gates",
+        "Use model registries for organization",
+        "Plan for model rollback scenarios"
+      ]
+    },
+    {
+      "category": "Deployment",
+      "practices": [
+        "Separate staging and production environments",
+        "Implement blue-green deployments",
+        "Use canary releases for gradual rollout",
+        "Monitor deployment health continuously"
+      ]
+    }
+  ],
+  "hints": [
+    "Start with a simple pipeline and add complexity gradually",
+    "Always include validation stages before deployment",
+    "Implement comprehensive monitoring from day one",
+    "Plan for automated retraining and rollback scenarios",
+    "Use infrastructure as code for reproducible deployments"
+  ]
+}

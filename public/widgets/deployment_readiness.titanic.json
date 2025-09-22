@@ -1,0 +1,258 @@
+{
+  "title": "Deployment Readiness Checker",
+  "data_url": "/data/titanic_demo.csv",
+  "target": "Survived",
+  "checks": [
+    {
+      "category": "Performance",
+      "checks": [
+        {
+          "id": "accuracy_baseline",
+          "name": "Accuracy > Baseline",
+          "description": "Model accuracy exceeds baseline performance",
+          "threshold": 0.8,
+          "weight": 0.2,
+          "critical": true
+        },
+        {
+          "id": "latency_requirement",
+          "name": "Latency < 200ms",
+          "description": "Inference time meets SLA requirements",
+          "threshold": 200,
+          "unit": "ms",
+          "weight": 0.15,
+          "critical": true
+        },
+        {
+          "id": "throughput_requirement",
+          "name": "Throughput > 1000 req/s",
+          "description": "Model can handle expected load",
+          "threshold": 1000,
+          "unit": "requests/second",
+          "weight": 0.1,
+          "critical": false
+        }
+      ]
+    },
+    {
+      "category": "Resource Constraints",
+      "checks": [
+        {
+          "id": "model_size_limit",
+          "name": "Model Size < 50MB",
+          "description": "Model fits within deployment constraints",
+          "threshold": 50,
+          "unit": "MB",
+          "weight": 0.1,
+          "critical": false
+        },
+        {
+          "id": "memory_usage",
+          "name": "Memory Usage < 1GB",
+          "description": "Model fits in available memory",
+          "threshold": 1024,
+          "unit": "MB",
+          "weight": 0.1,
+          "critical": true
+        },
+        {
+          "id": "cpu_usage",
+          "name": "CPU Usage < 80%",
+          "description": "Model doesn't overload CPU resources",
+          "threshold": 80,
+          "unit": "%",
+          "weight": 0.05,
+          "critical": false
+        }
+      ]
+    },
+    {
+      "category": "Quality Assurance",
+      "checks": [
+        {
+          "id": "bias_testing",
+          "name": "Bias Testing Complete",
+          "description": "Model tested for fairness across demographic groups",
+          "threshold": true,
+          "weight": 0.1,
+          "critical": true
+        },
+        {
+          "id": "adversarial_robustness",
+          "name": "Adversarial Testing Passed",
+          "description": "Model tested against adversarial inputs",
+          "threshold": true,
+          "weight": 0.05,
+          "critical": false
+        },
+        {
+          "id": "edge_case_handling",
+          "name": "Edge Case Testing Complete",
+          "description": "Model handles unusual inputs gracefully",
+          "threshold": true,
+          "weight": 0.05,
+          "critical": false
+        }
+      ]
+    },
+    {
+      "category": "Production Readiness",
+      "checks": [
+        {
+          "id": "monitoring_setup",
+          "name": "Monitoring Pipeline Ready",
+          "description": "Performance monitoring and alerting configured",
+          "threshold": true,
+          "weight": 0.1,
+          "critical": true
+        },
+        {
+          "id": "logging_configured",
+          "name": "Logging Configured",
+          "description": "Model predictions and errors are logged",
+          "threshold": true,
+          "weight": 0.05,
+          "critical": false
+        },
+        {
+          "id": "rollback_plan",
+          "name": "Rollback Plan Ready",
+          "description": "Plan to revert to previous model if needed",
+          "threshold": true,
+          "weight": 0.05,
+          "critical": true
+        }
+      ]
+    },
+    {
+      "category": "Compliance & Security",
+      "checks": [
+        {
+          "id": "data_privacy",
+          "name": "Data Privacy Compliant",
+          "description": "Model complies with data protection regulations",
+          "threshold": true,
+          "weight": 0.1,
+          "critical": true
+        },
+        {
+          "id": "model_interpretability",
+          "name": "Interpretability Tools Available",
+          "description": "Tools available to explain model predictions",
+          "threshold": true,
+          "weight": 0.05,
+          "critical": false
+        },
+        {
+          "id": "security_audit",
+          "name": "Security Audit Complete",
+          "description": "Model and infrastructure security reviewed",
+          "threshold": true,
+          "weight": 0.05,
+          "critical": false
+        }
+      ]
+    }
+  ],
+  "scenarios": [
+    {
+      "name": "Real-Time API",
+      "description": "High-frequency predictions with strict requirements",
+      "required_checks": [
+        "accuracy_baseline",
+        "latency_requirement",
+        "throughput_requirement",
+        "monitoring_setup",
+        "rollback_plan"
+      ],
+      "optional_checks": [
+        "model_size_limit",
+        "memory_usage",
+        "bias_testing"
+      ]
+    },
+    {
+      "name": "Batch Processing",
+      "description": "Offline processing with accuracy priority",
+      "required_checks": [
+        "accuracy_baseline",
+        "bias_testing",
+        "monitoring_setup",
+        "data_privacy"
+      ],
+      "optional_checks": [
+        "latency_requirement",
+        "throughput_requirement",
+        "model_interpretability"
+      ]
+    },
+    {
+      "name": "Edge Deployment",
+      "description": "Mobile or IoT devices with resource constraints",
+      "required_checks": [
+        "accuracy_baseline",
+        "model_size_limit",
+        "memory_usage",
+        "latency_requirement"
+      ],
+      "optional_checks": [
+        "bias_testing",
+        "adversarial_robustness",
+        "edge_case_handling"
+      ]
+    },
+    {
+      "name": "Regulatory Compliance",
+      "description": "Financial or healthcare applications",
+      "required_checks": [
+        "accuracy_baseline",
+        "bias_testing",
+        "model_interpretability",
+        "data_privacy",
+        "security_audit"
+      ],
+      "optional_checks": [
+        "latency_requirement",
+        "throughput_requirement",
+        "adversarial_robustness"
+      ]
+    }
+  ],
+  "scoring": {
+    "pass_threshold": 0.8,
+    "critical_weight": 0.6,
+    "optional_weight": 0.4,
+    "bonus_points": {
+      "all_checks_pass": 0.1,
+      "performance_exceeds_threshold": 0.05,
+      "security_audit_complete": 0.05
+    }
+  },
+  "recommendations": {
+    "high_priority": [
+      "Fix critical checks before deployment",
+      "Set up monitoring and alerting",
+      "Test model on production-like data",
+      "Prepare rollback plan"
+    ],
+    "medium_priority": [
+      "Optimize model for better performance",
+      "Implement bias testing",
+      "Add interpretability tools",
+      "Configure logging"
+    ],
+    "low_priority": [
+      "Improve documentation",
+      "Add more test cases",
+      "Optimize resource usage",
+      "Enhance security measures"
+    ]
+  },
+  "hints": [
+    "Start with critical checks - they must pass for deployment",
+    "Use shadow mode to test model in production safely",
+    "Monitor performance continuously after deployment",
+    "Have a rollback plan ready before going live",
+    "Consider your specific use case when prioritizing checks"
+  ]
+}

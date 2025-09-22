@@ -1,0 +1,182 @@
+{
+  "title": "Scaling Strategy Simulator",
+  "data_url": "/data/titanic_demo.csv",
+  "target": "Survived",
+  "strategies": [
+    {
+      "name": "vertical",
+      "display_name": "Vertical Scaling (Scale-Up)",
+      "description": "Add more CPU/GPU power to a single machine",
+      "pros": [
+        "Simple to implement",
+        "Quick to deploy",
+        "No orchestration complexity",
+        "Lower latency for single requests"
+      ],
+      "cons": [
+        "Limited by hardware constraints",
+        "Costly beyond a certain point",
+        "Single point of failure",
+        "Limited scalability"
+      ],
+      "best_for": "Small to medium workloads, quick scaling needs",
+      "cost_per_request": 0.05,
+      "max_throughput": 1000,
+      "latency_ms": 50,
+      "scalability_limit": "Hardware constraints"
+    },
+    {
+      "name": "horizontal",
+      "display_name": "Horizontal Scaling (Scale-Out)",
+      "description": "Distribute across multiple machines/containers",
+      "pros": [
+        "Near-infinite scaling potential",
+        "Built-in redundancy",
+        "Cost-effective at scale",
+        "Fault tolerance"
+      ],
+      "cons": [
+        "Requires orchestration (Kubernetes, Ray)",
+        "Network latency between nodes",
+        "More complex to manage",
+        "Higher initial setup cost"
+      ],
+      "best_for": "Large-scale applications, high availability requirements",
+      "cost_per_request": 0.03,
+      "max_throughput": 10000,
+      "latency_ms": 80,
+      "scalability_limit": "Network and orchestration complexity"
+    }
+  ],
+  "parameters": {
+    "users": [100, 1000, 10000, 100000],
+    "latency_target": 200,
+    "cost_limit": 500,
+    "availability_target": 99.9,
+    "throughput_target": 1000
+  },
+  "scaling_scenarios": [
+    {
+      "name": "Low Traffic",
+      "description": "Small application with occasional usage",
+      "users": 100,
+      "requests_per_second": 10,
+      "recommended_strategy": "vertical",
+      "reasoning": "Simple vertical scaling is sufficient for low traffic"
+    },
+    {
+      "name": "Medium Traffic",
+      "description": "Growing application with regular usage",
+      "users": 1000,
+      "requests_per_second": 100,
+      "recommended_strategy": "horizontal",
+      "reasoning": "Horizontal scaling provides better cost efficiency and reliability"
+    },
+    {
+      "name": "High Traffic",
+      "description": "Large-scale application with heavy usage",
+      "users": 10000,
+      "requests_per_second": 1000,
+      "recommended_strategy": "horizontal",
+      "reasoning": "Horizontal scaling is essential for high availability and performance"
+    },
+    {
+      "name": "Enterprise Scale",
+      "description": "Enterprise application with massive usage",
+      "users": 100000,
+      "requests_per_second": 10000,
+      "recommended_strategy": "horizontal",
+      "reasoning": "Only horizontal scaling can handle enterprise-scale traffic"
+    }
+  ],
+  "cost_analysis": {
+    "vertical_scaling": {
+      "base_cost": 100,
+      "cost_per_cpu_core": 50,
+      "cost_per_gpu": 200,
+      "cost_per_memory_gb": 10,
+      "scaling_factor": 1.5
+    },
+    "horizontal_scaling": {
+      "base_cost": 200,
+      "cost_per_instance": 80,
+      "cost_per_load_balancer": 30,
+      "cost_per_monitoring": 20,
+      "scaling_factor": 1.2
+    }
+  },
+  "performance_metrics": {
+    "latency": {
+      "vertical": {
+        "baseline": 50,
+        "scaling_factor": 0.8,
+        "max_improvement": 0.5
+      },
+      "horizontal": {
+        "baseline": 80,
+        "scaling_factor": 1.1,
+        "max_degradation": 1.5
+      }
+    },
+    "throughput": {
+      "vertical": {
+        "baseline": 1000,
+        "scaling_factor": 1.5,
+        "max_throughput": 5000
+      },
+      "horizontal": {
+        "baseline": 1000,
+        "scaling_factor": 2.0,
+        "max_throughput": 50000
+      }
+    },
+    "availability": {
+      "vertical": {
+        "baseline": 99.0,
+        "scaling_factor": 0.1,
+        "max_availability": 99.5
+      },
+      "horizontal": {
+        "baseline": 99.9,
+        "scaling_factor": 0.05,
+        "max_availability": 99.99
+      }
+    }
+  },
+  "simulation_results": {
+    "current_configuration": {
+      "strategy": "vertical",
+      "instances": 1,
+      "cpu_cores": 4,
+      "memory_gb": 16,
+      "cost_per_month": 200,
+      "max_throughput": 1000,
+      "avg_latency": 50,
+      "availability": 99.0
+    },
+    "recommended_configuration": {
+      "strategy": "horizontal",
+      "instances": 3,
+      "cpu_cores": 2,
+      "memory_gb": 8,
+      "cost_per_month": 180,
+      "max_throughput": 3000,
+      "avg_latency": 80,
+      "availability": 99.9
+    }
+  },
+  "visualization": {
+    "show_cost_comparison": true,
+    "show_performance_tradeoffs": true,
+    "show_scaling_curves": true,
+    "show_recommendations": true,
+    "show_scenario_analysis": true
+  },
+  "hints": [
+    "Start with vertical scaling for small workloads",
+    "Move to horizontal scaling as traffic grows",
+    "Consider cost per request, not just total cost",
+    "Monitor latency and throughput trade-offs",
+    "Plan for failure with redundancy and fault tolerance"
+  ]
+}

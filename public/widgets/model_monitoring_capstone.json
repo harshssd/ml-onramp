@@ -1,0 +1,349 @@
+{
+  "title": "Model Monitoring Dashboard - Capstone",
+  "data_url": "/data/telco_churn_demo.csv",
+  "target": "Churn",
+  "metrics": [
+    {
+      "name": "accuracy",
+      "display_name": "Accuracy",
+      "description": "Overall model accuracy",
+      "unit": "%",
+      "higher_is_better": true,
+      "baseline_value": 85.2,
+      "current_value": 84.8,
+      "threshold": 80.0,
+      "status": "good",
+      "trend": "stable",
+      "last_updated": "2024-01-06T10:30:00Z"
+    },
+    {
+      "name": "precision",
+      "display_name": "Precision",
+      "description": "Precision for churn prediction",
+      "unit": "%",
+      "higher_is_better": true,
+      "baseline_value": 82.1,
+      "current_value": 81.5,
+      "threshold": 75.0,
+      "status": "good",
+      "trend": "stable",
+      "last_updated": "2024-01-06T10:30:00Z"
+    },
+    {
+      "name": "recall",
+      "display_name": "Recall",
+      "description": "Recall for churn prediction",
+      "unit": "%",
+      "higher_is_better": true,
+      "baseline_value": 88.3,
+      "current_value": 87.9,
+      "threshold": 80.0,
+      "status": "good",
+      "trend": "stable",
+      "last_updated": "2024-01-06T10:30:00Z"
+    },
+    {
+      "name": "f1_score",
+      "display_name": "F1 Score",
+      "description": "Harmonic mean of precision and recall",
+      "unit": "%",
+      "higher_is_better": true,
+      "baseline_value": 85.1,
+      "current_value": 84.6,
+      "threshold": 78.0,
+      "status": "good",
+      "trend": "stable",
+      "last_updated": "2024-01-06T10:30:00Z"
+    },
+    {
+      "name": "latency",
+      "display_name": "Latency",
+      "description": "Average response time",
+      "unit": "ms",
+      "higher_is_better": false,
+      "baseline_value": 45,
+      "current_value": 48,
+      "threshold": 200,
+      "status": "good",
+      "trend": "stable",
+      "last_updated": "2024-01-06T10:30:00Z"
+    },
+    {
+      "name": "throughput",
+      "display_name": "Throughput",
+      "description": "Requests per second",
+      "unit": "req/s",
+      "higher_is_better": true,
+      "baseline_value": 1200,
+      "current_value": 1180,
+      "threshold": 800,
+      "status": "good",
+      "trend": "stable",
+      "last_updated": "2024-01-06T10:30:00Z"
+    },
+    {
+      "name": "error_rate",
+      "display_name": "Error Rate",
+      "description": "Percentage of failed requests",
+      "unit": "%",
+      "higher_is_better": false,
+      "baseline_value": 0.5,
+      "current_value": 0.8,
+      "threshold": 5.0,
+      "status": "good",
+      "trend": "stable",
+      "last_updated": "2024-01-06T10:30:00Z"
+    }
+  ],
+  "drift_metrics": [
+    {
+      "name": "data_drift",
+      "display_name": "Data Drift",
+      "description": "Change in input data distribution",
+      "method": "PSI",
+      "baseline_value": 0.0,
+      "current_value": 0.08,
+      "threshold": 0.1,
+      "status": "good",
+      "features": ["tenure", "monthly_charges", "total_charges"],
+      "last_updated": "2024-01-06T10:30:00Z"
+    },
+    {
+      "name": "concept_drift",
+      "display_name": "Concept Drift",
+      "description": "Change in input-output relationship",
+      "method": "Performance Degradation",
+      "baseline_value": 0.0,
+      "current_value": 0.05,
+      "threshold": 0.05,
+      "status": "warning",
+      "features": ["All Features"],
+      "last_updated": "2024-01-06T10:30:00Z"
+    }
+  ],
+  "fairness_metrics": [
+    {
+      "name": "demographic_parity",
+      "display_name": "Demographic Parity",
+      "description": "Equal prediction rates across groups",
+      "baseline_value": 0.92,
+      "current_value": 0.89,
+      "threshold": 0.85,
+      "status": "good",
+      "subgroups": ["gender", "senior_citizen"],
+      "last_updated": "2024-01-06T10:30:00Z"
+    },
+    {
+      "name": "equalized_odds",
+      "display_name": "Equalized Odds",
+      "description": "Equal true positive and false positive rates",
+      "baseline_value": 0.88,
+      "current_value": 0.85,
+      "threshold": 0.80,
+      "status": "good",
+      "subgroups": ["gender", "senior_citizen"],
+      "last_updated": "2024-01-06T10:30:00Z"
+    }
+  ],
+  "business_metrics": [
+    {
+      "name": "churn_prediction_accuracy",
+      "display_name": "Churn Prediction Accuracy",
+      "description": "Accuracy of churn predictions",
+      "unit": "%",
+      "higher_is_better": true,
+      "baseline_value": 84.8,
+      "current_value": 84.8,
+      "threshold": 80.0,
+      "status": "good",
+      "trend": "stable",
+      "last_updated": "2024-01-06T10:30:00Z"
+    },
+    {
+      "name": "customer_retention_rate",
+      "display_name": "Customer Retention Rate",
+      "description": "Percentage of customers retained",
+      "unit": "%",
+      "higher_is_better": true,
+      "baseline_value": 78.5,
+      "current_value": 78.2,
+      "threshold": 75.0,
+      "status": "good",
+      "trend": "stable",
+      "last_updated": "2024-01-06T10:30:00Z"
+    },
+    {
+      "name": "revenue_impact",
+      "display_name": "Revenue Impact",
+      "description": "Revenue saved through churn prevention",
+      "unit": "$",
+      "higher_is_better": true,
+      "baseline_value": 125000,
+      "current_value": 123500,
+      "threshold": 100000,
+      "status": "good",
+      "trend": "stable",
+      "last_updated": "2024-01-06T10:30:00Z"
+    }
+  ],
+  "alerts": [
+    {
+      "id": "alert_001",
+      "type": "performance",
+      "severity": "info",
+      "message": "Model performance is stable",
+      "timestamp": "2024-01-06T10:30:00Z",
+      "status": "resolved",
+      "acknowledged": true,
+      "channels": ["email"]
+    },
+    {
+      "id": "alert_002",
+      "type": "drift",
+      "severity": "warning",
+      "message": "Concept drift detected but within threshold",
+      "timestamp": "2024-01-06T10:15:00Z",
+      "status": "active",
+      "acknowledged": false,
+      "channels": ["email", "slack"]
+    },
+    {
+      "id": "alert_003",
+      "type": "system",
+      "severity": "info",
+      "message": "System health check passed",
+      "timestamp": "2024-01-06T10:00:00Z",
+      "status": "resolved",
+      "acknowledged": true,
+      "channels": ["email"]
+    }
+  ],
+  "time_series_data": {
+    "accuracy": [
+      {"timestamp": "2024-01-01", "value": 85.2},
+      {"timestamp": "2024-01-02", "value": 85.0},
+      {"timestamp": "2024-01-03", "value": 84.9},
+      {"timestamp": "2024-01-04", "value": 84.8},
+      {"timestamp": "2024-01-05", "value": 84.8},
+      {"timestamp": "2024-01-06", "value": 84.8}
+    ],
+    "latency": [
+      {"timestamp": "2024-01-01", "value": 45},
+      {"timestamp": "2024-01-02", "value": 46},
+      {"timestamp": "2024-01-03", "value": 47},
+      {"timestamp": "2024-01-04", "value": 48},
+      {"timestamp": "2024-01-05", "value": 48},
+      {"timestamp": "2024-01-06", "value": 48}
+    ],
+    "throughput": [
+      {"timestamp": "2024-01-01", "value": 1200},
+      {"timestamp": "2024-01-02", "value": 1190},
+      {"timestamp": "2024-01-03", "value": 1185},
+      {"timestamp": "2024-01-04", "value": 1180},
+      {"timestamp": "2024-01-05", "value": 1180},
+      {"timestamp": "2024-01-06", "value": 1180}
+    ],
+    "error_rate": [
+      {"timestamp": "2024-01-01", "value": 0.5},
+      {"timestamp": "2024-01-02", "value": 0.6},
+      {"timestamp": "2024-01-03", "value": 0.7},
+      {"timestamp": "2024-01-04", "value": 0.8},
+      {"timestamp": "2024-01-05", "value": 0.8},
+      {"timestamp": "2024-01-06", "value": 0.8}
+    ]
+  },
+  "monitoring_configuration": {
+    "data_collection": {
+      "prediction_logging": true,
+      "feature_logging": true,
+      "outcome_logging": true,
+      "metadata_logging": true
+    },
+    "drift_detection": {
+      "data_drift": {
+        "enabled": true,
+        "method": "PSI",
+        "threshold": 0.1,
+        "frequency": "daily"
+      },
+      "concept_drift": {
+        "enabled": true,
+        "method": "performance_degradation",
+        "threshold": 0.05,
+        "frequency": "daily"
+      }
+    },
+    "alerting": {
+      "performance_alerts": {
+        "accuracy_threshold": 0.80,
+        "latency_threshold": 200,
+        "error_rate_threshold": 0.05
+      },
+      "drift_alerts": {
+        "data_drift_threshold": 0.1,
+        "concept_drift_threshold": 0.05
+      },
+      "fairness_alerts": {
+        "demographic_parity_threshold": 0.85,
+        "equalized_odds_threshold": 0.80
+      }
+    }
+  },
+  "dashboard_sections": [
+    {
+      "name": "model_performance",
+      "display_name": "Model Performance",
+      "description": "Core model performance metrics",
+      "metrics": ["accuracy", "precision", "recall", "f1_score"],
+      "visualization": "line_chart",
+      "refresh_rate": "real_time"
+    },
+    {
+      "name": "system_health",
+      "display_name": "System Health",
+      "description": "Infrastructure and system metrics",
+      "metrics": ["latency", "throughput", "error_rate"],
+      "visualization": "gauge_chart",
+      "refresh_rate": "real_time"
+    },
+    {
+      "name": "drift_detection",
+      "display_name": "Drift Detection",
+      "description": "Data and concept drift monitoring",
+      "metrics": ["data_drift", "concept_drift"],
+      "visualization": "bar_chart",
+      "refresh_rate": "daily"
+    },
+    {
+      "name": "fairness_metrics",
+      "display_name": "Fairness Metrics",
+      "description": "Model fairness across demographic groups",
+      "metrics": ["demographic_parity", "equalized_odds"],
+      "visualization": "heatmap",
+      "refresh_rate": "daily"
+    },
+    {
+      "name": "business_impact",
+      "display_name": "Business Impact",
+      "description": "Business value and impact metrics",
+      "metrics": ["churn_prediction_accuracy", "customer_retention_rate", "revenue_impact"],
+      "visualization": "kpi_cards",
+      "refresh_rate": "daily"
+    }
+  ],
+  "visualization": {
+    "show_time_series": true,
+    "show_drift_analysis": true,
+    "show_fairness_metrics": true,
+    "show_business_metrics": true,
+    "show_alert_history": true,
+    "show_performance_heatmap": true
+  },
+  "hints": [
+    "Monitor key metrics continuously to detect performance degradation",
+    "Set appropriate thresholds based on business requirements",
+    "Investigate drift alerts promptly to prevent model degradation",
+    "Use fairness metrics to ensure equitable model performance",
+    "Regularly review and update monitoring thresholds"
+  ]
+}

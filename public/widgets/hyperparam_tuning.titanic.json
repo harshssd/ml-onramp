@@ -1,0 +1,142 @@
+{
+  "title": "Hyperparameter Tuning Playground",
+  "data_url": "/data/titanic_demo.csv",
+  "target": "Survived",
+  "models": [
+    {
+      "name": "Logistic Regression",
+      "type": "linear",
+      "description": "Linear model with regularization",
+      "hyperparameters": {
+        "C": {"type": "float", "range": [0.001, 100], "default": 1.0, "log": true, "description": "Inverse regularization strength"},
+        "penalty": {"type": "categorical", "options": ["l1", "l2", "elasticnet"], "default": "l2", "description": "Regularization type"},
+        "solver": {"type": "categorical", "options": ["liblinear", "lbfgs", "saga"], "default": "liblinear", "description": "Optimization algorithm"}
+      },
+      "importance": ["C", "penalty"],
+      "tuning_tips": [
+        "C controls overfitting: smaller values = more regularization",
+        "L1 penalty creates sparse models, L2 creates smooth models",
+        "liblinear works well for small datasets, lbfgs for larger ones"
+      ]
+    },
+    {
+      "name": "Random Forest",
+      "type": "tree",
+      "description": "Ensemble of decision trees",
+      "hyperparameters": {
+        "n_estimators": {"type": "int", "range": [10, 200], "default": 100, "description": "Number of trees in the forest"},
+        "max_depth": {"type": "int", "range": [1, 20], "default": 10, "description": "Maximum depth of trees"},
+        "min_samples_split": {"type": "int", "range": [2, 20], "default": 2, "description": "Minimum samples to split a node"},
+        "min_samples_leaf": {"type": "int", "range": [1, 10], "default": 1, "description": "Minimum samples in a leaf"},
+        "max_features": {"type": "categorical", "options": ["sqrt", "log2", "auto"], "default": "sqrt", "description": "Number of features to consider for splits"}
+      },
+      "importance": ["n_estimators", "max_depth", "min_samples_split"],
+      "tuning_tips": [
+        "More trees generally improve performance but increase training time",
+        "Deeper trees can overfit, shallower trees can underfit",
+        "min_samples_split prevents overfitting on small datasets"
+      ]
+    },
+    {
+      "name": "Gradient Boosting",
+      "type": "tree",
+      "description": "Sequential ensemble with boosting",
+      "hyperparameters": {
+        "n_estimators": {"type": "int", "range": [10, 200], "default": 100, "description": "Number of boosting stages"},
+        "learning_rate": {"type": "float", "range": [0.01, 1.0], "default": 0.1, "description": "Step size for each update"},
+        "max_depth": {"type": "int", "range": [1, 10], "default": 3, "description": "Maximum depth of trees"},
+        "subsample": {"type": "float", "range": [0.5, 1.0], "default": 1.0, "description": "Fraction of samples used for training"},
+        "min_samples_split": {"type": "int", "range": [2, 20], "default": 2, "description": "Minimum samples to split a node"}
+      },
+      "importance": ["learning_rate", "n_estimators", "max_depth"],
+      "tuning_tips": [
+        "Lower learning rate requires more estimators but often better performance",
+        "Subsample < 1.0 can prevent overfitting and improve generalization",
+        "Start with learning_rate=0.1 and n_estimators=100, then adjust"
+      ]
+    },
+    {
+      "name": "Neural Network",
+      "type": "neural",
+      "description": "Multi-layer perceptron classifier",
+      "hyperparameters": {
+        "hidden_layer_sizes": {"type": "categorical", "options": ["(50,)", "(100,)", "(50, 50)", "(100, 50)", "(50, 50, 50)"], "default": "(50,)", "description": "Architecture of hidden layers"},
+        "learning_rate": {"type": "categorical", "options": ["constant", "adaptive"], "default": "constant", "description": "Learning rate schedule"},
+        "alpha": {"type": "float", "range": [0.0001, 0.1], "default": 0.0001, "log": true, "description": "L2 regularization strength"},
+        "max_iter": {"type": "int", "range": [100, 1000], "default": 200, "description": "Maximum number of iterations"},
+        "batch_size": {"type": "categorical", "options": ["auto", "32", "64", "128"], "default": "auto", "description": "Batch size for optimization"}
+      },
+      "importance": ["hidden_layer_sizes", "alpha", "learning_rate"],
+      "tuning_tips": [
+        "Start with simple architectures and increase complexity if needed",
+        "Higher alpha values prevent overfitting but may cause underfitting",
+        "Adaptive learning rate can help with convergence"
+      ]
+    }
+  ],
+  "search_methods": [
+    {
+      "name": "grid",
+      "display_name": "Grid Search",
+      "description": "Exhaustive search through all combinations",
+      "pros": ["Complete coverage", "Reproducible", "Simple to understand"],
+      "cons": ["Computationally expensive", "Inefficient for large spaces"],
+      "best_for": "Small hyperparameter spaces, when you need exhaustive coverage"
+    },
+    {
+      "name": "random",
+      "display_name": "Random Search",
+      "description": "Random sampling of hyperparameter combinations",
+      "pros": ["More efficient", "Scales well", "Often finds good results quickly"],
+      "cons": ["Not guaranteed coverage", "Less systematic"],
+      "best_for": "Large hyperparameter spaces, when you want good results quickly"
+    },
+    {
+      "name": "bayesian",
+      "display_name": "Bayesian Optimization",
+      "description": "Intelligent search using past results to guide future trials",
+      "pros": ["Smarter search", "Fewer trials needed", "Balances exploration vs exploitation"],
+      "cons": ["More complex", "Slower per iteration", "Requires good surrogate models"],
+      "best_for": "Expensive evaluations, when you want optimal results with limited trials"
+    }
+  ],
+  "cv_folds": 5,
+  "metrics": ["accuracy", "precision", "recall", "f1", "auc"],
+  "max_trials": 50,
+  "visualization": {
+    "show_learning_curves": true,
+    "show_hyperparameter_importance": true,
+    "show_optimization_history": true,
+    "show_parallel_coordinates": true
+  },
+  "hints": [
+    "Start with a coarse search to identify promising regions",
+    "Focus on the most important hyperparameters first",
+    "Use cross-validation to get reliable performance estimates",
+    "Monitor both performance and training time",
+    "Be careful not to overfit to the validation set"
+  ],
+  "scenarios": [
+    {
+      "name": "Quick Baseline",
+      "description": "Fast tuning for initial model comparison",
+      "method": "random",
+      "max_trials": 20,
+      "focus": ["accuracy", "training_time"]
+    },
+    {
+      "name": "Thorough Optimization",
+      "description": "Comprehensive search for best performance",
+      "method": "bayesian",
+      "max_trials": 100,
+      "focus": ["accuracy", "f1", "auc"]
+    },
+    {
+      "name": "Interpretable Model",
+      "description": "Tuning for models that need to be explainable",
+      "method": "grid",
+      "max_trials": 30,
+      "focus": ["accuracy", "interpretability"]
+    }
+  ]
+}

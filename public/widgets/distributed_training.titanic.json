@@ -1,0 +1,212 @@
+{
+  "title": "Distributed Training Lab",
+  "data_url": "/data/titanic_demo.csv",
+  "target": "Survived",
+  "models": [
+    {
+      "name": "NeuralNetwork",
+      "display_name": "Neural Network",
+      "description": "Deep learning model with multiple layers",
+      "training_time_single": 300,
+      "memory_usage_gb": 8,
+      "parallelizable": true,
+      "communication_overhead": 0.1
+    },
+    {
+      "name": "XGBoost",
+      "display_name": "XGBoost",
+      "description": "Gradient boosting model",
+      "training_time_single": 120,
+      "memory_usage_gb": 4,
+      "parallelizable": true,
+      "communication_overhead": 0.05
+    },
+    {
+      "name": "RandomForest",
+      "display_name": "Random Forest",
+      "description": "Ensemble of decision trees",
+      "training_time_single": 60,
+      "memory_usage_gb": 2,
+      "parallelizable": true,
+      "communication_overhead": 0.02
+    }
+  ],
+  "cluster_sizes": [1, 2, 4, 8, 16],
+  "distributed_strategies": [
+    {
+      "name": "data_parallelism",
+      "display_name": "Data Parallelism",
+      "description": "Split training data across workers",
+      "pros": [
+        "Linear speedup with more workers",
+        "Simple to implement",
+        "Works with any model architecture",
+        "Good for large datasets"
+      ],
+      "cons": [
+        "Communication overhead",
+        "Memory requirements",
+        "Synchronization bottlenecks",
+        "Limited by batch size"
+      ],
+      "best_for": "Large datasets, simple models",
+      "scaling_efficiency": 0.8
+    },
+    {
+      "name": "model_parallelism",
+      "display_name": "Model Parallelism",
+      "description": "Split model across multiple devices",
+      "pros": [
+        "Enables very large models",
+        "Memory efficient",
+        "Can handle models larger than single device",
+        "Good for complex architectures"
+      ],
+      "cons": [
+        "Complex implementation",
+        "Communication overhead",
+        "Load balancing challenges",
+        "Limited to specific architectures"
+      ],
+      "best_for": "Large models, complex architectures",
+      "scaling_efficiency": 0.6
+    },
+    {
+      "name": "parameter_servers",
+      "display_name": "Parameter Servers",
+      "description": "Centralized parameter storage and updates",
+      "pros": [
+        "Scalable to many workers",
+        "Fault tolerant",
+        "Flexible update strategies",
+        "Good for asynchronous training"
+      ],
+      "cons": [
+        "Single point of failure",
+        "Communication bottlenecks",
+        "Stale parameter issues",
+        "Complex synchronization"
+      ],
+      "best_for": "Many workers, asynchronous training",
+      "scaling_efficiency": 0.7
+    }
+  ],
+  "training_scenarios": [
+    {
+      "name": "Small Dataset",
+      "description": "Training with small dataset",
+      "dataset_size": 1000,
+      "recommended_strategy": "data_parallelism",
+      "optimal_cluster_size": 2,
+      "reasoning": "Data parallelism is efficient for small datasets"
+    },
+    {
+      "name": "Large Dataset",
+      "description": "Training with large dataset",
+      "dataset_size": 100000,
+      "recommended_strategy": "data_parallelism",
+      "optimal_cluster_size": 8,
+      "reasoning": "Data parallelism scales well with large datasets"
+    },
+    {
+      "name": "Large Model",
+      "description": "Training with large model",
+      "model_size": "large",
+      "recommended_strategy": "model_parallelism",
+      "optimal_cluster_size": 4,
+      "reasoning": "Model parallelism is needed for large models"
+    },
+    {
+      "name": "Many Workers",
+      "description": "Training with many workers",
+      "worker_count": 16,
+      "recommended_strategy": "parameter_servers",
+      "optimal_cluster_size": 16,
+      "reasoning": "Parameter servers handle many workers efficiently"
+    }
+  ],
+  "performance_metrics": {
+    "training_time": {
+      "baseline": 300,
+      "scaling_factor": 0.8,
+      "max_speedup": 8.0
+    },
+    "accuracy": {
+      "baseline": 0.85,
+      "scaling_factor": 0.01,
+      "max_improvement": 0.05
+    },
+    "memory_usage": {
+      "baseline": 8,
+      "scaling_factor": 0.5,
+      "max_reduction": 0.75
+    },
+    "communication_overhead": {
+      "baseline": 0.1,
+      "scaling_factor": 1.2,
+      "max_overhead": 0.5
+    }
+  },
+  "scaling_curves": {
+    "data_parallelism": {
+      "speedup": [1.0, 1.8, 3.2, 5.6, 8.0],
+      "efficiency": [1.0, 0.9, 0.8, 0.7, 0.5],
+      "communication_overhead": [0.0, 0.05, 0.1, 0.2, 0.4]
+    },
+    "model_parallelism": {
+      "speedup": [1.0, 1.5, 2.4, 3.2, 4.0],
+      "efficiency": [1.0, 0.75, 0.6, 0.4, 0.25],
+      "communication_overhead": [0.0, 0.1, 0.2, 0.3, 0.5]
+    },
+    "parameter_servers": {
+      "speedup": [1.0, 1.7, 3.0, 5.2, 7.2],
+      "efficiency": [1.0, 0.85, 0.75, 0.65, 0.45],
+      "communication_overhead": [0.0, 0.08, 0.15, 0.25, 0.4]
+    }
+  },
+  "cost_analysis": {
+    "single_machine": {
+      "cost_per_hour": 2.0,
+      "training_time_hours": 0.5,
+      "total_cost": 1.0
+    },
+    "distributed": {
+      "cost_per_hour_per_machine": 1.5,
+      "machines": 4,
+      "training_time_hours": 0.2,
+      "total_cost": 1.2
+    }
+  },
+  "simulation_results": {
+    "current_configuration": {
+      "strategy": "data_parallelism",
+      "cluster_size": 4,
+      "training_time": 75,
+      "accuracy": 0.86,
+      "memory_usage": 4,
+      "communication_overhead": 0.1
+    },
+    "optimized_configuration": {
+      "strategy": "data_parallelism",
+      "cluster_size": 8,
+      "training_time": 45,
+      "accuracy": 0.87,
+      "memory_usage": 2,
+      "communication_overhead": 0.2
+    }
+  },
+  "visualization": {
+    "show_scaling_curves": true,
+    "show_performance_comparison": true,
+    "show_cost_analysis": true,
+    "show_strategy_recommendations": true,
+    "show_efficiency_metrics": true
+  },
+  "hints": [
+    "Choose data parallelism for large datasets",
+    "Use model parallelism for large models",
+    "Consider parameter servers for many workers",
+    "Monitor communication overhead",
+    "Balance speedup with efficiency"
+  ]
+}

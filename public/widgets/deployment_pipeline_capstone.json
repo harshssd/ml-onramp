@@ -1,0 +1,310 @@
+{
+  "title": "Deployment Pipeline Builder - Capstone",
+  "data_url": "/data/telco_churn_demo.csv",
+  "target": "Churn",
+  "stages": [
+    {
+      "name": "data_ingestion",
+      "display_name": "Data Ingestion",
+      "description": "Ingest and validate customer data",
+      "status": "completed",
+      "duration": "5 minutes",
+      "dependencies": [],
+      "outputs": ["validated_data.csv", "data_quality_report.json"],
+      "tools": ["pandas", "great_expectations", "airflow"],
+      "validation": {
+        "schema_check": true,
+        "completeness_check": true,
+        "quality_check": true
+      }
+    },
+    {
+      "name": "feature_engineering",
+      "display_name": "Feature Engineering",
+      "description": "Transform raw data into model features",
+      "status": "completed",
+      "duration": "10 minutes",
+      "dependencies": ["data_ingestion"],
+      "outputs": ["features.csv", "feature_pipeline.pkl"],
+      "tools": ["scikit-learn", "pandas", "numpy"],
+      "validation": {
+        "feature_validation": true,
+        "transformation_check": true,
+        "pipeline_validation": true
+      }
+    },
+    {
+      "name": "model_training",
+      "display_name": "Model Training",
+      "description": "Train churn prediction model",
+      "status": "completed",
+      "duration": "15 minutes",
+      "dependencies": ["feature_engineering"],
+      "outputs": ["model.pkl", "training_metrics.json", "model_metadata.json"],
+      "tools": ["scikit-learn", "mlflow", "xgboost"],
+      "validation": {
+        "performance_check": true,
+        "cross_validation": true,
+        "bias_testing": true
+      }
+    },
+    {
+      "name": "model_validation",
+      "display_name": "Model Validation",
+      "description": "Validate model performance and quality",
+      "status": "completed",
+      "duration": "8 minutes",
+      "dependencies": ["model_training"],
+      "outputs": ["validation_report.json", "performance_metrics.json"],
+      "tools": ["mlflow", "great_expectations", "custom_validators"],
+      "validation": {
+        "accuracy_threshold": 0.85,
+        "precision_threshold": 0.80,
+        "recall_threshold": 0.80,
+        "bias_threshold": 0.90
+      }
+    },
+    {
+      "name": "model_registry",
+      "display_name": "Model Registry",
+      "description": "Register model version in MLflow",
+      "status": "completed",
+      "duration": "2 minutes",
+      "dependencies": ["model_validation"],
+      "outputs": ["model_version.json", "registry_metadata.json"],
+      "tools": ["mlflow", "model_registry"],
+      "validation": {
+        "version_validation": true,
+        "metadata_check": true,
+        "artifact_validation": true
+      }
+    },
+    {
+      "name": "containerization",
+      "display_name": "Containerization",
+      "description": "Build Docker container for model serving",
+      "status": "completed",
+      "duration": "12 minutes",
+      "dependencies": ["model_registry"],
+      "outputs": ["model_api.tar", "docker_image.json"],
+      "tools": ["docker", "fastapi", "uvicorn"],
+      "validation": {
+        "container_test": true,
+        "api_test": true,
+        "security_scan": true
+      }
+    },
+    {
+      "name": "staging_deployment",
+      "display_name": "Staging Deployment",
+      "description": "Deploy to staging environment",
+      "status": "completed",
+      "duration": "8 minutes",
+      "dependencies": ["containerization"],
+      "outputs": ["staging_url", "deployment_status.json"],
+      "tools": ["kubernetes", "helm", "istio"],
+      "validation": {
+        "health_check": true,
+        "load_test": true,
+        "integration_test": true
+      }
+    },
+    {
+      "name": "production_deployment",
+      "display_name": "Production Deployment",
+      "description": "Deploy to production environment",
+      "status": "in_progress",
+      "duration": "10 minutes",
+      "dependencies": ["staging_deployment"],
+      "outputs": ["production_url", "deployment_metrics.json"],
+      "tools": ["kubernetes", "helm", "istio", "prometheus"],
+      "validation": {
+        "canary_deployment": true,
+        "monitoring_setup": true,
+        "alerting_config": true
+      }
+    }
+  ],
+  "integrations": [
+    {
+      "name": "GitHub Actions",
+      "display_name": "GitHub Actions",
+      "description": "CI/CD pipeline automation",
+      "status": "active",
+      "triggers": ["push", "pull_request", "schedule"],
+      "workflows": ["train", "deploy", "monitor"],
+      "environments": ["development", "staging", "production"]
+    },
+    {
+      "name": "MLflow",
+      "display_name": "MLflow",
+      "description": "Model registry and experiment tracking",
+      "status": "active",
+      "features": ["experiment_tracking", "model_registry", "artifact_storage"],
+      "integrations": ["s3", "postgresql", "prometheus"]
+    },
+    {
+      "name": "Docker",
+      "display_name": "Docker",
+      "description": "Containerization platform",
+      "status": "active",
+      "features": ["multi_stage_build", "security_scanning", "registry"],
+      "integrations": ["kubernetes", "helm", "istio"]
+    },
+    {
+      "name": "Kubernetes",
+      "display_name": "Kubernetes",
+      "description": "Container orchestration",
+      "status": "active",
+      "features": ["deployment", "service", "configmap", "secrets"],
+      "integrations": ["helm", "istio", "prometheus", "grafana"]
+    },
+    {
+      "name": "Prometheus",
+      "display_name": "Prometheus",
+      "description": "Metrics collection and monitoring",
+      "status": "active",
+      "features": ["metrics_collection", "alerting", "service_discovery"],
+      "integrations": ["grafana", "alertmanager", "kubernetes"]
+    },
+    {
+      "name": "Grafana",
+      "display_name": "Grafana",
+      "description": "Monitoring and visualization",
+      "status": "active",
+      "features": ["dashboards", "alerting", "data_sources"],
+      "integrations": ["prometheus", "elasticsearch", "influxdb"]
+    }
+  ],
+  "pipeline_metrics": {
+    "total_duration": "70 minutes",
+    "success_rate": 0.95,
+    "failure_rate": 0.05,
+    "average_lead_time": "45 minutes",
+    "deployment_frequency": "daily",
+    "mean_time_to_recovery": "15 minutes"
+  },
+  "quality_gates": [
+    {
+      "gate": "Code Quality",
+      "description": "Linting, formatting, security scanning",
+      "status": "passed",
+      "tools": ["flake8", "black", "bandit", "safety"],
+      "thresholds": {
+        "code_coverage": 0.80,
+        "security_score": 0.90,
+        "complexity_score": 0.85
+      }
+    },
+    {
+      "gate": "Test Coverage",
+      "description": "Unit tests, integration tests, model tests",
+      "status": "passed",
+      "tools": ["pytest", "coverage", "model_tests"],
+      "thresholds": {
+        "unit_test_coverage": 0.85,
+        "integration_test_coverage": 0.70,
+        "model_test_coverage": 0.90
+      }
+    },
+    {
+      "gate": "Performance Tests",
+      "description": "Load testing, latency testing",
+      "status": "passed",
+      "tools": ["locust", "k6", "artillery"],
+      "thresholds": {
+        "response_time": 200,
+        "throughput": 1000,
+        "error_rate": 0.01
+      }
+    },
+    {
+      "gate": "Model Validation",
+      "description": "Performance thresholds, bias testing",
+      "status": "passed",
+      "tools": ["mlflow", "great_expectations", "fairness_tests"],
+      "thresholds": {
+        "accuracy": 0.85,
+        "precision": 0.80,
+        "recall": 0.80,
+        "bias_score": 0.90
+      }
+    }
+  ],
+  "deployment_strategies": [
+    {
+      "name": "blue_green",
+      "display_name": "Blue-Green Deployment",
+      "description": "Zero-downtime deployment with instant switchover",
+      "pros": ["Zero downtime", "Instant rollback", "Simple validation"],
+      "cons": ["Resource intensive", "Complex setup", "Data consistency"],
+      "use_case": "Critical production systems"
+    },
+    {
+      "name": "canary",
+      "display_name": "Canary Deployment",
+      "description": "Gradual rollout with monitoring and validation",
+      "pros": ["Risk mitigation", "Real user testing", "Gradual validation"],
+      "cons": ["Complex traffic routing", "Longer deployment time", "Monitoring overhead"],
+      "use_case": "High-risk model updates"
+    },
+    {
+      "name": "rolling",
+      "display_name": "Rolling Deployment",
+      "description": "Incremental updates with gradual replacement",
+      "pros": ["Resource efficient", "Gradual rollout", "Simple implementation"],
+      "cons": ["Potential downtime", "Complex rollback", "Version mixing"],
+      "use_case": "Standard deployments"
+    }
+  ],
+  "monitoring_setup": {
+    "metrics": [
+      "model_accuracy",
+      "prediction_latency",
+      "request_throughput",
+      "error_rate",
+      "data_drift_score",
+      "concept_drift_score"
+    ],
+    "alerts": [
+      {
+        "name": "High Error Rate",
+        "condition": "error_rate > 0.05",
+        "severity": "critical",
+        "channels": ["email", "slack", "pagerduty"]
+      },
+      {
+        "name": "High Latency",
+        "condition": "latency > 200ms",
+        "severity": "warning",
+        "channels": ["email", "slack"]
+      },
+      {
+        "name": "Data Drift",
+        "condition": "drift_score > 0.1",
+        "severity": "alert",
+        "channels": ["email", "slack"]
+      }
+    ],
+    "dashboards": [
+      "model_performance",
+      "system_health",
+      "business_metrics",
+      "drift_detection"
+    ]
+  },
+  "visualization": {
+    "show_pipeline_flow": true,
+    "show_stage_status": true,
+    "show_integrations": true,
+    "show_metrics": true,
+    "show_quality_gates": true
+  },
+  "hints": [
+    "Design pipeline stages with clear dependencies",
+    "Implement comprehensive quality gates",
+    "Use appropriate deployment strategies",
+    "Set up monitoring and alerting early",
+    "Test rollback procedures regularly"
+  ]
+}

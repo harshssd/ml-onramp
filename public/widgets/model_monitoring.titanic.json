@@ -1,0 +1,217 @@
+{
+  "title": "Model Monitoring Dashboard",
+  "data_url": "/data/titanic_demo.csv",
+  "target": "Survived",
+  "metrics": [
+    {
+      "name": "accuracy",
+      "display_name": "Accuracy",
+      "description": "Overall model accuracy",
+      "unit": "%",
+      "higher_is_better": true,
+      "baseline_value": 82.5,
+      "current_value": 81.2,
+      "threshold": 80.0,
+      "status": "warning",
+      "trend": "decreasing"
+    },
+    {
+      "name": "precision",
+      "display_name": "Precision",
+      "description": "Precision for positive class",
+      "unit": "%",
+      "higher_is_better": true,
+      "baseline_value": 78.3,
+      "current_value": 76.8,
+      "threshold": 75.0,
+      "status": "warning",
+      "trend": "decreasing"
+    },
+    {
+      "name": "recall",
+      "display_name": "Recall",
+      "description": "Recall for positive class",
+      "unit": "%",
+      "higher_is_better": true,
+      "baseline_value": 85.1,
+      "current_value": 84.7,
+      "threshold": 80.0,
+      "status": "good",
+      "trend": "stable"
+    },
+    {
+      "name": "f1_score",
+      "display_name": "F1 Score",
+      "description": "Harmonic mean of precision and recall",
+      "unit": "%",
+      "higher_is_better": true,
+      "baseline_value": 81.6,
+      "current_value": 80.5,
+      "threshold": 78.0,
+      "status": "warning",
+      "trend": "decreasing"
+    },
+    {
+      "name": "latency",
+      "display_name": "Latency",
+      "description": "Average response time",
+      "unit": "ms",
+      "higher_is_better": false,
+      "baseline_value": 45,
+      "current_value": 52,
+      "threshold": 200,
+      "status": "good",
+      "trend": "increasing"
+    },
+    {
+      "name": "throughput",
+      "display_name": "Throughput",
+      "description": "Requests per second",
+      "unit": "req/s",
+      "higher_is_better": true,
+      "baseline_value": 150,
+      "current_value": 142,
+      "threshold": 100,
+      "status": "good",
+      "trend": "decreasing"
+    }
+  ],
+  "dimensions": [
+    {
+      "name": "overall",
+      "display_name": "Overall",
+      "description": "Overall model performance",
+      "metrics": ["accuracy", "precision", "recall", "f1_score", "latency", "throughput"]
+    },
+    {
+      "name": "by_class",
+      "display_name": "By Class",
+      "description": "Performance by prediction class",
+      "metrics": ["accuracy", "precision", "recall", "f1_score"],
+      "subgroups": ["Survived", "Not Survived"]
+    },
+    {
+      "name": "by_subgroup",
+      "display_name": "By Subgroup",
+      "description": "Performance by demographic subgroups",
+      "metrics": ["accuracy", "precision", "recall", "f1_score"],
+      "subgroups": ["Male", "Female", "First Class", "Second Class", "Third Class"]
+    }
+  ],
+  "drift_metrics": [
+    {
+      "name": "data_drift",
+      "display_name": "Data Drift",
+      "description": "Change in input data distribution",
+      "method": "PSI",
+      "baseline_value": 0.0,
+      "current_value": 0.15,
+      "threshold": 0.1,
+      "status": "alert",
+      "features": ["Age", "Fare", "Pclass"]
+    },
+    {
+      "name": "concept_drift",
+      "display_name": "Concept Drift",
+      "description": "Change in input-output relationship",
+      "method": "Performance Degradation",
+      "baseline_value": 0.0,
+      "current_value": 0.08,
+      "threshold": 0.05,
+      "status": "warning",
+      "features": ["All Features"]
+    }
+  ],
+  "fairness_metrics": [
+    {
+      "name": "demographic_parity",
+      "display_name": "Demographic Parity",
+      "description": "Equal prediction rates across groups",
+      "baseline_value": 0.95,
+      "current_value": 0.92,
+      "threshold": 0.90,
+      "status": "good",
+      "subgroups": ["Male vs Female"]
+    },
+    {
+      "name": "equalized_odds",
+      "display_name": "Equalized Odds",
+      "description": "Equal true positive and false positive rates",
+      "baseline_value": 0.88,
+      "current_value": 0.85,
+      "threshold": 0.80,
+      "status": "warning",
+      "subgroups": ["Male vs Female"]
+    }
+  ],
+  "time_series_data": {
+    "accuracy": [
+      {"timestamp": "2024-01-01", "value": 82.5},
+      {"timestamp": "2024-01-02", "value": 82.3},
+      {"timestamp": "2024-01-03", "value": 82.1},
+      {"timestamp": "2024-01-04", "value": 81.8},
+      {"timestamp": "2024-01-05", "value": 81.5},
+      {"timestamp": "2024-01-06", "value": 81.2}
+    ],
+    "latency": [
+      {"timestamp": "2024-01-01", "value": 45},
+      {"timestamp": "2024-01-02", "value": 47},
+      {"timestamp": "2024-01-03", "value": 49},
+      {"timestamp": "2024-01-04", "value": 50},
+      {"timestamp": "2024-01-05", "value": 51},
+      {"timestamp": "2024-01-06", "value": 52}
+    ],
+    "throughput": [
+      {"timestamp": "2024-01-01", "value": 150},
+      {"timestamp": "2024-01-02", "value": 148},
+      {"timestamp": "2024-01-03", "value": 146},
+      {"timestamp": "2024-01-04", "value": 144},
+      {"timestamp": "2024-01-05", "value": 143},
+      {"timestamp": "2024-01-06", "value": 142}
+    ]
+  },
+  "alerts": [
+    {
+      "id": "accuracy_drop",
+      "type": "performance",
+      "severity": "warning",
+      "message": "Model accuracy has dropped below threshold",
+      "timestamp": "2024-01-06T10:30:00Z",
+      "status": "active",
+      "acknowledged": false
+    },
+    {
+      "id": "data_drift_detected",
+      "type": "drift",
+      "severity": "alert",
+      "message": "Data drift detected in Age and Fare features",
+      "timestamp": "2024-01-06T09:15:00Z",
+      "status": "active",
+      "acknowledged": false
+    },
+    {
+      "id": "latency_increase",
+      "type": "performance",
+      "severity": "info",
+      "message": "Latency has increased but remains within SLA",
+      "timestamp": "2024-01-06T08:45:00Z",
+      "status": "resolved",
+      "acknowledged": true
+    }
+  ],
+  "refresh_rate": "realtime",
+  "visualization": {
+    "show_time_series": true,
+    "show_drift_analysis": true,
+    "show_fairness_metrics": true,
+    "show_alert_history": true,
+    "show_performance_heatmap": true
+  },
+  "hints": [
+    "Monitor key metrics continuously to detect performance degradation",
+    "Set appropriate thresholds based on business requirements",
+    "Investigate drift alerts promptly to prevent model degradation",
+    "Use fairness metrics to ensure equitable model performance",
+    "Regularly review and update monitoring thresholds"
+  ]
+}

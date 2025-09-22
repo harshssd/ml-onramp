@@ -1,0 +1,283 @@
+{
+  "title": "Cost Performance Dashboard",
+  "data_url": "/data/titanic_demo.csv",
+  "target": "Survived",
+  "deployment_options": [
+    {
+      "name": "Cloud_GPU",
+      "display_name": "Cloud GPU",
+      "description": "High-performance GPU instances in the cloud",
+      "pros": [
+        "High performance",
+        "Scalable",
+        "Managed infrastructure",
+        "Good for complex models"
+      ],
+      "cons": [
+        "Expensive",
+        "High latency",
+        "Complex setup",
+        "Overkill for simple models"
+      ],
+      "cost_per_request": 0.10,
+      "latency_ms": 100,
+      "throughput_rps": 500,
+      "setup_cost": 1000,
+      "maintenance_cost": 500,
+      "best_for": "Complex models, high accuracy requirements"
+    },
+    {
+      "name": "Cloud_CPU",
+      "display_name": "Cloud CPU",
+      "description": "Standard CPU instances in the cloud",
+      "pros": [
+        "Cost-effective",
+        "Good performance",
+        "Easy to scale",
+        "Balanced option"
+      ],
+      "cons": [
+        "Limited for complex models",
+        "Higher latency than edge",
+        "Network dependency",
+        "Resource constraints"
+      ],
+      "cost_per_request": 0.03,
+      "latency_ms": 150,
+      "throughput_rps": 1000,
+      "setup_cost": 200,
+      "maintenance_cost": 100,
+      "best_for": "Most applications, balanced requirements"
+    },
+    {
+      "name": "Edge_Device",
+      "display_name": "Edge Device",
+      "description": "On-device deployment for mobile/IoT",
+      "pros": [
+        "Lowest latency",
+        "Offline capability",
+        "Privacy preservation",
+        "No network dependency"
+      ],
+      "cons": [
+        "Limited compute power",
+        "Memory constraints",
+        "Battery life impact",
+        "Model size limitations"
+      ],
+      "cost_per_request": 0.01,
+      "latency_ms": 20,
+      "throughput_rps": 100,
+      "setup_cost": 50,
+      "maintenance_cost": 25,
+      "best_for": "Mobile apps, IoT devices, real-time applications"
+    },
+    {
+      "name": "Hybrid_Cloud",
+      "display_name": "Hybrid Cloud",
+      "description": "Combination of cloud and edge deployment",
+      "pros": [
+        "Best of both worlds",
+        "Flexible deployment",
+        "Cost optimization",
+        "High availability"
+      ],
+      "cons": [
+        "Complex architecture",
+        "Higher setup cost",
+        "Management overhead",
+        "Coordination challenges"
+      ],
+      "cost_per_request": 0.05,
+      "latency_ms": 60,
+      "throughput_rps": 800,
+      "setup_cost": 500,
+      "maintenance_cost": 200,
+      "best_for": "Enterprise applications, complex requirements"
+    }
+  ],
+  "dimensions": [
+    {
+      "name": "latency",
+      "display_name": "Latency",
+      "description": "Response time in milliseconds",
+      "unit": "ms",
+      "lower_is_better": true,
+      "threshold": 200
+    },
+    {
+      "name": "throughput",
+      "display_name": "Throughput",
+      "description": "Requests per second",
+      "unit": "rps",
+      "lower_is_better": false,
+      "threshold": 1000
+    },
+    {
+      "name": "cost_per_request",
+      "display_name": "Cost per Request",
+      "description": "Cost in dollars per request",
+      "unit": "$",
+      "lower_is_better": true,
+      "threshold": 0.05
+    },
+    {
+      "name": "accuracy",
+      "display_name": "Accuracy",
+      "description": "Model accuracy percentage",
+      "unit": "%",
+      "lower_is_better": false,
+      "threshold": 80
+    },
+    {
+      "name": "availability",
+      "display_name": "Availability",
+      "description": "Uptime percentage",
+      "unit": "%",
+      "lower_is_better": false,
+      "threshold": 99
+    }
+  ],
+  "tradeoff_scenarios": [
+    {
+      "name": "High Performance",
+      "description": "Maximum performance requirements",
+      "priority": "performance",
+      "constraints": {
+        "latency": 50,
+        "throughput": 2000,
+        "accuracy": 95
+      },
+      "recommended_option": "Cloud_GPU",
+      "reasoning": "GPU instances provide highest performance"
+    },
+    {
+      "name": "Cost Optimization",
+      "description": "Minimize operational costs",
+      "priority": "cost",
+      "constraints": {
+        "cost_per_request": 0.02,
+        "latency": 300,
+        "accuracy": 80
+      },
+      "recommended_option": "Edge_Device",
+      "reasoning": "Edge devices offer lowest cost per request"
+    },
+    {
+      "name": "Balanced Approach",
+      "description": "Balance performance and cost",
+      "priority": "balanced",
+      "constraints": {
+        "latency": 150,
+        "throughput": 1000,
+        "cost_per_request": 0.05
+      },
+      "recommended_option": "Cloud_CPU",
+      "reasoning": "CPU instances provide good balance"
+    },
+    {
+      "name": "Real-time Requirements",
+      "description": "Ultra-low latency requirements",
+      "priority": "latency",
+      "constraints": {
+        "latency": 30,
+        "throughput": 500,
+        "availability": 99.9
+      },
+      "recommended_option": "Edge_Device",
+      "reasoning": "Edge deployment minimizes latency"
+    }
+  ],
+  "cost_breakdown": {
+    "Cloud_GPU": {
+      "compute_cost": 0.08,
+      "storage_cost": 0.01,
+      "network_cost": 0.005,
+      "management_cost": 0.005,
+      "total_cost": 0.10
+    },
+    "Cloud_CPU": {
+      "compute_cost": 0.025,
+      "storage_cost": 0.002,
+      "network_cost": 0.002,
+      "management_cost": 0.001,
+      "total_cost": 0.03
+    },
+    "Edge_Device": {
+      "compute_cost": 0.005,
+      "storage_cost": 0.002,
+      "network_cost": 0.001,
+      "management_cost": 0.002,
+      "total_cost": 0.01
+    },
+    "Hybrid_Cloud": {
+      "compute_cost": 0.04,
+      "storage_cost": 0.005,
+      "network_cost": 0.003,
+      "management_cost": 0.002,
+      "total_cost": 0.05
+    }
+  },
+  "performance_analysis": {
+    "current_deployment": {
+      "option": "Cloud_CPU",
+      "latency": 150,
+      "throughput": 1000,
+      "cost_per_request": 0.03,
+      "accuracy": 85,
+      "availability": 99.5
+    },
+    "optimization_opportunities": [
+      {
+        "option": "Edge_Device",
+        "improvement": "Reduce latency by 87%",
+        "tradeoff": "Reduce throughput by 90%",
+        "cost_impact": "Reduce cost by 67%"
+      },
+      {
+        "option": "Cloud_GPU",
+        "improvement": "Increase accuracy by 12%",
+        "tradeoff": "Increase cost by 233%",
+        "latency_impact": "Reduce latency by 33%"
+      }
+    ]
+  },
+  "scaling_analysis": {
+    "traffic_growth": {
+      "current": 1000,
+      "projected_6_months": 5000,
+      "projected_12_months": 20000
+    },
+    "cost_projection": {
+      "Cloud_GPU": {
+        "current": 100,
+        "6_months": 500,
+        "12_months": 2000
+      },
+      "Cloud_CPU": {
+        "current": 30,
+        "6_months": 150,
+        "12_months": 600
+      },
+      "Edge_Device": {
+        "current": 10,
+        "6_months": 50,
+        "12_months": 200
+      }
+    }
+  },
+  "visualization": {
+    "show_cost_comparison": true,
+    "show_performance_tradeoffs": true,
+    "show_scaling_projections": true,
+    "show_optimization_opportunities": true,
+    "show_tradeoff_analysis": true
+  },
+  "hints": [
+    "Consider your latency requirements carefully",
+    "Balance cost with performance needs",
+    "Plan for traffic growth",
+    "Evaluate optimization opportunities",
+    "Test different deployment options"
+  ]
+}

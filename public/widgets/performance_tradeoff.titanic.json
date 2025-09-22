@@ -1,0 +1,283 @@
+{
+  "title": "Performance Trade-off Explorer",
+  "data_url": "/data/titanic_demo.csv",
+  "target": "Survived",
+  "models": [
+    {
+      "name": "Logistic Regression",
+      "type": "linear",
+      "description": "Simple, fast, interpretable linear model",
+      "baseline_metrics": {
+        "accuracy": 0.82,
+        "latency_ms": 5,
+        "model_size_mb": 0.1,
+        "cost_per_prediction": 0.001,
+        "interpretability_score": 0.95
+      },
+      "optimization_strategies": [
+        {
+          "name": "regularization",
+          "description": "L1/L2 regularization for overfitting prevention",
+          "impact": {
+            "accuracy": 0.02,
+            "latency_ms": 0,
+            "model_size_mb": 0,
+            "cost_per_prediction": 0,
+            "interpretability_score": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "Random Forest",
+      "type": "tree",
+      "description": "Ensemble of decision trees with good performance",
+      "baseline_metrics": {
+        "accuracy": 0.85,
+        "latency_ms": 25,
+        "model_size_mb": 2.5,
+        "cost_per_prediction": 0.005,
+        "interpretability_score": 0.7
+      },
+      "optimization_strategies": [
+        {
+          "name": "pruning",
+          "description": "Remove weak branches to reduce size",
+          "impact": {
+            "accuracy": -0.01,
+            "latency_ms": -5,
+            "model_size_mb": -0.8,
+            "cost_per_prediction": -0.001,
+            "interpretability_score": 0.05
+          }
+        }
+      ]
+    },
+    {
+      "name": "Gradient Boosting",
+      "type": "tree",
+      "description": "Sequential ensemble with high accuracy",
+      "baseline_metrics": {
+        "accuracy": 0.87,
+        "latency_ms": 45,
+        "model_size_mb": 4.2,
+        "cost_per_prediction": 0.008,
+        "interpretability_score": 0.6
+      },
+      "optimization_strategies": [
+        {
+          "name": "early_stopping",
+          "description": "Stop boosting when validation performance plateaus",
+          "impact": {
+            "accuracy": 0,
+            "latency_ms": -10,
+            "model_size_mb": -1.2,
+            "cost_per_prediction": -0.002,
+            "interpretability_score": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "Neural Network",
+      "type": "neural",
+      "description": "Deep learning model with high capacity",
+      "baseline_metrics": {
+        "accuracy": 0.88,
+        "latency_ms": 120,
+        "model_size_mb": 15.8,
+        "cost_per_prediction": 0.025,
+        "interpretability_score": 0.2
+      },
+      "optimization_strategies": [
+        {
+          "name": "quantization",
+          "description": "Reduce precision of weights to 8-bit",
+          "impact": {
+            "accuracy": -0.02,
+            "latency_ms": -40,
+            "model_size_mb": -8.5,
+            "cost_per_prediction": -0.015,
+            "interpretability_score": 0
+          }
+        },
+        {
+          "name": "pruning",
+          "description": "Remove weak connections to reduce size",
+          "impact": {
+            "accuracy": -0.01,
+            "latency_ms": -20,
+            "model_size_mb": -5.2,
+            "cost_per_prediction": -0.008,
+            "interpretability_score": 0.05
+          }
+        },
+        {
+          "name": "distillation",
+          "description": "Train smaller model to mimic larger one",
+          "impact": {
+            "accuracy": -0.03,
+            "latency_ms": -60,
+            "model_size_mb": -10.5,
+            "cost_per_prediction": -0.018,
+            "interpretability_score": 0.1
+          }
+        }
+      ]
+    }
+  ],
+  "dimensions": [
+    {
+      "name": "accuracy",
+      "display_name": "Accuracy",
+      "description": "Model prediction accuracy",
+      "unit": "%",
+      "higher_is_better": true,
+      "weight": 0.3
+    },
+    {
+      "name": "latency_ms",
+      "display_name": "Latency",
+      "description": "Inference time in milliseconds",
+      "unit": "ms",
+      "higher_is_better": false,
+      "weight": 0.25
+    },
+    {
+      "name": "model_size_mb",
+      "display_name": "Model Size",
+      "description": "Model size in megabytes",
+      "unit": "MB",
+      "higher_is_better": false,
+      "weight": 0.2
+    },
+    {
+      "name": "cost_per_prediction",
+      "display_name": "Cost per Prediction",
+      "description": "Computational cost per prediction",
+      "unit": "$",
+      "higher_is_better": false,
+      "weight": 0.15
+    },
+    {
+      "name": "interpretability_score",
+      "display_name": "Interpretability",
+      "description": "Ability to explain predictions",
+      "unit": "score",
+      "higher_is_better": true,
+      "weight": 0.1
+    }
+  ],
+  "production_scenarios": [
+    {
+      "name": "Real-Time API",
+      "description": "High-frequency predictions with strict latency requirements",
+      "constraints": {
+        "latency_ms": 50,
+        "model_size_mb": 10,
+        "cost_per_prediction": 0.01
+      },
+      "priority_weights": {
+        "latency_ms": 0.4,
+        "accuracy": 0.3,
+        "model_size_mb": 0.2,
+        "cost_per_prediction": 0.1
+      },
+      "recommended_models": ["LogisticRegression", "RandomForest"],
+      "optimization_strategies": ["pruning", "quantization"]
+    },
+    {
+      "name": "Batch Processing",
+      "description": "Offline processing with accuracy priority",
+      "constraints": {
+        "latency_ms": 1000,
+        "model_size_mb": 100,
+        "cost_per_prediction": 0.05
+      },
+      "priority_weights": {
+        "accuracy": 0.5,
+        "interpretability_score": 0.2,
+        "model_size_mb": 0.15,
+        "latency_ms": 0.1,
+        "cost_per_prediction": 0.05
+      },
+      "recommended_models": ["GradientBoosting", "NeuralNetwork"],
+      "optimization_strategies": ["early_stopping", "regularization"]
+    },
+    {
+      "name": "Edge Deployment",
+      "description": "Mobile or IoT devices with resource constraints",
+      "constraints": {
+        "latency_ms": 100,
+        "model_size_mb": 5,
+        "cost_per_prediction": 0.005
+      },
+      "priority_weights": {
+        "model_size_mb": 0.4,
+        "latency_ms": 0.3,
+        "accuracy": 0.2,
+        "cost_per_prediction": 0.1
+      },
+      "recommended_models": ["LogisticRegression", "RandomForest"],
+      "optimization_strategies": ["pruning", "quantization", "distillation"]
+    },
+    {
+      "name": "Regulatory Compliance",
+      "description": "Financial or healthcare applications requiring interpretability",
+      "constraints": {
+        "interpretability_score": 0.8,
+        "latency_ms": 200,
+        "model_size_mb": 20
+      },
+      "priority_weights": {
+        "interpretability_score": 0.4,
+        "accuracy": 0.3,
+        "latency_ms": 0.15,
+        "model_size_mb": 0.1,
+        "cost_per_prediction": 0.05
+      },
+      "recommended_models": ["LogisticRegression", "RandomForest"],
+      "optimization_strategies": ["regularization"]
+    }
+  ],
+  "visualization": {
+    "show_3d_scatter": true,
+    "show_radar_chart": true,
+    "show_parallel_coordinates": true,
+    "show_trade_off_matrix": true,
+    "show_optimization_impact": true
+  },
+  "hints": [
+    "Consider your production constraints when choosing models",
+    "Accuracy isn't everything - latency and cost matter too",
+    "Use optimization strategies to balance multiple objectives",
+    "Test different scenarios to find the best trade-offs",
+    "Monitor performance in production to validate your choices"
+  ],
+  "common_trade_offs": [
+    {
+      "trade_off": "Accuracy vs Latency",
+      "description": "More complex models are more accurate but slower",
+      "solution": "Use model compression or simpler architectures",
+      "example": "Neural network with 88% accuracy vs Random Forest with 85% accuracy but 5x faster"
+    },
+    {
+      "trade_off": "Accuracy vs Interpretability",
+      "description": "Complex models are less interpretable",
+      "solution": "Use explainable AI tools or simpler models",
+      "example": "Linear model is interpretable but less accurate than neural network"
+    },
+    {
+      "trade_off": "Performance vs Cost",
+      "description": "Better performance often requires more resources",
+      "solution": "Optimize for your specific cost constraints",
+      "example": "GPU inference is faster but more expensive than CPU"
+    },
+    {
+      "trade_off": "Model Size vs Accuracy",
+      "description": "Larger models are more accurate but harder to deploy",
+      "solution": "Use compression techniques or model distillation",
+      "example": "Full neural network vs quantized version with 4x smaller size"
+    }
+  ]
+}

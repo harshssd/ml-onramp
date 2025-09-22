@@ -1,0 +1,37 @@
+{
+  "title": "Feature Selection — Compare Methods",
+  "data_url": "/data/titanic_demo.csv",
+  "target": "Survived",
+  "methods": [
+    {
+      "name": "correlation",
+      "supports": ["numeric"],
+      "score_direction": "abs_higher_better"
+    },
+    {
+      "name": "mutual_information",
+      "supports": ["numeric", "categorical"],
+      "score_direction": "higher_better"
+    },
+    {
+      "name": "model_importance",
+      "model": "random_forest_classifier",
+      "n_estimators": 200,
+      "max_depth": 5,
+      "score_direction": "higher_better"
+    }
+  ],
+  "cv_compare": {
+    "folds": 5,
+    "models": [
+      { "name": "logreg_l2", "penalty": "l2", "C": 1.0 },
+      { "name": "random_forest", "n_estimators": 200, "max_depth": 5 }
+    ],
+    "k_feature_sets": [5, 8, "all"]
+  },
+  "exclude": ["Ticket", "Cabin", "PassengerId"],
+  "hints": [
+    "Use MI when mixing numeric/categorical features.",
+    "Validate selection via cross-validation; fewer features often generalize better."
+  ]
+}

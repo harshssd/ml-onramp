@@ -1,0 +1,42 @@
+{
+  "title": "Transform Preview — Safe Pipeline",
+  "data_url": "/data/titanic_demo.csv",
+  "target": "Survived",
+  "train_split": 0.8,
+  "leakage_guard": true,
+  "steps": [
+    {
+      "name": "impute_numeric",
+      "strategy": "median",
+      "columns": ["Age", "Fare"]
+    },
+    {
+      "name": "impute_categorical",
+      "strategy": "most_frequent",
+      "columns": ["Embarked"]
+    },
+    {
+      "name": "add_missing_indicators",
+      "columns": ["Age", "Cabin"]
+    },
+    {
+      "name": "one_hot_encode",
+      "drop_first": true,
+      "columns": ["Sex", "Embarked", "Pclass"]
+    },
+    {
+      "name": "scale_numeric",
+      "method": "standard",
+      "columns": ["Age", "Fare", "SibSp", "Parch"]
+    },
+    {
+      "name": "drop_columns",
+      "columns": ["Ticket", "Cabin", "PassengerId"]
+    }
+  ],
+  "preview": {
+    "show_schema_diff": true,
+    "show_feature_count": true,
+    "show_example_rows": 5
+  }
+}

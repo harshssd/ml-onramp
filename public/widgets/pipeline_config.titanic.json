@@ -1,0 +1,370 @@
+{
+  "title": "Pipeline Configurator",
+  "data_url": "/data/titanic_demo.csv",
+  "target": "Survived",
+  "stages": {
+    "Data Ingestion": {
+      "schema_check": {
+        "enabled": true,
+        "description": "Validate data schema against expected format",
+        "configurable": true,
+        "default_value": true,
+        "impact": "Prevents data quality issues downstream"
+      },
+      "drift_check": {
+        "enabled": true,
+        "description": "Detect data drift from baseline distribution",
+        "configurable": true,
+        "default_value": true,
+        "impact": "Early detection of data changes"
+      },
+      "data_quality_checks": {
+        "enabled": true,
+        "description": "Validate data quality metrics",
+        "configurable": true,
+        "default_value": true,
+        "impact": "Ensures high-quality data for training"
+      },
+      "data_lineage": {
+        "enabled": true,
+        "description": "Track data flow and transformations",
+        "configurable": true,
+        "default_value": true,
+        "impact": "Enables data traceability and debugging"
+      }
+    },
+    "Feature Engineering": {
+      "feature_extraction": {
+        "enabled": true,
+        "description": "Extract features from raw data",
+        "configurable": true,
+        "default_value": true,
+        "impact": "Creates meaningful features for model training"
+      },
+      "feature_selection": {
+        "enabled": true,
+        "description": "Select most relevant features",
+        "configurable": true,
+        "default_value": true,
+        "impact": "Reduces dimensionality and improves performance"
+      },
+      "feature_scaling": {
+        "enabled": true,
+        "description": "Normalize and scale features",
+        "configurable": true,
+        "default_value": true,
+        "impact": "Ensures consistent feature ranges"
+      },
+      "feature_store": {
+        "enabled": true,
+        "description": "Store and serve features centrally",
+        "configurable": true,
+        "default_value": true,
+        "impact": "Enables feature reuse and consistency"
+      }
+    },
+    "Model Training": {
+      "automated_training": {
+        "enabled": true,
+        "description": "Automate model training process",
+        "configurable": true,
+        "default_value": true,
+        "impact": "Reduces manual effort and ensures consistency"
+      },
+      "hyperparameter_optimization": {
+        "enabled": true,
+        "description": "Automatically optimize hyperparameters",
+        "configurable": true,
+        "default_value": true,
+        "impact": "Improves model performance through optimization"
+      },
+      "experiment_tracking": {
+        "enabled": true,
+        "description": "Track experiments and results",
+        "configurable": true,
+        "default_value": true,
+        "impact": "Enables reproducibility and comparison"
+      },
+      "model_versioning": {
+        "enabled": true,
+        "description": "Version control model artifacts",
+        "configurable": true,
+        "default_value": true,
+        "impact": "Enables model rollback and comparison"
+      }
+    },
+    "Model Validation": {
+      "accuracy_threshold": {
+        "enabled": true,
+        "description": "Set minimum accuracy threshold",
+        "configurable": true,
+        "default_value": 0.8,
+        "min_value": 0.0,
+        "max_value": 1.0,
+        "impact": "Ensures model meets performance requirements"
+      },
+      "bias_check": {
+        "enabled": true,
+        "description": "Check for model bias and fairness",
+        "configurable": true,
+        "default_value": true,
+        "impact": "Ensures ethical and fair model behavior"
+      },
+      "cross_validation": {
+        "enabled": true,
+        "description": "Perform cross-validation for robust evaluation",
+        "configurable": true,
+        "default_value": true,
+        "impact": "Provides reliable performance estimates"
+      },
+      "a_b_testing": {
+        "enabled": true,
+        "description": "Compare model versions with A/B testing",
+        "configurable": true,
+        "default_value": true,
+        "impact": "Validates model performance in production"
+      }
+    },
+    "Deployment": {
+      "environment": {
+        "enabled": true,
+        "description": "Deploy to staging and production environments",
+        "configurable": true,
+        "default_value": ["staging", "production"],
+        "options": ["staging", "production", "development"],
+        "impact": "Enables safe testing before production deployment"
+      },
+      "containerization": {
+        "enabled": true,
+        "description": "Package model in containers",
+        "configurable": true,
+        "default_value": true,
+        "impact": "Ensures consistent deployment across environments"
+      },
+      "blue_green_deployment": {
+        "enabled": true,
+        "description": "Use blue-green deployment strategy",
+        "configurable": true,
+        "default_value": true,
+        "impact": "Enables zero-downtime deployments"
+      },
+      "rollback_capability": {
+        "enabled": true,
+        "description": "Enable automatic rollback on failure",
+        "configurable": true,
+        "default_value": true,
+        "impact": "Minimizes impact of deployment failures"
+      }
+    },
+    "Monitoring": {
+      "latency_alerts": {
+        "enabled": true,
+        "description": "Alert on high latency",
+        "configurable": true,
+        "default_value": true,
+        "threshold": 200,
+        "unit": "ms",
+        "impact": "Ensures responsive user experience"
+      },
+      "drift_alerts": {
+        "enabled": true,
+        "description": "Alert on data or model drift",
+        "configurable": true,
+        "default_value": true,
+        "impact": "Early detection of performance degradation"
+      },
+      "accuracy_monitoring": {
+        "enabled": true,
+        "description": "Monitor model accuracy continuously",
+        "configurable": true,
+        "default_value": true,
+        "impact": "Tracks model performance over time"
+      },
+      "retraining_triggers": {
+        "enabled": true,
+        "description": "Automatically trigger retraining",
+        "configurable": true,
+        "default_value": true,
+        "impact": "Maintains model performance automatically"
+      }
+    }
+  },
+  "pipeline_templates": [
+    {
+      "name": "Development Pipeline",
+      "description": "Lightweight pipeline for development and testing",
+      "stages": {
+        "Data Ingestion": {
+          "schema_check": true,
+          "drift_check": false,
+          "data_quality_checks": true,
+          "data_lineage": false
+        },
+        "Feature Engineering": {
+          "feature_extraction": true,
+          "feature_selection": true,
+          "feature_scaling": true,
+          "feature_store": false
+        },
+        "Model Training": {
+          "automated_training": true,
+          "hyperparameter_optimization": false,
+          "experiment_tracking": true,
+          "model_versioning": true
+        },
+        "Model Validation": {
+          "accuracy_threshold": 0.7,
+          "bias_check": false,
+          "cross_validation": true,
+          "a_b_testing": false
+        },
+        "Deployment": {
+          "environment": ["staging"],
+          "containerization": true,
+          "blue_green_deployment": false,
+          "rollback_capability": true
+        },
+        "Monitoring": {
+          "latency_alerts": false,
+          "drift_alerts": false,
+          "accuracy_monitoring": true,
+          "retraining_triggers": false
+        }
+      },
+      "estimated_cost": "low",
+      "complexity": "low",
+      "suitable_for": "Development, experimentation, proof of concept"
+    },
+    {
+      "name": "Production Pipeline",
+      "description": "Full-featured pipeline for production deployment",
+      "stages": {
+        "Data Ingestion": {
+          "schema_check": true,
+          "drift_check": true,
+          "data_quality_checks": true,
+          "data_lineage": true
+        },
+        "Feature Engineering": {
+          "feature_extraction": true,
+          "feature_selection": true,
+          "feature_scaling": true,
+          "feature_store": true
+        },
+        "Model Training": {
+          "automated_training": true,
+          "hyperparameter_optimization": true,
+          "experiment_tracking": true,
+          "model_versioning": true
+        },
+        "Model Validation": {
+          "accuracy_threshold": 0.85,
+          "bias_check": true,
+          "cross_validation": true,
+          "a_b_testing": true
+        },
+        "Deployment": {
+          "environment": ["staging", "production"],
+          "containerization": true,
+          "blue_green_deployment": true,
+          "rollback_capability": true
+        },
+        "Monitoring": {
+          "latency_alerts": true,
+          "drift_alerts": true,
+          "accuracy_monitoring": true,
+          "retraining_triggers": true
+        }
+      },
+      "estimated_cost": "high",
+      "complexity": "high",
+      "suitable_for": "Production, high-stakes applications, enterprise use"
+    },
+    {
+      "name": "Batch Processing Pipeline",
+      "description": "Optimized for large-scale batch processing",
+      "stages": {
+        "Data Ingestion": {
+          "schema_check": true,
+          "drift_check": true,
+          "data_quality_checks": true,
+          "data_lineage": true
+        },
+        "Feature Engineering": {
+          "feature_extraction": true,
+          "feature_selection": true,
+          "feature_scaling": true,
+          "feature_store": true
+        },
+        "Model Training": {
+          "automated_training": true,
+          "hyperparameter_optimization": true,
+          "experiment_tracking": true,
+          "model_versioning": true
+        },
+        "Model Validation": {
+          "accuracy_threshold": 0.8,
+          "bias_check": true,
+          "cross_validation": true,
+          "a_b_testing": false
+        },
+        "Deployment": {
+          "environment": ["staging", "production"],
+          "containerization": true,
+          "blue_green_deployment": false,
+          "rollback_capability": true
+        },
+        "Monitoring": {
+          "latency_alerts": false,
+          "drift_alerts": true,
+          "accuracy_monitoring": true,
+          "retraining_triggers": true
+        }
+      },
+      "estimated_cost": "medium",
+      "complexity": "medium",
+      "suitable_for": "Batch processing, offline analytics, scheduled predictions"
+    }
+  ],
+  "configuration_impact": {
+    "performance": {
+      "high_impact": ["hyperparameter_optimization", "cross_validation", "feature_selection"],
+      "medium_impact": ["automated_training", "experiment_tracking", "accuracy_threshold"],
+      "low_impact": ["data_lineage", "model_versioning", "containerization"]
+    },
+    "cost": {
+      "high_cost": ["hyperparameter_optimization", "blue_green_deployment", "retraining_triggers"],
+      "medium_cost": ["feature_store", "a_b_testing", "drift_alerts"],
+      "low_cost": ["schema_check", "data_lineage", "model_versioning"]
+    },
+    "complexity": {
+      "high_complexity": ["blue_green_deployment", "retraining_triggers", "feature_store"],
+      "medium_complexity": ["hyperparameter_optimization", "a_b_testing", "drift_alerts"],
+      "low_complexity": ["schema_check", "data_lineage", "containerization"]
+    }
+  },
+  "validation_rules": [
+    {
+      "rule": "accuracy_threshold_range",
+      "description": "Accuracy threshold must be between 0.0 and 1.0",
+      "condition": "accuracy_threshold >= 0.0 && accuracy_threshold <= 1.0"
+    },
+    {
+      "rule": "staging_before_production",
+      "description": "Production deployment requires staging environment",
+      "condition": "production in environment => staging in environment"
+    },
+    {
+      "rule": "monitoring_with_deployment",
+      "description": "Production deployment should include monitoring",
+      "condition": "production in environment => accuracy_monitoring enabled"
+    }
+  ],
+  "hints": [
+    "Start with essential configurations and add complexity gradually",
+    "Always enable validation stages before production deployment",
+    "Consider cost vs benefit when enabling advanced features",
+    "Use staging environment for testing before production",
+    "Implement comprehensive monitoring for production deployments"
+  ]
+}

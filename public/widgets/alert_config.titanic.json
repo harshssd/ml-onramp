@@ -1,0 +1,255 @@
+{
+  "title": "Alert Configurator",
+  "data_url": "/data/titanic_demo.csv",
+  "target": "Survived",
+  "thresholds": {
+    "accuracy": {
+      "value": 0.75,
+      "unit": "%",
+      "description": "Minimum acceptable accuracy",
+      "severity": "critical",
+      "enabled": true
+    },
+    "precision": {
+      "value": 0.70,
+      "unit": "%",
+      "description": "Minimum acceptable precision",
+      "severity": "warning",
+      "enabled": true
+    },
+    "recall": {
+      "value": 0.70,
+      "unit": "%",
+      "description": "Minimum acceptable recall",
+      "severity": "warning",
+      "enabled": true
+    },
+    "latency": {
+      "value": 200,
+      "unit": "ms",
+      "description": "Maximum acceptable latency",
+      "severity": "critical",
+      "enabled": true
+    },
+    "throughput": {
+      "value": 100,
+      "unit": "req/s",
+      "description": "Minimum acceptable throughput",
+      "severity": "warning",
+      "enabled": true
+    },
+    "drift_score": {
+      "value": 0.1,
+      "unit": "score",
+      "description": "Maximum acceptable drift score",
+      "severity": "alert",
+      "enabled": true
+    },
+    "fairness_score": {
+      "value": 0.85,
+      "unit": "score",
+      "description": "Minimum acceptable fairness score",
+      "severity": "warning",
+      "enabled": true
+    }
+  },
+  "alert_channels": [
+    {
+      "name": "email",
+      "display_name": "Email",
+      "description": "Send alerts via email",
+      "enabled": true,
+      "recipients": ["ml-team@company.com", "data-science@company.com"],
+      "template": "Model Performance Alert: {metric} is {status}",
+      "severity_levels": ["warning", "alert", "critical"]
+    },
+    {
+      "name": "slack",
+      "display_name": "Slack",
+      "description": "Send alerts to Slack channel",
+      "enabled": true,
+      "channel": "#ml-alerts",
+      "template": "🚨 Model Alert: {metric} is {status}",
+      "severity_levels": ["alert", "critical"]
+    },
+    {
+      "name": "pagerduty",
+      "display_name": "PagerDuty",
+      "description": "Send critical alerts to PagerDuty",
+      "enabled": true,
+      "service_key": "ml-monitoring-service",
+      "template": "Critical Model Alert: {metric} is {status}",
+      "severity_levels": ["critical"]
+    },
+    {
+      "name": "webhook",
+      "display_name": "Webhook",
+      "description": "Send alerts to custom webhook",
+      "enabled": false,
+      "url": "https://api.company.com/ml-alerts",
+      "template": "{\"metric\": \"{metric}\", \"status\": \"{status}\", \"timestamp\": \"{timestamp}\"}",
+      "severity_levels": ["warning", "alert", "critical"]
+    }
+  ],
+  "alert_policies": [
+    {
+      "name": "Performance Degradation",
+      "description": "Alert when model performance drops significantly",
+      "conditions": [
+        "accuracy < 0.75",
+        "precision < 0.70",
+        "recall < 0.70"
+      ],
+      "severity": "critical",
+      "channels": ["email", "slack", "pagerduty"],
+      "cooldown_minutes": 30,
+      "enabled": true
+    },
+    {
+      "name": "Latency Issues",
+      "description": "Alert when response time exceeds SLA",
+      "conditions": [
+        "latency > 200",
+        "throughput < 100"
+      ],
+      "severity": "critical",
+      "channels": ["email", "slack", "pagerduty"],
+      "cooldown_minutes": 15,
+      "enabled": true
+    },
+    {
+      "name": "Data Drift Detection",
+      "description": "Alert when data drift is detected",
+      "conditions": [
+        "drift_score > 0.1"
+      ],
+      "severity": "alert",
+      "channels": ["email", "slack"],
+      "cooldown_minutes": 60,
+      "enabled": true
+    },
+    {
+      "name": "Fairness Issues",
+      "description": "Alert when fairness metrics drop",
+      "conditions": [
+        "fairness_score < 0.85"
+      ],
+      "severity": "warning",
+      "channels": ["email"],
+      "cooldown_minutes": 120,
+      "enabled": true
+    }
+  ],
+  "escalation_rules": [
+    {
+      "name": "Critical Alert Escalation",
+      "description": "Escalate critical alerts if not acknowledged",
+      "conditions": [
+        "severity = critical",
+        "acknowledged = false",
+        "time_since_alert > 15 minutes"
+      ],
+      "actions": [
+        "Send to manager",
+        "Create incident ticket",
+        "Page on-call engineer"
+      ],
+      "enabled": true
+    },
+    {
+      "name": "Alert Fatigue Prevention",
+      "description": "Suppress alerts if too many are generated",
+      "conditions": [
+        "alerts_in_last_hour > 10",
+        "same_metric = true"
+      ],
+      "actions": [
+        "Suppress similar alerts",
+        "Send summary instead",
+        "Escalate to manager"
+      ],
+      "enabled": true
+    }
+  ],
+  "alert_templates": [
+    {
+      "name": "Performance Alert",
+      "subject": "Model Performance Alert - {metric}",
+      "body": "Model performance alert:\n\nMetric: {metric}\nCurrent Value: {current_value}\nThreshold: {threshold}\nStatus: {status}\nTimestamp: {timestamp}\n\nPlease investigate and take appropriate action.",
+      "severity": "warning"
+    },
+    {
+      "name": "Drift Alert",
+      "subject": "Data Drift Detected - {feature}",
+      "body": "Data drift detected:\n\nFeature: {feature}\nDrift Score: {drift_score}\nThreshold: {threshold}\nMethod: {method}\nTimestamp: {timestamp}\n\nConsider retraining the model.",
+      "severity": "alert"
+    },
+    {
+      "name": "Critical Alert",
+      "subject": "CRITICAL: Model Failure - {metric}",
+      "body": "CRITICAL MODEL ALERT:\n\nMetric: {metric}\nCurrent Value: {current_value}\nThreshold: {threshold}\nStatus: {status}\nTimestamp: {timestamp}\n\nIMMEDIATE ACTION REQUIRED!",
+      "severity": "critical"
+    }
+  ],
+  "monitoring_schedules": [
+    {
+      "name": "Real-time Monitoring",
+      "description": "Monitor metrics in real-time",
+      "frequency": "continuous",
+      "metrics": ["accuracy", "latency", "throughput"],
+      "enabled": true
+    },
+    {
+      "name": "Hourly Drift Check",
+      "description": "Check for data drift every hour",
+      "frequency": "hourly",
+      "metrics": ["drift_score"],
+      "enabled": true
+    },
+    {
+      "name": "Daily Fairness Check",
+      "description": "Check fairness metrics daily",
+      "frequency": "daily",
+      "metrics": ["fairness_score"],
+      "enabled": true
+    },
+    {
+      "name": "Weekly Performance Review",
+      "description": "Comprehensive performance review",
+      "frequency": "weekly",
+      "metrics": ["accuracy", "precision", "recall", "f1_score"],
+      "enabled": true
+    }
+  ],
+  "alert_history": [
+    {
+      "id": "alert_001",
+      "timestamp": "2024-01-06T10:30:00Z",
+      "metric": "accuracy",
+      "value": 0.75,
+      "threshold": 0.80,
+      "severity": "warning",
+      "status": "active",
+      "acknowledged": false,
+      "channels": ["email", "slack"]
+    },
+    {
+      "id": "alert_002",
+      "timestamp": "2024-01-06T09:15:00Z",
+      "metric": "drift_score",
+      "value": 0.15,
+      "threshold": 0.10,
+      "severity": "alert",
+      "status": "resolved",
+      "acknowledged": true,
+      "channels": ["email"]
+    }
+  ],
+  "hints": [
+    "Set thresholds based on business requirements and historical performance",
+    "Use appropriate severity levels to prioritize alerts",
+    "Implement cooldown periods to prevent alert fatigue",
+    "Test alert channels regularly to ensure they work",
+    "Review and update alert policies based on model behavior"
+  ]
+}

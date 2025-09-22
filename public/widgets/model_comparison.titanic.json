@@ -1,0 +1,101 @@
+{
+  "title": "Model Comparison Dashboard",
+  "data_url": "/data/titanic_demo.csv",
+  "target": "Survived",
+  "models": [
+    {
+      "name": "Logistic Regression",
+      "type": "linear",
+      "description": "Simple, interpretable, good for high-dimensional data",
+      "pros": ["Fast", "Interpretable", "No hyperparameters", "Works with sparse data"],
+      "cons": ["Linear decision boundary", "Sensitive to outliers", "Requires feature scaling"],
+      "use_cases": ["Baseline models", "High-dimensional data", "Interpretability required"],
+      "hyperparameters": {
+        "C": {"type": "float", "range": [0.001, 100], "default": 1.0, "log": true},
+        "penalty": {"type": "categorical", "options": ["l1", "l2", "elasticnet"], "default": "l2"}
+      }
+    },
+    {
+      "name": "Random Forest",
+      "type": "tree",
+      "description": "Ensemble of decision trees, good for tabular data",
+      "pros": ["Handles non-linear relationships", "Feature importance", "Robust to outliers", "No scaling needed"],
+      "cons": ["Can overfit", "Less interpretable", "Memory intensive", "Slower inference"],
+      "use_cases": ["Tabular data", "Mixed feature types", "Feature importance needed"],
+      "hyperparameters": {
+        "n_estimators": {"type": "int", "range": [10, 200], "default": 100},
+        "max_depth": {"type": "int", "range": [1, 20], "default": 10},
+        "min_samples_split": {"type": "int", "range": [2, 20], "default": 2}
+      }
+    },
+    {
+      "name": "Gradient Boosting",
+      "type": "tree",
+      "description": "Sequential ensemble, often highest accuracy",
+      "pros": ["High accuracy", "Handles missing values", "Feature importance", "Good for competitions"],
+      "cons": ["Can overfit easily", "Many hyperparameters", "Slow training", "Less interpretable"],
+      "use_cases": ["Competitions", "High accuracy needed", "Structured data"],
+      "hyperparameters": {
+        "n_estimators": {"type": "int", "range": [10, 200], "default": 100},
+        "learning_rate": {"type": "float", "range": [0.01, 1.0], "default": 0.1},
+        "max_depth": {"type": "int", "range": [1, 10], "default": 3}
+      }
+    },
+    {
+      "name": "Neural Network",
+      "type": "neural",
+      "description": "Deep learning model, flexible and powerful",
+      "pros": ["Very flexible", "Can learn complex patterns", "Good for large datasets", "State-of-the-art performance"],
+      "cons": ["Requires lots of data", "Many hyperparameters", "Black box", "Slow training"],
+      "use_cases": ["Complex patterns", "Large datasets", "Unstructured data"],
+      "hyperparameters": {
+        "hidden_layer_sizes": {"type": "categorical", "options": ["(50,)", "(100,)", "(50, 50)"], "default": "(50,)"},
+        "learning_rate": {"type": "categorical", "options": ["constant", "adaptive"], "default": "constant"},
+        "alpha": {"type": "float", "range": [0.0001, 0.1], "default": 0.0001, "log": true}
+      }
+    }
+  ],
+  "metrics": ["accuracy", "precision", "recall", "f1", "auc"],
+  "comparison": {
+    "show_training_time": true,
+    "show_inference_time": true,
+    "show_interpretability": true,
+    "show_memory_usage": true,
+    "show_feature_importance": true,
+    "show_learning_curves": true
+  },
+  "visualization": {
+    "show_confusion_matrix": true,
+    "show_roc_curves": true,
+    "show_feature_importance": true,
+    "show_learning_curves": true
+  },
+  "hints": [
+    "Start with simpler models and increase complexity only if needed",
+    "Consider your data size when choosing model complexity",
+    "Interpretability requirements should guide your choice",
+    "Use cross-validation to get reliable performance estimates"
+  ],
+  "scenarios": [
+    {
+      "name": "Small Dataset (< 1000 samples)",
+      "recommended": ["Logistic Regression", "Decision Tree"],
+      "reason": "Simple models work better with limited data"
+    },
+    {
+      "name": "High Interpretability Required",
+      "recommended": ["Logistic Regression", "Decision Tree"],
+      "reason": "Easy to explain to stakeholders"
+    },
+    {
+      "name": "Maximum Accuracy",
+      "recommended": ["Gradient Boosting", "Neural Network"],
+      "reason": "Complex models can capture more patterns"
+    },
+    {
+      "name": "Real-time Inference",
+      "recommended": ["Logistic Regression", "Small Neural Network"],
+      "reason": "Fast prediction times"
+    }
+  ]
+}

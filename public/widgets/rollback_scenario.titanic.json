@@ -1,0 +1,324 @@
+{
+  "title": "Rollback Scenario Lab",
+  "data_url": "/data/titanic_demo.csv",
+  "target": "Survived",
+  "model_versions": [
+    {
+      "version": "v1.0",
+      "display_name": "Model v1.0",
+      "description": "Initial baseline model",
+      "deployment_date": "2024-01-01",
+      "performance_metrics": {
+        "accuracy": 0.82,
+        "precision": 0.78,
+        "recall": 0.85,
+        "f1_score": 0.81,
+        "latency_ms": 45,
+        "throughput_rps": 1200
+      },
+      "status": "stable",
+      "rollback_risk": "low",
+      "rollback_time": "2 minutes",
+      "validation_status": "passed"
+    },
+    {
+      "version": "v1.1",
+      "display_name": "Model v1.1",
+      "description": "Improved model with feature engineering",
+      "deployment_date": "2024-01-15",
+      "performance_metrics": {
+        "accuracy": 0.85,
+        "precision": 0.81,
+        "recall": 0.87,
+        "f1_score": 0.84,
+        "latency_ms": 50,
+        "throughput_rps": 1100
+      },
+      "status": "stable",
+      "rollback_risk": "low",
+      "rollback_time": "3 minutes",
+      "validation_status": "passed"
+    },
+    {
+      "version": "v1.2",
+      "display_name": "Model v1.2",
+      "description": "Latest model with optimization",
+      "deployment_date": "2024-01-30",
+      "performance_metrics": {
+        "accuracy": 0.87,
+        "precision": 0.83,
+        "recall": 0.89,
+        "f1_score": 0.86,
+        "latency_ms": 55,
+        "throughput_rps": 1000
+      },
+      "status": "degraded",
+      "rollback_risk": "high",
+      "rollback_time": "4 minutes",
+      "validation_status": "failed"
+    }
+  ],
+  "rollback_options": [
+    {
+      "name": "manual",
+      "display_name": "Manual Rollback",
+      "description": "Human-initiated rollback process",
+      "pros": [
+        "Full control over process",
+        "Can validate before rollback",
+        "Allows for custom validation",
+        "Human oversight and decision making"
+      ],
+      "cons": [
+        "Requires human intervention",
+        "Slower response time",
+        "Potential for human error",
+        "May not be available 24/7"
+      ],
+      "use_cases": [
+        "Complex rollback scenarios",
+        "When validation is required",
+        "During business hours",
+        "For critical systems"
+      ],
+      "process": [
+        "Trigger rollback manually",
+        "Validate target version",
+        "Execute rollback",
+        "Monitor performance",
+        "Validate success"
+      ],
+      "estimated_time": "5-10 minutes"
+    },
+    {
+      "name": "automatic",
+      "display_name": "Automatic Rollback",
+      "description": "System-initiated rollback based on triggers",
+      "pros": [
+        "Fast response time",
+        "Available 24/7",
+        "Consistent process",
+        "Reduces human error"
+      ],
+      "cons": [
+        "Limited flexibility",
+        "May rollback unnecessarily",
+        "Requires predefined triggers",
+        "Less human oversight"
+      ],
+      "use_cases": [
+        "Simple rollback scenarios",
+        "When speed is critical",
+        "For non-critical systems",
+        "During off-hours"
+      ],
+      "process": [
+        "Monitor performance metrics",
+        "Detect degradation",
+        "Trigger automatic rollback",
+        "Execute rollback",
+        "Monitor and alert"
+      ],
+      "estimated_time": "1-3 minutes"
+    }
+  ],
+  "rollback_scenarios": [
+    {
+      "name": "performance_degradation",
+      "display_name": "Performance Degradation",
+      "description": "Model performance drops below acceptable threshold",
+      "severity": "high",
+      "trigger_conditions": [
+        "Accuracy drops below 80%",
+        "Latency exceeds 200ms",
+        "Throughput drops below 800 rps",
+        "Error rate exceeds 5%"
+      ],
+      "rollback_target": "v1.1",
+      "reasoning": "Previous stable version with good performance",
+      "validation_required": true,
+      "estimated_downtime": "3 minutes"
+    },
+    {
+      "name": "data_quality_issue",
+      "display_name": "Data Quality Issue",
+      "description": "Data quality problems affect model predictions",
+      "severity": "medium",
+      "trigger_conditions": [
+        "Data validation failures",
+        "Schema mismatches",
+        "Missing critical features",
+        "Data corruption detected"
+      ],
+      "rollback_target": "v1.0",
+      "reasoning": "Baseline model less sensitive to data issues",
+      "validation_required": false,
+      "estimated_downtime": "2 minutes"
+    },
+    {
+      "name": "bias_detection",
+      "display_name": "Bias Detection",
+      "description": "Model shows bias against certain groups",
+      "severity": "high",
+      "trigger_conditions": [
+        "Fairness metrics violation",
+        "Bias score exceeds threshold",
+        "User complaints about unfairness",
+        "Regulatory compliance issues"
+      ],
+      "rollback_target": "v1.1",
+      "reasoning": "Previous version with better fairness metrics",
+      "validation_required": true,
+      "estimated_downtime": "4 minutes"
+    },
+    {
+      "name": "infrastructure_failure",
+      "display_name": "Infrastructure Failure",
+      "description": "Infrastructure issues prevent model serving",
+      "severity": "critical",
+      "trigger_conditions": [
+        "Server crashes",
+        "Memory exhaustion",
+        "Network connectivity issues",
+        "Storage failures"
+      ],
+      "rollback_target": "v1.0",
+      "reasoning": "Simplest model with lowest resource requirements",
+      "validation_required": false,
+      "estimated_downtime": "1 minute"
+    }
+  ],
+  "rollback_process": {
+    "pre_rollback": [
+      "Assess current situation",
+      "Identify rollback target",
+      "Validate target version",
+      "Notify stakeholders",
+      "Prepare rollback plan"
+    ],
+    "during_rollback": [
+      "Stop current model serving",
+      "Deploy target version",
+      "Validate deployment",
+      "Start model serving",
+      "Monitor performance"
+    ],
+    "post_rollback": [
+      "Validate rollback success",
+      "Monitor system stability",
+      "Update documentation",
+      "Notify stakeholders",
+      "Plan next steps"
+    ]
+  },
+  "validation_checks": [
+    {
+      "check": "Model Performance",
+      "description": "Verify model meets performance requirements",
+      "metrics": ["accuracy", "precision", "recall", "f1_score"],
+      "thresholds": {
+        "accuracy": 0.80,
+        "precision": 0.75,
+        "recall": 0.80,
+        "f1_score": 0.78
+      }
+    },
+    {
+      "check": "System Performance",
+      "description": "Verify system meets performance requirements",
+      "metrics": ["latency_ms", "throughput_rps", "error_rate"],
+      "thresholds": {
+        "latency_ms": 200,
+        "throughput_rps": 800,
+        "error_rate": 0.05
+      }
+    },
+    {
+      "check": "Data Quality",
+      "description": "Verify data quality meets requirements",
+      "metrics": ["completeness", "accuracy", "consistency"],
+      "thresholds": {
+        "completeness": 0.95,
+        "accuracy": 0.90,
+        "consistency": 0.85
+      }
+    },
+    {
+      "check": "Fairness Metrics",
+      "description": "Verify model fairness meets requirements",
+      "metrics": ["demographic_parity", "equalized_odds", "calibration"],
+      "thresholds": {
+        "demographic_parity": 0.90,
+        "equalized_odds": 0.85,
+        "calibration": 0.80
+      }
+    }
+  ],
+  "rollback_simulation": {
+    "current_scenario": "performance_degradation",
+    "current_version": "v1.2",
+    "target_version": "v1.1",
+    "rollback_type": "manual",
+    "steps": [
+      {
+        "step": 1,
+        "action": "Assess Situation",
+        "description": "Analyze current performance degradation",
+        "duration": "1 minute",
+        "status": "completed"
+      },
+      {
+        "step": 2,
+        "action": "Select Target",
+        "description": "Choose v1.1 as rollback target",
+        "duration": "30 seconds",
+        "status": "completed"
+      },
+      {
+        "step": 3,
+        "action": "Validate Target",
+        "description": "Validate v1.1 meets requirements",
+        "duration": "1 minute",
+        "status": "in_progress"
+      },
+      {
+        "step": 4,
+        "action": "Execute Rollback",
+        "description": "Deploy v1.1 and stop v1.2",
+        "duration": "2 minutes",
+        "status": "pending"
+      },
+      {
+        "step": 5,
+        "action": "Monitor Performance",
+        "description": "Monitor restored performance",
+        "duration": "2 minutes",
+        "status": "pending"
+      }
+    ]
+  },
+  "best_practices": [
+    "Always validate target version before rollback",
+    "Maintain multiple stable versions for rollback",
+    "Test rollback procedures regularly",
+    "Document rollback decisions and outcomes",
+    "Monitor system after rollback",
+    "Plan for rollback in deployment strategy",
+    "Use feature flags for gradual rollbacks",
+    "Implement circuit breakers for automatic rollbacks"
+  ],
+  "visualization": {
+    "show_model_versions": true,
+    "show_rollback_options": true,
+    "show_scenarios": true,
+    "show_process": true,
+    "show_simulation": true
+  },
+  "hints": [
+    "Choose rollback target based on stability and performance",
+    "Validate target version before executing rollback",
+    "Monitor system closely after rollback",
+    "Document rollback decisions and outcomes",
+    "Test rollback procedures regularly"
+  ]
+}

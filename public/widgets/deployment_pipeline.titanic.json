@@ -1,0 +1,331 @@
+{
+  "title": "Deployment Pipeline Builder",
+  "data_url": "/data/titanic_demo.csv",
+  "target": "Survived",
+  "deployment_strategies": [
+    {
+      "name": "Batch Job",
+      "type": "batch",
+      "description": "Scheduled predictions for large-scale processing",
+      "icon": "clock",
+      "characteristics": {
+        "latency": "hours",
+        "throughput": "high",
+        "cost": "low",
+        "complexity": "low"
+      },
+      "use_cases": [
+        "Daily reports",
+        "Recommendation systems",
+        "Fraud scoring",
+        "Data analytics"
+      ],
+      "pros": [
+        "Cost-effective for large volumes",
+        "Simple infrastructure",
+        "Efficient resource usage",
+        "Easy to scale"
+      ],
+      "cons": [
+        "Not real-time",
+        "High latency",
+        "Limited interactivity",
+        "Scheduled processing only"
+      ],
+      "infrastructure_requirements": [
+        "Scheduled job runner (cron, Airflow)",
+        "Data storage (S3, GCS)",
+        "Compute resources (EC2, GCE)",
+        "Monitoring system"
+      ]
+    },
+    {
+      "name": "Real-Time API",
+      "type": "realtime",
+      "description": "Instant predictions via REST/GraphQL APIs",
+      "icon": "zap",
+      "characteristics": {
+        "latency": "milliseconds",
+        "throughput": "medium",
+        "cost": "high",
+        "complexity": "high"
+      },
+      "use_cases": [
+        "Chatbots",
+        "Fraud detection",
+        "Recommendation engines",
+        "Interactive applications"
+      ],
+      "pros": [
+        "Low latency",
+        "High interactivity",
+        "Immediate feedback",
+        "User-facing applications"
+      ],
+      "cons": [
+        "Higher costs",
+        "Complex infrastructure",
+        "Scaling challenges",
+        "Requires monitoring"
+      ],
+      "infrastructure_requirements": [
+        "API Gateway (Kong, AWS API Gateway)",
+        "Load balancer (ALB, NLB)",
+        "Auto-scaling groups",
+        "Monitoring and alerting"
+      ]
+    },
+    {
+      "name": "Streaming Service",
+      "type": "streaming",
+      "description": "Continuous predictions on data streams",
+      "icon": "activity",
+      "characteristics": {
+        "latency": "seconds",
+        "throughput": "very_high",
+        "cost": "medium",
+        "complexity": "very_high"
+      },
+      "use_cases": [
+        "IoT sensors",
+        "Social media monitoring",
+        "Real-time analytics",
+        "Event processing"
+      ],
+      "pros": [
+        "Handles continuous flows",
+        "Low latency",
+        "Highly scalable",
+        "Real-time processing"
+      ],
+      "cons": [
+        "Very complex infrastructure",
+        "Requires stream processing expertise",
+        "Monitoring challenges",
+        "High operational overhead"
+      ],
+      "infrastructure_requirements": [
+        "Stream processing (Kafka, Kinesis)",
+        "Stream processing engine (Flink, Spark)",
+        "Message queues",
+        "Real-time monitoring"
+      ]
+    }
+  ],
+  "deployment_environments": [
+    {
+      "name": "Cloud",
+      "description": "Deploy on cloud infrastructure with managed services",
+      "icon": "cloud",
+      "characteristics": {
+        "scalability": "high",
+        "reliability": "high",
+        "cost": "medium",
+        "complexity": "low"
+      },
+      "platforms": [
+        {
+          "name": "AWS SageMaker",
+          "description": "Amazon's managed ML platform",
+          "features": ["Auto-scaling", "Model versioning", "A/B testing"]
+        },
+        {
+          "name": "Google Cloud Vertex AI",
+          "description": "Google's unified ML platform",
+          "features": ["AutoML", "Model monitoring", "Explainable AI"]
+        },
+        {
+          "name": "Azure ML",
+          "description": "Microsoft's ML platform",
+          "features": ["MLOps", "Model registry", "Responsible AI"]
+        }
+      ],
+      "pros": [
+        "Easy scaling",
+        "Managed services",
+        "Global availability",
+        "Reduced operational overhead"
+      ],
+      "cons": [
+        "Internet dependency",
+        "Potential latency",
+        "Ongoing costs",
+        "Vendor lock-in"
+      ]
+    },
+    {
+      "name": "Edge",
+      "description": "Deploy on local devices or edge servers",
+      "icon": "smartphone",
+      "characteristics": {
+        "scalability": "low",
+        "reliability": "medium",
+        "cost": "low",
+        "complexity": "medium"
+      },
+      "platforms": [
+        {
+          "name": "Mobile Devices",
+          "description": "iOS/Android apps with on-device ML",
+          "features": ["Offline capability", "Privacy", "Low latency"]
+        },
+        {
+          "name": "IoT Devices",
+          "description": "Embedded systems with ML capabilities",
+          "features": ["Real-time processing", "Low power", "Compact"]
+        },
+        {
+          "name": "Edge Servers",
+          "description": "Local servers for edge computing",
+          "features": ["Low latency", "Bandwidth optimization", "Local processing"]
+        }
+      ],
+      "pros": [
+        "Low latency",
+        "Works offline",
+        "Reduced bandwidth",
+        "Privacy preservation"
+      ],
+      "cons": [
+        "Limited compute power",
+        "Device constraints",
+        "Update challenges",
+        "Limited scalability"
+      ]
+    },
+    {
+      "name": "Hybrid",
+      "description": "Combination of cloud and edge deployment",
+      "icon": "layers",
+      "characteristics": {
+        "scalability": "high",
+        "reliability": "high",
+        "cost": "medium",
+        "complexity": "high"
+      },
+      "platforms": [
+        {
+          "name": "Cloud + Edge",
+          "description": "Heavy processing in cloud, real-time on edge",
+          "features": ["Best of both worlds", "Flexible architecture", "Optimized performance"]
+        },
+        {
+          "name": "Multi-Cloud",
+          "description": "Distributed across multiple cloud providers",
+          "features": ["Vendor independence", "High availability", "Cost optimization"]
+        }
+      ],
+      "pros": [
+        "Best of both worlds",
+        "Flexible architecture",
+        "Optimized performance",
+        "Risk mitigation"
+      ],
+      "cons": [
+        "Complex management",
+        "Higher complexity",
+        "Integration challenges",
+        "Operational overhead"
+      ]
+    }
+  ],
+  "pipeline_components": [
+    {
+      "name": "Data Ingestion",
+      "description": "Collect and prepare data for prediction",
+      "icon": "database",
+      "types": ["batch", "realtime", "streaming"]
+    },
+    {
+      "name": "Model Serving",
+      "description": "Deploy and serve the ML model",
+      "icon": "cpu",
+      "types": ["batch", "realtime", "streaming"]
+    },
+    {
+      "name": "API Gateway",
+      "description": "Manage and route API requests",
+      "icon": "globe",
+      "types": ["realtime", "streaming"]
+    },
+    {
+      "name": "Load Balancer",
+      "description": "Distribute traffic across instances",
+      "icon": "scale",
+      "types": ["realtime", "streaming"]
+    },
+    {
+      "name": "Monitoring",
+      "description": "Track performance and health",
+      "icon": "activity",
+      "types": ["batch", "realtime", "streaming"]
+    },
+    {
+      "name": "Storage",
+      "description": "Store predictions and metadata",
+      "icon": "hard-drive",
+      "types": ["batch", "realtime", "streaming"]
+    }
+  ],
+  "scenarios": [
+    {
+      "name": "E-commerce Recommendation",
+      "description": "Personalized product recommendations for online store",
+      "requirements": {
+        "latency": "low",
+        "throughput": "high",
+        "cost": "medium",
+        "reliability": "high"
+      },
+      "recommended_strategy": "Real-Time API",
+      "recommended_environment": "Cloud",
+      "reason": "Requires low latency for user experience and high reliability for business impact"
+    },
+    {
+      "name": "IoT Sensor Monitoring",
+      "description": "Real-time analysis of sensor data from manufacturing equipment",
+      "requirements": {
+        "latency": "very_low",
+        "throughput": "very_high",
+        "cost": "low",
+        "reliability": "high"
+      },
+      "recommended_strategy": "Streaming Service",
+      "recommended_environment": "Edge",
+      "reason": "Requires very low latency and high throughput for real-time equipment monitoring"
+    },
+    {
+      "name": "Daily Sales Report",
+      "description": "Generate daily sales analytics and insights",
+      "requirements": {
+        "latency": "high",
+        "throughput": "high",
+        "cost": "low",
+        "reliability": "medium"
+      },
+      "recommended_strategy": "Batch Job",
+      "recommended_environment": "Cloud",
+      "reason": "Non-urgent processing with cost optimization priority"
+    },
+    {
+      "name": "Mobile App Feature",
+      "description": "On-device image classification for mobile app",
+      "requirements": {
+        "latency": "very_low",
+        "throughput": "low",
+        "cost": "very_low",
+        "reliability": "medium"
+      },
+      "recommended_strategy": "Real-Time API",
+      "recommended_environment": "Edge",
+      "reason": "Requires very low latency and works offline for mobile users"
+    }
+  ],
+  "hints": [
+    "Start with batch deployment for non-urgent use cases",
+    "Use real-time APIs for user-facing applications",
+    "Consider streaming for continuous data processing",
+    "Choose cloud for scalability, edge for latency",
+    "Test thoroughly with shadow deployment before going live"
+  ]
+}

@@ -5,6 +5,43 @@ import YouTubeSegment from "./YouTubeSegment";
 import CheckpointQuiz from "./CheckpointQuiz";
 import PyodideRunner from "./PyodideRunner";
 import RegressionPlayground from "./RegressionPlayground";
+import WordCloudWidget from "./WordCloudWidget";
+import DragDropWidget from "./DragDropWidget";
+import FlowDiagramWidget from "./FlowDiagramWidget";
+import DatasetExplorerWidget from "./DatasetExplorerWidget";
+import TrainTestSplitWidget from "./TrainTestSplitWidget";
+import ErrorVisualizerWidget from "./ErrorVisualizerWidget";
+import ClassificationPlaygroundWidget from "./ClassificationPlaygroundWidget";
+import ClusteringVisualizerWidget from "./ClusteringVisualizerWidget";
+import FeatureSelectorWidget from "./FeatureSelectorWidget";
+import OverfitPlaygroundWidget from "./OverfitPlaygroundWidget";
+import DigitRecognizerWidget from "./DigitRecognizerWidget";
+import ImageGeneratorDemoWidget from "./ImageGeneratorDemoWidget";
+import AlgorithmExplorerWidget from "./AlgorithmExplorerWidget";
+import EnsembleVisualizerWidget from "./EnsembleVisualizerWidget";
+import NeuralNetworkVisualizerWidget from "./NeuralNetworkVisualizerWidget";
+import MetricsDashboardWidget from "./MetricsDashboardWidget";
+import TransformPreviewWidget from "./TransformPreviewWidget";
+import ImputeLabWidget from "./ImputeLabWidget";
+import ScalingPlaygroundWidget from "./ScalingPlaygroundWidget";
+import ModelComparisonWidget from "./ModelComparisonWidget";
+import HyperparamTuningWidget from "./HyperparamTuningWidget";
+import CVVisualizerWidget from "./CVVisualizerWidget";
+import OptimizationLabWidget from "./OptimizationLabWidget";
+import PerformanceTradeoffExplorerWidget from "./PerformanceTradeoffExplorerWidget";
+import DeploymentPipelineBuilderWidget from "./DeploymentPipelineBuilderWidget";
+import MLOpsWorkflowVisualizerWidget from "./MLOpsWorkflowVisualizerWidget";
+import ModelMonitoringDashboardWidget from "./ModelMonitoringDashboardWidget";
+import ScalingStrategySimulatorWidget from "./ScalingStrategySimulatorWidget";
+import DistributedTrainingLabWidget from "./DistributedTrainingLabWidget";
+import CostPerformanceDashboardWidget from "./CostPerformanceDashboardWidget";
+import IncidentPlaybookSimulatorWidget from "./IncidentPlaybookSimulatorWidget";
+import RootCauseAnalyzerWidget from "./RootCauseAnalyzerWidget";
+import RollbackScenarioLabWidget from "./RollbackScenarioLabWidget";
+import DeploymentPipelineCapstoneWidget from "./DeploymentPipelineCapstoneWidget";
+import ModelMonitoringCapstoneWidget from "./ModelMonitoringCapstoneWidget";
+import RollbackPlaygroundCapstoneWidget from "./RollbackPlaygroundCapstoneWidget";
+import ConfigLoader from "./ConfigLoader";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { Badge } from "./ui/badge";
@@ -97,7 +134,7 @@ export default function LessonTemplate({ lesson, onComplete, onNext }: LessonTem
   };
 
   const handleNextQuiz = () => {
-    if (currentQuizIndex < frontmatter.quiz.length - 1) {
+    if (frontmatter.quiz && currentQuizIndex < frontmatter.quiz.length - 1) {
       setCurrentQuizIndex(currentQuizIndex + 1);
     } else {
       handleQuizPass('quiz');
@@ -118,7 +155,259 @@ export default function LessonTemplate({ lesson, onComplete, onNext }: LessonTem
   const renderWidget = (widgetType: string) => {
     switch (widgetType) {
       case 'regression_playground':
-        return <RegressionPlayground />;
+        return <RegressionPlayground onComplete={() => handleCodeComplete('regression')} />;
+      case 'wordcloud':
+        return <WordCloudWidget onComplete={() => handleCodeComplete('wordcloud')} />;
+      case 'dragdrop':
+        return <DragDropWidget onComplete={() => handleCodeComplete('dragdrop')} />;
+      case 'flowdiagram':
+        return <FlowDiagramWidget onComplete={() => handleCodeComplete('flowdiagram')} />;
+      case 'dataset_explorer':
+        return <DatasetExplorerWidget onComplete={() => handleCodeComplete('dataset_explorer')} />;
+      case 'train_test_split':
+        return <TrainTestSplitWidget onComplete={() => handleCodeComplete('train_test_split')} />;
+      case 'error_visualizer':
+        return <ErrorVisualizerWidget onComplete={() => handleCodeComplete('error_visualizer')} />;
+      case 'classification_playground':
+        return <ClassificationPlaygroundWidget onComplete={() => handleCodeComplete('classification_playground')} />;
+      case 'clustering_visualizer':
+        return <ClusteringVisualizerWidget onComplete={() => handleCodeComplete('clustering_visualizer')} />;
+      case 'feature_selector':
+        return <FeatureSelectorWidget onComplete={() => handleCodeComplete('feature_selector')} />;
+      case 'overfit_playground':
+        return <OverfitPlaygroundWidget onComplete={() => handleCodeComplete('overfit_playground')} />;
+      case 'digit_recognizer':
+        return <DigitRecognizerWidget onComplete={() => handleCodeComplete('digit_recognizer')} />;
+      case 'image_generator_demo':
+        return <ImageGeneratorDemoWidget onComplete={() => handleCodeComplete('image_generator_demo')} />;
+      case 'algorithm_explorer':
+        return <AlgorithmExplorerWidget onComplete={() => handleCodeComplete('algorithm_explorer')} />;
+      case 'ensemble_visualizer':
+        return <EnsembleVisualizerWidget onComplete={() => handleCodeComplete('ensemble_visualizer')} />;
+      case 'nn_visualizer':
+        return <NeuralNetworkVisualizerWidget onComplete={() => handleCodeComplete('nn_visualizer')} />;
+      case 'metrics_dashboard':
+        return <MetricsDashboardWidget onComplete={() => handleCodeComplete('metrics_dashboard')} />;
+      case 'transform_preview':
+        return (
+          <ConfigLoader configPath={widget.data || ''}>
+            {(config, loading, error) => (
+              <TransformPreviewWidget 
+                onComplete={() => handleCodeComplete('transform_preview')} 
+                config={config}
+              />
+            )}
+          </ConfigLoader>
+        );
+      case 'impute_lab':
+        return (
+          <ConfigLoader configPath={widget.data || ''}>
+            {(config, loading, error) => (
+              <ImputeLabWidget 
+                onComplete={() => handleCodeComplete('impute_lab')} 
+                config={config}
+              />
+            )}
+          </ConfigLoader>
+        );
+      case 'scaling_playground':
+        return (
+          <ConfigLoader configPath={widget.data || ''}>
+            {(config, loading, error) => (
+              <ScalingPlaygroundWidget 
+                onComplete={() => handleCodeComplete('scaling_playground')} 
+                config={config}
+              />
+            )}
+          </ConfigLoader>
+        );
+      case 'model_comparison_dashboard':
+        return (
+          <ConfigLoader configPath={widget.data || ''}>
+            {(config, loading, error) => (
+              <ModelComparisonWidget 
+                onComplete={() => handleCodeComplete('model_comparison_dashboard')} 
+                config={config}
+              />
+            )}
+          </ConfigLoader>
+        );
+    case 'hyperparam_tuning_playground':
+      return (
+        <ConfigLoader configPath={widget.data || ''}>
+          {(config, loading, error) => (
+            <HyperparamTuningWidget 
+              onComplete={() => handleCodeComplete('hyperparam_tuning_playground')} 
+              config={config}
+            />
+          )}
+        </ConfigLoader>
+      );
+    case 'cv_visualizer':
+      return (
+        <ConfigLoader configPath={widget.data || ''}>
+          {(config, loading, error) => (
+            <CVVisualizerWidget 
+              onComplete={() => handleCodeComplete('cv_visualizer')} 
+              config={config}
+            />
+          )}
+        </ConfigLoader>
+      );
+    case 'optimization_lab':
+      return (
+        <ConfigLoader configPath={widget.data || ''}>
+          {(config, loading, error) => (
+            <OptimizationLabWidget 
+              onComplete={() => handleCodeComplete('optimization_lab')} 
+              config={config}
+            />
+          )}
+        </ConfigLoader>
+      );
+    case 'performance_tradeoff_explorer':
+      return (
+        <ConfigLoader configPath={widget.data || ''}>
+          {(config, loading, error) => (
+            <PerformanceTradeoffExplorerWidget 
+              onComplete={() => handleCodeComplete('performance_tradeoff_explorer')} 
+              config={config}
+            />
+          )}
+        </ConfigLoader>
+      );
+    case 'deployment_pipeline_builder':
+      return (
+        <ConfigLoader configPath={widget.data || ''}>
+          {(config, loading, error) => (
+            <DeploymentPipelineBuilderWidget 
+              onComplete={() => handleCodeComplete('deployment_pipeline_builder')} 
+              config={config}
+            />
+          )}
+        </ConfigLoader>
+      );
+    case 'mlops_workflow_visualizer':
+      return (
+        <ConfigLoader configPath={widget.data || ''}>
+          {(config, loading, error) => (
+            <MLOpsWorkflowVisualizerWidget 
+              onComplete={() => handleCodeComplete('mlops_workflow_visualizer')} 
+              config={config}
+            />
+          )}
+        </ConfigLoader>
+      );
+    case 'model_monitoring_dashboard':
+      return (
+        <ConfigLoader configPath={widget.data || ''}>
+          {(config, loading, error) => (
+            <ModelMonitoringDashboardWidget 
+              onComplete={() => handleCodeComplete('model_monitoring_dashboard')} 
+              config={config}
+            />
+          )}
+        </ConfigLoader>
+      );
+    case 'scaling_strategy_simulator':
+      return (
+        <ConfigLoader configPath={widget.data || ''}>
+          {(config, loading, error) => (
+            <ScalingStrategySimulatorWidget 
+              onComplete={() => handleCodeComplete('scaling_strategy_simulator')} 
+              config={config}
+            />
+          )}
+        </ConfigLoader>
+      );
+    case 'distributed_training_lab':
+      return (
+        <ConfigLoader configPath={widget.data || ''}>
+          {(config, loading, error) => (
+            <DistributedTrainingLabWidget 
+              onComplete={() => handleCodeComplete('distributed_training_lab')} 
+              config={config}
+            />
+          )}
+        </ConfigLoader>
+      );
+    case 'cost_performance_dashboard':
+      return (
+        <ConfigLoader configPath={widget.data || ''}>
+          {(config, loading, error) => (
+            <CostPerformanceDashboardWidget 
+              onComplete={() => handleCodeComplete('cost_performance_dashboard')} 
+              config={config}
+            />
+          )}
+        </ConfigLoader>
+      );
+    case 'incident_playbook_simulator':
+      return (
+        <ConfigLoader configPath={widget.data || ''}>
+          {(config, loading, error) => (
+            <IncidentPlaybookSimulatorWidget 
+              onComplete={() => handleCodeComplete('incident_playbook_simulator')} 
+              config={config}
+            />
+          )}
+        </ConfigLoader>
+      );
+    case 'root_cause_analyzer':
+      return (
+        <ConfigLoader configPath={widget.data || ''}>
+          {(config, loading, error) => (
+            <RootCauseAnalyzerWidget 
+              onComplete={() => handleCodeComplete('root_cause_analyzer')} 
+              config={config}
+            />
+          )}
+        </ConfigLoader>
+      );
+    case 'rollback_scenario_lab':
+      return (
+        <ConfigLoader configPath={widget.data || ''}>
+          {(config, loading, error) => (
+            <RollbackScenarioLabWidget 
+              onComplete={() => handleCodeComplete('rollback_scenario_lab')} 
+              config={config}
+            />
+          )}
+        </ConfigLoader>
+      );
+    case 'deployment_pipeline_builder':
+      return (
+        <ConfigLoader configPath={widget.data || ''}>
+          {(config, loading, error) => (
+            <DeploymentPipelineCapstoneWidget 
+              onComplete={() => handleCodeComplete('deployment_pipeline_builder')} 
+              config={config}
+            />
+          )}
+        </ConfigLoader>
+      );
+    case 'model_monitoring_dashboard':
+      return (
+        <ConfigLoader configPath={widget.data || ''}>
+          {(config, loading, error) => (
+            <ModelMonitoringCapstoneWidget 
+              onComplete={() => handleCodeComplete('model_monitoring_dashboard')} 
+              config={config}
+            />
+          )}
+        </ConfigLoader>
+      );
+    case 'rollback_playground':
+      return (
+        <ConfigLoader configPath={widget.data || ''}>
+          {(config, loading, error) => (
+            <RollbackPlaygroundCapstoneWidget 
+              onComplete={() => handleCodeComplete('rollback_playground')} 
+              config={config}
+            />
+          )}
+        </ConfigLoader>
+      );
       case 'pyodide_snippet':
         return (
           <PyodideRunner
@@ -296,7 +585,7 @@ print("Median:", median)`}
       {/* Content */}
       <div className="max-w-6xl mx-auto px-4 py-8 space-y-8">
         {/* Quest Objectives */}
-        {frontmatter.goals.length > 0 && (
+        {frontmatter.goals && frontmatter.goals.length > 0 && (
           <Card className={`${themeClasses.card} backdrop-blur-sm border ${themeClasses.border} shadow-lg`}>
             <CardHeader>
               <CardTitle className={`text-2xl font-bold ${themeClasses.text} flex items-center`}>
@@ -369,12 +658,12 @@ print("Median:", median)`}
         {sections.map((section, index) => renderContentSection(section, index))}
 
         {/* Quiz Section */}
-        {frontmatter.quiz.length > 0 && (
+        {frontmatter.quiz && frontmatter.quiz.length > 0 && (
           <Card className={`${themeClasses.card} backdrop-blur-sm border ${themeClasses.border} shadow-lg`}>
             <CardHeader>
               <CardTitle className={`text-2xl font-bold ${themeClasses.text} flex items-center`}>
                 <Shield className="h-6 w-6 mr-3 text-green-500" />
-                Knowledge Challenge ({currentQuizIndex + 1}/{frontmatter.quiz.length})
+                Knowledge Challenge ({currentQuizIndex + 1}/{frontmatter.quiz?.length || 0})
               </CardTitle>
               <CardDescription className={`${themeClasses.text}/70`}>
                 Test your understanding and earn XP for correct answers!
@@ -398,7 +687,7 @@ print("Median:", median)`}
                 }))}
                 correctId={frontmatter.quiz[currentQuizIndex].answer.toString()}
                 explanation={frontmatter.quiz[currentQuizIndex].explain}
-                onPass={currentQuizIndex < frontmatter.quiz.length - 1 ? handleNextQuiz : () => handleQuizPass('quiz')}
+                onPass={frontmatter.quiz && currentQuizIndex < frontmatter.quiz.length - 1 ? handleNextQuiz : () => handleQuizPass('quiz')}
               />
             </CardContent>
           </Card>
@@ -426,13 +715,13 @@ print("Median:", median)`}
                   </div>
                 </div>
               </div>
-              {renderWidget(widget)}
+              {renderWidget(widget.type)}
             </CardContent>
           </Card>
         ))}
 
         {/* Tasks */}
-        {frontmatter.tasks.length > 0 && (
+        {frontmatter.tasks && frontmatter.tasks.length > 0 && (
           <Card className={`${themeClasses.card} backdrop-blur-sm border ${themeClasses.border} shadow-lg`}>
             <CardHeader>
               <CardTitle className={`text-2xl font-bold ${themeClasses.text} flex items-center`}>
@@ -468,7 +757,7 @@ print("Median:", median)`}
         )}
 
         {/* Reflection */}
-        {frontmatter.reflection.length > 0 && (
+        {frontmatter.reflection && frontmatter.reflection.length > 0 && (
           <Card className={`${themeClasses.card} backdrop-blur-sm border ${themeClasses.border} shadow-lg`}>
             <CardHeader>
               <CardTitle className={`text-2xl font-bold ${themeClasses.text} flex items-center`}>

@@ -1,0 +1,435 @@
+{
+  "title": "Incident Playbook Simulator",
+  "data_url": "/data/titanic_demo.csv",
+  "target": "Survived",
+  "scenarios": [
+    {
+      "name": "data_drift",
+      "display_name": "Data Drift Incident",
+      "description": "Model performance degrades due to changing data distribution",
+      "severity": "high",
+      "symptoms": [
+        "Model accuracy drops from 85% to 75%",
+        "Prediction confidence decreases",
+        "Feature distribution changes detected",
+        "Business metrics decline"
+      ],
+      "timeline": [
+        {
+          "time": "09:00",
+          "event": "Data drift alert triggered",
+          "action": "Investigate feature distributions"
+        },
+        {
+          "time": "09:15",
+          "event": "Confirmed data drift in Age and Fare features",
+          "action": "Analyze impact on model performance"
+        },
+        {
+          "time": "09:30",
+          "event": "Model accuracy confirmed degraded",
+          "action": "Prepare rollback to previous model version"
+        },
+        {
+          "time": "09:45",
+          "event": "Rollback executed",
+          "action": "Monitor restored performance"
+        },
+        {
+          "time": "10:00",
+          "event": "Performance restored",
+          "action": "Plan retraining with new data"
+        }
+      ],
+      "actions": [
+        {
+          "step": 1,
+          "action": "Detect",
+          "description": "Identify the problem through monitoring",
+          "tools": ["Monitoring Dashboard", "Alert System"],
+          "duration": "5 minutes",
+          "success_criteria": "Problem identified and confirmed"
+        },
+        {
+          "step": 2,
+          "action": "Diagnose",
+          "description": "Analyze root cause of data drift",
+          "tools": ["Data Analysis", "Feature Monitoring"],
+          "duration": "15 minutes",
+          "success_criteria": "Root cause identified"
+        },
+        {
+          "step": 3,
+          "action": "Mitigate",
+          "description": "Rollback to stable model version",
+          "tools": ["Model Registry", "Deployment Pipeline"],
+          "duration": "10 minutes",
+          "success_criteria": "Stable model deployed"
+        },
+        {
+          "step": 4,
+          "action": "Recover",
+          "description": "Validate recovery and monitor performance",
+          "tools": ["Performance Monitoring", "Business Metrics"],
+          "duration": "15 minutes",
+          "success_criteria": "Performance restored"
+        },
+        {
+          "step": 5,
+          "action": "Prevent",
+          "description": "Plan retraining and improve monitoring",
+          "tools": ["Retraining Pipeline", "Enhanced Monitoring"],
+          "duration": "30 minutes",
+          "success_criteria": "Prevention measures implemented"
+        }
+      ],
+      "prevention_measures": [
+        "Implement automated drift detection",
+        "Set up regular retraining schedules",
+        "Enhance data quality monitoring",
+        "Create data validation checks"
+      ]
+    },
+    {
+      "name": "pipeline_failure",
+      "display_name": "Data Pipeline Failure",
+      "description": "Data pipeline fails due to upstream schema changes",
+      "severity": "critical",
+      "symptoms": [
+        "Training pipeline fails",
+        "Missing data in feature store",
+        "Schema validation errors",
+        "Model predictions become inconsistent"
+      ],
+      "timeline": [
+        {
+          "time": "08:00",
+          "event": "Pipeline failure alert triggered",
+          "action": "Check pipeline status and logs"
+        },
+        {
+          "time": "08:10",
+          "event": "Schema validation error identified",
+          "action": "Investigate upstream data source changes"
+        },
+        {
+          "time": "08:20",
+          "event": "Upstream schema change confirmed",
+          "action": "Update pipeline configuration"
+        },
+        {
+          "time": "08:35",
+          "event": "Pipeline configuration updated",
+          "action": "Restart pipeline and validate data"
+        },
+        {
+          "time": "08:50",
+          "event": "Pipeline restored and validated",
+          "action": "Monitor data quality and model performance"
+        }
+      ],
+      "actions": [
+        {
+          "step": 1,
+          "action": "Detect",
+          "description": "Identify pipeline failure through monitoring",
+          "tools": ["Pipeline Monitoring", "Alert System"],
+          "duration": "5 minutes",
+          "success_criteria": "Pipeline failure confirmed"
+        },
+        {
+          "step": 2,
+          "action": "Diagnose",
+          "description": "Analyze pipeline logs and identify cause",
+          "tools": ["Log Analysis", "Schema Validation"],
+          "duration": "10 minutes",
+          "success_criteria": "Root cause identified"
+        },
+        {
+          "step": 3,
+          "action": "Mitigate",
+          "description": "Update pipeline configuration",
+          "tools": ["Configuration Management", "Schema Updates"],
+          "duration": "15 minutes",
+          "success_criteria": "Pipeline configuration updated"
+        },
+        {
+          "step": 4,
+          "action": "Recover",
+          "description": "Restart pipeline and validate data",
+          "tools": ["Pipeline Orchestration", "Data Validation"],
+          "duration": "15 minutes",
+          "success_criteria": "Pipeline restored and validated"
+        },
+        {
+          "step": 5,
+          "action": "Prevent",
+          "description": "Improve schema handling and monitoring",
+          "tools": ["Schema Evolution", "Enhanced Monitoring"],
+          "duration": "30 minutes",
+          "success_criteria": "Prevention measures implemented"
+        }
+      ],
+      "prevention_measures": [
+        "Implement schema evolution handling",
+        "Add data validation checks",
+        "Set up pipeline health monitoring",
+        "Create upstream change notifications"
+      ]
+    },
+    {
+      "name": "latency_spike",
+      "display_name": "Latency Spike",
+      "description": "Model inference latency increases significantly",
+      "severity": "medium",
+      "symptoms": [
+        "Response time increases from 100ms to 500ms",
+        "User complaints about slow responses",
+        "High CPU/memory usage",
+        "Queue buildup in inference servers"
+      ],
+      "timeline": [
+        {
+          "time": "14:00",
+          "event": "Latency alert triggered",
+          "action": "Check system resources and load"
+        },
+        {
+          "time": "14:05",
+          "event": "High CPU usage detected",
+          "action": "Investigate resource utilization"
+        },
+        {
+          "time": "14:10",
+          "event": "Memory leak suspected",
+          "action": "Restart inference servers"
+        },
+        {
+          "time": "14:15",
+          "event": "Servers restarted",
+          "action": "Monitor latency and resource usage"
+        },
+        {
+          "time": "14:20",
+          "event": "Latency restored to normal",
+          "action": "Investigate root cause of memory leak"
+        }
+      ],
+      "actions": [
+        {
+          "step": 1,
+          "action": "Detect",
+          "description": "Identify latency spike through monitoring",
+          "tools": ["Performance Monitoring", "Alert System"],
+          "duration": "2 minutes",
+          "success_criteria": "Latency spike confirmed"
+        },
+        {
+          "step": 2,
+          "action": "Diagnose",
+          "description": "Analyze system resources and identify cause",
+          "tools": ["Resource Monitoring", "Log Analysis"],
+          "duration": "5 minutes",
+          "success_criteria": "Root cause identified"
+        },
+        {
+          "step": 3,
+          "action": "Mitigate",
+          "description": "Restart servers or scale resources",
+          "tools": ["Auto-scaling", "Server Management"],
+          "duration": "5 minutes",
+          "success_criteria": "Resources scaled or servers restarted"
+        },
+        {
+          "step": 4,
+          "action": "Recover",
+          "description": "Monitor latency and validate recovery",
+          "tools": ["Performance Monitoring", "Load Testing"],
+          "duration": "5 minutes",
+          "success_criteria": "Latency restored to normal"
+        },
+        {
+          "step": 5,
+          "action": "Prevent",
+          "description": "Implement resource monitoring and limits",
+          "tools": ["Resource Limits", "Enhanced Monitoring"],
+          "duration": "20 minutes",
+          "success_criteria": "Prevention measures implemented"
+        }
+      ],
+      "prevention_measures": [
+        "Implement resource limits",
+        "Set up auto-scaling policies",
+        "Add memory leak detection",
+        "Create performance baselines"
+      ]
+    },
+    {
+      "name": "bias_issue",
+      "display_name": "Bias Detection",
+      "description": "Model shows bias against certain demographic groups",
+      "severity": "high",
+      "symptoms": [
+        "Fairness metrics show bias",
+        "Different accuracy across groups",
+        "User complaints about unfair treatment",
+        "Regulatory compliance concerns"
+      ],
+      "timeline": [
+        {
+          "time": "11:00",
+          "event": "Bias alert triggered",
+          "action": "Analyze predictions by demographic groups"
+        },
+        {
+          "time": "11:15",
+          "event": "Bias confirmed in model predictions",
+          "action": "Investigate training data and model"
+        },
+        {
+          "time": "11:30",
+          "event": "Training data bias identified",
+          "action": "Prepare bias mitigation strategy"
+        },
+        {
+          "time": "11:45",
+          "event": "Bias mitigation implemented",
+          "action": "Retrain model with balanced data"
+        },
+        {
+          "time": "12:30",
+          "event": "Retrained model deployed",
+          "action": "Monitor fairness metrics"
+        }
+      ],
+      "actions": [
+        {
+          "step": 1,
+          "action": "Detect",
+          "description": "Identify bias through fairness monitoring",
+          "tools": ["Fairness Monitoring", "Bias Detection"],
+          "duration": "10 minutes",
+          "success_criteria": "Bias confirmed and quantified"
+        },
+        {
+          "step": 2,
+          "action": "Diagnose",
+          "description": "Analyze training data and model for bias",
+          "tools": ["Data Analysis", "Model Analysis"],
+          "duration": "15 minutes",
+          "success_criteria": "Bias source identified"
+        },
+        {
+          "step": 3,
+          "action": "Mitigate",
+          "description": "Implement bias mitigation techniques",
+          "tools": ["Bias Mitigation", "Data Balancing"],
+          "duration": "15 minutes",
+          "success_criteria": "Mitigation strategy implemented"
+        },
+        {
+          "step": 4,
+          "action": "Recover",
+          "description": "Retrain and deploy bias-free model",
+          "tools": ["Retraining Pipeline", "Model Deployment"],
+          "duration": "45 minutes",
+          "success_criteria": "Bias-free model deployed"
+        },
+        {
+          "step": 5,
+          "action": "Prevent",
+          "description": "Implement regular bias testing",
+          "tools": ["Bias Testing", "Fairness Monitoring"],
+          "duration": "30 minutes",
+          "success_criteria": "Prevention measures implemented"
+        }
+      ],
+      "prevention_measures": [
+        "Implement regular bias testing",
+        "Use diverse training data",
+        "Add fairness constraints",
+        "Monitor fairness metrics"
+      ]
+    }
+  ],
+  "incident_response_team": [
+    {
+      "role": "Incident Commander",
+      "responsibilities": [
+        "Coordinate response efforts",
+        "Make critical decisions",
+        "Communicate with stakeholders",
+        "Ensure proper documentation"
+      ],
+      "escalation_level": "high"
+    },
+    {
+      "role": "Data Engineer",
+      "responsibilities": [
+        "Investigate data issues",
+        "Fix pipeline problems",
+        "Validate data quality",
+        "Update data processing"
+      ],
+      "escalation_level": "medium"
+    },
+    {
+      "role": "ML Engineer",
+      "responsibilities": [
+        "Analyze model performance",
+        "Implement fixes",
+        "Retrain models",
+        "Validate model quality"
+      ],
+      "escalation_level": "medium"
+    },
+    {
+      "role": "DevOps Engineer",
+      "responsibilities": [
+        "Handle infrastructure issues",
+        "Scale resources",
+        "Manage deployments",
+        "Monitor system health"
+      ],
+      "escalation_level": "medium"
+    }
+  ],
+  "communication_channels": [
+    {
+      "channel": "Incident Slack Channel",
+      "purpose": "Real-time communication during incidents",
+      "audience": "Response team"
+    },
+    {
+      "channel": "Status Page",
+      "purpose": "Public status updates",
+      "audience": "External users"
+    },
+    {
+      "channel": "Management Notification",
+      "purpose": "Executive updates",
+      "audience": "Management team"
+    }
+  ],
+  "post_incident_actions": [
+    "Conduct post-mortem analysis",
+    "Document lessons learned",
+    "Update runbooks and procedures",
+    "Implement preventive measures",
+    "Share knowledge with team"
+  ],
+  "visualization": {
+    "show_timeline": true,
+    "show_actions": true,
+    "show_team_roles": true,
+    "show_communication": true,
+    "show_prevention": true
+  },
+  "hints": [
+    "Follow the incident response playbook systematically",
+    "Communicate clearly with all stakeholders",
+    "Document all actions and decisions",
+    "Learn from each incident to improve processes",
+    "Implement preventive measures to avoid recurrence"
+  ]
+}

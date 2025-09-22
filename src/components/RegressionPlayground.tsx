@@ -175,7 +175,7 @@ export default function RegressionPlayground({
               <li>• Use the sliders to adjust the slope (m) and intercept (b)</li>
               <li>• Try to make the red line fit the blue data points as closely as possible</li>
               <li>• Watch how the MSE (Mean Squared Error) changes as you adjust the line</li>
-              <li>• The green dashed line shows the "true" relationship (if enabled)</li>
+              <li>• The green dashed line shows the &quot;true&quot; relationship (if enabled)</li>
             </ul>
             <Button 
               onClick={() => setShowInstructions(false)}

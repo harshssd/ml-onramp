@@ -116,29 +116,62 @@ export default function KarpathyLearningPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="text-center mb-8">
+            <div className="text-6xl mb-4">🧠</div>
+            <h2 className={`text-3xl font-bold ${themeClasses.text} mb-4`}>
+              Neural Mastery: The Deep Dive with Karpathy
+            </h2>
+            <p className={`text-xl ${themeClasses.text}/70 max-w-3xl mx-auto mb-6`}>
+              Master neural networks from the ground up with Andrej Karpathy&apos;s legendary course. 
+              Build, understand, and create with the power of deep learning.
+            </p>
+            <div className={`p-6 rounded-lg ${themeClasses.card.replace('/10', '/5')} border ${themeClasses.border} max-w-4xl mx-auto`}>
+              <p className={`${themeClasses.text} italic text-lg`}>
+                &quot;You&apos;ve seen what AI can do. Now it&apos;s time to understand HOW it does it. This is where the magic happens.&quot;
+              </p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Chapter 1 - Detailed Implementation */}
             <Card className={`${themeClasses.card} backdrop-blur-sm border ${themeClasses.border} hover:${themeClasses.card.replace('/10', '/20')} transition-all duration-300 transform hover:scale-105 cursor-pointer`}
               onClick={() => window.location.href = '/learning/karpathy/chapter1'}>
               <CardHeader>
                 <div className="flex items-center justify-between mb-4">
-                  <div className="text-4xl">🧠</div>
+                  <div className="text-4xl">⚙️</div>
                   <Badge className="bg-blue-500 text-white">
-                    Featured
+                    Ready to Start
                   </Badge>
                 </div>
                 <CardTitle className={`text-2xl ${themeClasses.text}`}>
-                  Chapter 1: What is a Neural Network?
+                  Chapter 1: The Foundation
                 </CardTitle>
                 <CardDescription className={`${themeClasses.text}/70`}>
-                  Complete implementation with precise timestamps, interactive widgets, and comprehensive learning structure
+                  Build neural networks from first principles with micrograd
                 </CardDescription>
               </CardHeader>
               <CardContent>
+                <div className={`p-4 rounded-lg ${themeClasses.card.replace('/10', '/5')} border ${themeClasses.border} mb-4`}>
+                  <div className="space-y-2">
+                    <div>
+                      <span className={`font-semibold ${themeClasses.text}`}>Setup: </span>
+                      <span className={`${themeClasses.text}`}>Every master starts with the fundamentals. You&apos;re about to build neural networks from scratch.</span>
+                    </div>
+                    <div>
+                      <span className={`font-semibold ${themeClasses.text}`}>Challenge: </span>
+                      <span className={`${themeClasses.text}`}>Can you understand and implement every component of a neural network?</span>
+                    </div>
+                    <div>
+                      <span className={`font-semibold ${themeClasses.text}`}>Resolution: </span>
+                      <span className={`${themeClasses.text}`}>You&apos;ll have built a complete neural network library and understand every line of code.</span>
+                    </div>
+                  </div>
+                </div>
+                
                 <div className="space-y-3">
                   <div className="flex justify-between">
                     <span className={`${themeClasses.text}/70`}>Duration:</span>
-                    <span className={`${themeClasses.text}`}>2h 30m</span>
+                    <span className={`${themeClasses.text}`}>8-10 hours</span>
                   </div>
                   <div className="flex justify-between">
                     <span className={`${themeClasses.text}/70`}>Lessons:</span>
@@ -149,31 +182,69 @@ export default function KarpathyLearningPage() {
                     <span className={`${themeClasses.text}`}>Interactive widgets</span>
                   </div>
                 </div>
-                
-                <div className="mt-4">
-                  <h4 className={`font-semibold ${themeClasses.text} mb-2`}>What you&apos;ll learn:</h4>
-                  <ul className={`text-sm ${themeClasses.text}/70 space-y-1`}>
-                    <li className="flex items-center">
-                      <CheckCircle className="h-4 w-4 text-green-400 mr-2" />
-                      Neural network fundamentals
-                    </li>
-                    <li className="flex items-center">
-                      <CheckCircle className="h-4 w-4 text-green-400 mr-2" />
-                      Forward pass and backpropagation
-                    </li>
-                    <li className="flex items-center">
-                      <CheckCircle className="h-4 w-4 text-green-400 mr-2" />
-                      Hands-on micrograd implementation
-                    </li>
-                  </ul>
-                </div>
 
                 <Button className="w-full mt-6 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white">
-                  Start Chapter 1
+                  Begin Your Foundation
                   <ArrowLeft className="h-4 w-4 ml-2 rotate-180" />
                 </Button>
               </CardContent>
             </Card>
+
+            {/* Coming Soon Chapters */}
+            <Card className={`${themeClasses.card} backdrop-blur-sm border ${themeClasses.border} opacity-75`}>
+              <CardHeader>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="text-4xl">📝</div>
+                  <Badge className="bg-gray-500 text-white">
+                    Coming Soon
+                  </Badge>
+                </div>
+                <CardTitle className={`text-2xl ${themeClasses.text}`}>
+                  Chapter 2: The Language of Intelligence
+                </CardTitle>
+                <CardDescription className={`${themeClasses.text}/70`}>
+                  Master language models and transformer architecture
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className={`p-4 rounded-lg ${themeClasses.card.replace('/10', '/5')} border ${themeClasses.border} mb-4`}>
+                  <div className="space-y-2">
+                    <div>
+                      <span className={`font-semibold ${themeClasses.text}`}>Setup: </span>
+                      <span className={`${themeClasses.text}`}>Language is the ultimate test of intelligence. You&apos;re about to teach machines to speak.</span>
+                    </div>
+                    <div>
+                      <span className={`font-semibold ${themeClasses.text}`}>Challenge: </span>
+                      <span className={`${themeClasses.text}`}>Can you build a system that understands and generates human language?</span>
+                    </div>
+                    <div>
+                      <span className={`font-semibold ${themeClasses.text}`}>Resolution: </span>
+                      <span className={`${themeClasses.text}`}>You&apos;ll create language models that can write, understand, and communicate like humans.</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="space-y-3">
+                  <div className="flex justify-between">
+                    <span className={`${themeClasses.text}/70`}>Duration:</span>
+                    <span className={`${themeClasses.text}`}>10-12 hours</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className={`${themeClasses.text}/70`}>Lessons:</span>
+                    <span className={`${themeClasses.text}`}>8 lessons</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className={`${themeClasses.text}/70`}>Status:</span>
+                    <span className={`${themeClasses.text}`}>In Development</span>
+                  </div>
+                </div>
+
+                <Button className="w-full mt-6 bg-gray-500 text-white cursor-not-allowed" disabled>
+                  Complete Chapter 1 First
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
 
             {karpathyTracks.map((track) => (
               <Card key={track.id} className={`${themeClasses.card} backdrop-blur-sm border ${themeClasses.border} hover:${themeClasses.card.replace('/10', '/20')} transition-all duration-300 transform hover:scale-105 cursor-pointer`}

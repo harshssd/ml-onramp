@@ -3,475 +3,339 @@
 import { useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
-import { type Lesson } from '@/components/LessonCard';
 import { ProgressRing } from '@/components/ProgressRing';
 import { ThemeSelector } from '@/components/ThemeSelector';
-import { LogOut, User, Trophy, Star, Target, BookOpen, Play, ArrowRight } from 'lucide-react';
+import { storyCourses, getCourseById } from '@/data/storyCourses';
+import { 
+  BookOpen, 
+  Play, 
+  Star, 
+  Target, 
+  Trophy, 
+  ArrowRight, 
+  Brain, 
+  Zap, 
+  Clock, 
+  CheckCircle,
+  Badge,
+  Sparkles,
+  Rocket,
+  Shield,
+  Lightbulb,
+  Users,
+  Award,
+  TrendingUp,
+  Lock,
+  Unlock
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import { Badge as UIBadge } from '@/components/ui/badge';
 import { useTheme } from '@/contexts/ThemeContext';
 
-// Learning Paths Data
-const learningPaths = [
-  {
-    id: 'data-explorer',
-    title: 'AI Fundamentals for Everyone',
-    description: 'Start your AI journey from scratch! Learn the basics of Artificial Intelligence and Machine Learning with no prior experience needed.',
-    story: 'Welcome to the world of AI! You are about to embark on an exciting journey into Artificial Intelligence and Machine Learning. No prior experience needed - we\'ll guide you every step of the way.',
-    difficulty: 'beginner',
-    estimatedTime: '8-12 weeks',
-    chapters: 5,
-    skills: ['Python Basics', 'Data Analysis', 'Visualization', 'ML Fundamentals', 'First Model'],
-    prerequisites: [],
-    rewards: {
-      xp: 1000,
-      badges: ['Data Explorer', 'Python Initiate', 'Visualization Artist', 'Model Builder'],
-      unlocks: ['ML Practitioner Track', 'Advanced Algorithms', 'Community Access']
-    },
-    icon: '🌟',
-    color: 'bg-gradient-to-r from-blue-500 to-purple-600',
-    status: 'available'
-  },
-  {
-    id: 'ml-practitioner',
-    title: 'AI Applications & Projects',
-    description: 'Build real AI projects and applications! Learn advanced machine learning techniques through hands-on projects.',
-    story: 'You\'ve learned the fundamentals! Now it\'s time to build real AI applications and solve practical problems with machine learning.',
-    difficulty: 'intermediate',
-    estimatedTime: '12-16 weeks',
-    chapters: 8,
-    skills: ['Advanced Python', 'Feature Engineering', 'Model Selection', 'Evaluation', 'Deployment'],
-    prerequisites: [],
-    rewards: {
-      xp: 2000,
-      badges: ['ML Practitioner', 'Algorithm Master', 'Model Deployer', 'Problem Solver'],
-      unlocks: ['ML Engineer Track', 'Specialization Tracks', 'Mentor Program']
-    },
-    icon: '🧙‍♂️',
-    color: 'bg-gradient-to-r from-green-500 to-teal-600',
-    status: 'available'
-  },
-  {
-    id: 'ml-engineer',
-    title: 'AI Systems & Deployment',
-    description: 'Master AI system design and deployment! Learn to build, deploy, and maintain AI systems in production.',
-    story: 'You\'re ready for the big leagues! Learn to design, build, and deploy AI systems that work in the real world.',
-    difficulty: 'advanced',
-    estimatedTime: '16-20 weeks',
-    chapters: 10,
-    skills: ['Docker', 'Kubernetes', 'MLOps', 'Cloud ML', 'System Design'],
-    prerequisites: [],
-    rewards: {
-      xp: 3000,
-      badges: ['ML Engineer', 'System Architect', 'DevOps Master', 'Cloud Expert'],
-      unlocks: ['ML Architect Track', 'Leadership Program', 'Industry Mentorship']
-    },
-    icon: '⚙️',
-    color: 'bg-gradient-to-r from-orange-500 to-red-600',
-    status: 'available'
-  },
-  {
-    id: 'deep-learning-sage',
-    title: 'The Deep Learning Sage\'s Path',
-    description: 'Master the most powerful magic - Deep Learning! Explore neural networks and AI.',
-    story: 'You are a seasoned ML practitioner seeking to master the most powerful magic - Deep Learning!',
-    difficulty: 'advanced',
-    estimatedTime: '20-24 weeks',
-    chapters: 12,
-    skills: ['Neural Networks', 'TensorFlow', 'PyTorch', 'Computer Vision', 'NLP'],
-    prerequisites: ['ml-practitioner'],
-    rewards: {
-      xp: 4000,
-      badges: ['Deep Learning Sage', 'Neural Network Master', 'AI Visionary', 'Research Pioneer'],
-      unlocks: ['Research Track', 'AI Ethics Program', 'Industry Leadership']
-    },
-    icon: '🧠',
-    color: 'bg-gradient-to-r from-purple-500 to-pink-600',
-    status: 'available'
-  },
-  {
-    id: 'ml-architect',
-    title: 'The ML Architect\'s Legacy',
-    description: 'Design and build enterprise-scale ML systems! Lead the future of AI.',
-    story: 'You are a Master of ML who must design and build enterprise-scale ML systems!',
-    difficulty: 'expert',
-    estimatedTime: '24-30 weeks',
-    chapters: 15,
-    skills: ['System Design', 'MLOps', 'Model Optimization', 'AI Ethics', 'Leadership'],
-    prerequisites: ['ml-engineer', 'deep-learning-sage'],
-    rewards: {
-      xp: 5000,
-      badges: ['ML Architect', 'System Designer', 'AI Leader', 'Industry Expert'],
-      unlocks: ['Master\'s Program', 'Executive Track', 'Industry Advisory']
-    },
-    icon: '🏛️',
-    color: 'bg-gradient-to-r from-indigo-500 to-purple-600',
-    status: 'available'
-  }
-];
-
-export default function AppPage() {
-  const [user, setUser] = useState<any>(null); // eslint-disable-line @typescript-eslint/no-explicit-any
-  const [lessons, setLessons] = useState<Lesson[]>([]);
-  const [userProgress, setUserProgress] = useState<Record<string, number>>({});
-  const [isLoading, setIsLoading] = useState(true);
-  const [showLearningPaths, setShowLearningPaths] = useState(false);
-  const router = useRouter();
-  const supabase = createClient();
+export default function Dashboard() {
   const { getThemeClasses } = useTheme();
   const themeClasses = getThemeClasses();
+  const router = useRouter();
+  const [user, setUser] = useState<any>(null);
+  const [userProgress, setUserProgress] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
 
-  const loadLessons = useCallback(async () => {
+  const loadUser = useCallback(async () => {
     try {
-      const response = await fetch('/api/lessons');
-      const data = await response.json();
-      setLessons(data);
+      const supabase = createClient();
+      const { data: { user } } = await supabase.auth.getUser();
+      setUser(user);
+      
+      if (user) {
+        const { data: progress } = await supabase
+          .from('user_progress')
+          .select('*')
+          .eq('user_id', user.id)
+          .single();
+        setUserProgress(progress);
+      }
     } catch (error) {
-      console.error('Error loading lessons:', error);
+      console.error('Error loading user:', error);
+    } finally {
+      setLoading(false);
     }
   }, []);
 
-  const loadUserProgress = useCallback(async (userId: string) => {
-    try {
-      const { data } = await supabase
-        .from('user_progress')
-        .select('lesson_id, progress_percentage, completed')
-        .eq('user_id', userId);
-
-      const progressMap: Record<string, number> = {};
-      data?.forEach((item) => {
-        progressMap[item.lesson_id] = item.progress_percentage;
-      });
-      setUserProgress(progressMap);
-    } catch (error) {
-      console.error('Error loading user progress:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  }, [supabase]);
-
   useEffect(() => {
-    const getUser = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) {
-        router.push('/login');
-        return;
-      }
-      setUser(user);
-      await loadLessons();
-      await loadUserProgress(user.id);
-    };
+    loadUser();
+  }, [loadUser]);
 
-    getUser();
-  }, [router, supabase.auth, loadLessons, loadUserProgress]);
-
-  const handleSignOut = async () => {
-    await supabase.auth.signOut();
-    router.push('/');
-  };
-
-  const handleStartLesson = (slug: string) => {
-    router.push(`/lesson/${slug}`);
-  };
-
-  const handleStartLearningPath = (pathId: string) => {
-    router.push(`/learning?path=${pathId}`);
-  };
-
-  const handleStartStorytelling = () => {
-    router.push('/learning');
+  const handleStartCourse = (courseId: string) => {
+    const course = getCourseById(courseId);
+    if (course && course.chapters.length > 0) {
+      router.push(course.chapters[0].path);
+    }
   };
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
       case 'beginner': return 'bg-green-500';
-      case 'intermediate': return 'bg-yellow-500';
-      case 'advanced': return 'bg-orange-500';
+      case 'intermediate': return 'bg-blue-500';
+      case 'advanced': return 'bg-purple-500';
       case 'expert': return 'bg-red-500';
       default: return 'bg-gray-500';
     }
   };
 
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case 'completed': return '✅';
-      case 'in-progress': return '🔄';
-      case 'available': return '🚀';
-      case 'locked': return '🔒';
-      default: return '❓';
+  const getDifficultyIcon = (difficulty: string) => {
+    switch (difficulty) {
+      case 'beginner': return <Sparkles className="h-4 w-4" />;
+      case 'intermediate': return <Brain className="h-4 w-4" />;
+      case 'advanced': return <Rocket className="h-4 w-4" />;
+      case 'expert': return <Award className="h-4 w-4" />;
+      default: return <BookOpen className="h-4 w-4" />;
     }
   };
 
-  const calculateOverallProgress = () => {
-    if (lessons.length === 0) return 0;
-    const totalProgress = Object.values(userProgress).reduce((sum, progress) => sum + progress, 0);
-    return totalProgress / lessons.length;
-  };
-
-  const calculateXP = () => {
-    return Math.floor(calculateOverallProgress() * 1000);
-  };
-
-  const calculateLevel = () => {
-    return Math.floor(calculateXP() / 100) + 1;
-  };
-
-  const getCompletedLessons = () => {
-    return Object.values(userProgress).filter(progress => progress === 100).length;
-  };
-
-  const getCurrentStreak = () => {
-    // Mock streak calculation - in real app, this would be calculated from actual data
-    return Math.floor(Math.random() * 7) + 1;
-  };
-
-  if (isLoading) {
+  if (loading) {
     return (
       <div className={`min-h-screen ${themeClasses.background} flex items-center justify-center`}>
         <div className="text-center">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-yellow-400 mx-auto"></div>
-          <p className={`mt-4 ${themeClasses.text}/80 text-lg`}>Loading your quest...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
+          <p className={`${themeClasses.text}`}>Loading your AI journey...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className={`min-h-screen ${themeClasses.background} relative overflow-hidden`}>
-      {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-pulse"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-pulse"></div>
-        <div className="absolute top-40 left-1/2 w-80 h-80 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-pulse"></div>
+    <div className={`min-h-screen ${themeClasses.background}`}>
+      {/* Header */}
+      <div className="border-b border-gray-200 dark:border-gray-700">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center py-6">
+            <div className="flex items-center space-x-4">
+              <div className="text-3xl">🧠</div>
+              <div>
+                <h1 className={`text-2xl font-bold ${themeClasses.text}`}>
+                  AI Learning Platform
+                </h1>
+                <p className={`text-sm ${themeClasses.text}/70`}>
+                  Your journey to AI mastery
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center space-x-4">
+              <ThemeSelector />
+              {user ? (
+                <div className="flex items-center space-x-3">
+                  <div className="text-right">
+                    <p className={`text-sm font-medium ${themeClasses.text}`}>
+                      {user.email}
+                    </p>
+                    <p className={`text-xs ${themeClasses.text}/70`}>
+                      Level {userProgress?.level || 1}
+                    </p>
+                  </div>
+                  <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+                    <User className="h-4 w-4 text-white" />
+                  </div>
+                </div>
+              ) : (
+                <Button 
+                  onClick={() => router.push('/login')}
+                  className="bg-blue-500 hover:bg-blue-600 text-white"
+                >
+                  Sign In
+                </Button>
+              )}
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div className="relative z-10">
-        {/* Game Header */}
-        <header className={`${themeClasses.card} backdrop-blur-sm border-b ${themeClasses.border}`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between items-center h-20">
-              <div className="flex items-center space-x-4">
-                <div className="text-3xl">🤖</div>
-                <div>
-                  <h1 className={`text-2xl font-bold ${themeClasses.text}`}>AI Learning Hub</h1>
-                  <p className={`${themeClasses.text}/70 text-sm`}>Level {calculateLevel()} • {calculateXP()} XP</p>
-            </div>
-              </div>
+      {/* Main Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Welcome Section */}
+        <div className="text-center mb-12">
+          <h2 className={`text-4xl font-bold ${themeClasses.text} mb-4`}>
+            Choose Your AI Journey
+          </h2>
+          <p className={`text-xl ${themeClasses.text}/70 max-w-3xl mx-auto`}>
+            Every great AI practitioner started somewhere. Your journey begins with a single step - 
+            choosing the path that calls to you.
+          </p>
+        </div>
+
+        {/* Story Courses */}
+        <div className="space-y-8">
+          {storyCourses.map((course, index) => (
+            <Card key={course.id} className={`${themeClasses.card} backdrop-blur-sm border ${themeClasses.border} hover:${themeClasses.card.replace('/10', '/20')} transition-all duration-300`}>
+              <CardHeader>
+                <div className="flex items-start justify-between">
+                  <div className="flex items-start space-x-4">
+                    <div className="text-6xl">{course.icon}</div>
+                    <div className="flex-1">
+                      <div className="flex items-center space-x-3 mb-2">
+                        <CardTitle className={`text-3xl ${themeClasses.text}`}>
+                          {course.title}
+                        </CardTitle>
+                        <UIBadge className={`${getDifficultyColor(course.difficulty)} text-white`}>
+                          {getDifficultyIcon(course.difficulty)}
+                          <span className="ml-1 capitalize">{course.difficulty}</span>
+                        </UIBadge>
+                      </div>
+                      <CardDescription className={`text-xl ${themeClasses.text}/70 mb-4`}>
+                        {course.subtitle}
+                      </CardDescription>
+                      <p className={`text-lg ${themeClasses.text}/80 mb-6`}>
+                        {course.description}
+                      </p>
+                      
+                      {/* Story Hook */}
+                      <div className={`p-4 rounded-lg ${themeClasses.card.replace('/10', '/5')} border ${themeClasses.border} mb-6`}>
+                        <p className={`${themeClasses.text} italic`}>
+                          "{course.story.hook}"
+                        </p>
+                      </div>
+
+                      {/* Course Stats */}
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                        <div className="text-center">
+                          <div className="flex items-center justify-center mb-1">
+                            <Clock className="h-4 w-4 text-blue-400 mr-1" />
+                            <span className={`text-sm font-medium ${themeClasses.text}`}>Duration</span>
+                          </div>
+                          <p className={`text-sm ${themeClasses.text}/70`}>{course.duration}</p>
+                        </div>
+                        <div className="text-center">
+                          <div className="flex items-center justify-center mb-1">
+                            <BookOpen className="h-4 w-4 text-green-400 mr-1" />
+                            <span className={`text-sm font-medium ${themeClasses.text}`}>Chapters</span>
+                          </div>
+                          <p className={`text-sm ${themeClasses.text}/70`}>{course.chapters.length}</p>
+                        </div>
+                        <div className="text-center">
+                          <div className="flex items-center justify-center mb-1">
+                            <Users className="h-4 w-4 text-purple-400 mr-1" />
+                            <span className={`text-sm font-medium ${themeClasses.text}`}>Level</span>
+                          </div>
+                          <p className={`text-sm ${themeClasses.text}/70 capitalize`}>{course.difficulty}</p>
+                        </div>
+                        <div className="text-center">
+                          <div className="flex items-center justify-center mb-1">
+                            <TrendingUp className="h-4 w-4 text-orange-400 mr-1" />
+                            <span className={`text-sm font-medium ${themeClasses.text}`}>Hours</span>
+                          </div>
+                          <p className={`text-sm ${themeClasses.text}/70`}>{course.estimatedHours}</p>
+                        </div>
+                      </div>
+
+                      {/* Skills */}
+                      <div className="mb-6">
+                        <h4 className={`font-semibold ${themeClasses.text} mb-2`}>Skills you'll master:</h4>
+                        <div className="flex flex-wrap gap-2">
+                          {course.skills.map((skill, skillIndex) => (
+                            <UIBadge key={skillIndex} variant="secondary" className={`${themeClasses.card.replace('/10', '/20')}`}>
+                              {skill}
+                            </UIBadge>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </CardHeader>
               
-              <div className="flex items-center space-x-4">
-                {/* Theme Selector */}
-                <ThemeSelector />
-                
-                {/* XP Bar */}
-                <div className="flex items-center space-x-3">
-                  <Star className="h-5 w-5 text-yellow-400" />
-                  <div className="w-32 bg-white/20 rounded-full h-3">
-                    <div 
-                      className="bg-gradient-to-r from-yellow-400 to-orange-500 h-3 rounded-full transition-all duration-500"
-                      style={{ width: `${(calculateXP() % 100)}%` }}
-                    ></div>
+              <CardContent>
+                {/* Chapter Preview */}
+                <div className="mb-6">
+                  <h4 className={`font-semibold ${themeClasses.text} mb-3`}>Your Journey:</h4>
+                  <div className="space-y-3">
+                    {course.chapters.map((chapter, chapterIndex) => (
+                      <div key={chapter.id} className={`flex items-center space-x-3 p-3 rounded-lg ${themeClasses.card.replace('/10', '/5')} border ${themeClasses.border}`}>
+                        <div className="text-2xl">{chapter.icon}</div>
+                        <div className="flex-1">
+                          <div className="flex items-center space-x-2">
+                            <h5 className={`font-medium ${themeClasses.text}`}>{chapter.title}</h5>
+                            {chapter.locked ? (
+                              <Lock className="h-4 w-4 text-gray-400" />
+                            ) : (
+                              <Unlock className="h-4 w-4 text-green-400" />
+                            )}
+                          </div>
+                          <p className={`text-sm ${themeClasses.text}/70`}>{chapter.description}</p>
+                          <div className="flex items-center space-x-4 mt-1">
+                            <span className={`text-xs ${themeClasses.text}/60`}>{chapter.duration}</span>
+                            <span className={`text-xs ${themeClasses.text}/60`}>{chapter.lessons} lessons</span>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                  <span className={`${themeClasses.text}/80 text-sm font-medium`}>{calculateXP() % 100}/100</span>
                 </div>
 
-                <div className="flex items-center space-x-2">
-                  <User className={`h-5 w-5 ${themeClasses.text}/70`} />
-                  <span className={`${themeClasses.text}/90 text-sm`}>{user?.email?.split('@')[0]}</span>
+                {/* Action Buttons */}
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-4">
+                    <Button
+                      onClick={() => handleStartCourse(course.id)}
+                      className={`bg-gradient-to-r ${course.gradient} hover:opacity-90 text-white px-8 py-3 text-lg`}
+                      disabled={course.chapters[0]?.locked}
+                    >
+                      {course.chapters[0]?.locked ? (
+                        <>
+                          <Lock className="h-5 w-5 mr-2" />
+                          Complete Previous Course
+                        </>
+                      ) : (
+                        <>
+                          <Play className="h-5 w-5 mr-2" />
+                          Begin Journey
+                        </>
+                      )}
+                    </Button>
+                    
+                    <Button
+                      variant="outline"
+                      className={`${themeClasses.border} px-6 py-3`}
+                      onClick={() => router.push(`/courses/${course.id}`)}
+                    >
+                      <BookOpen className="h-4 w-4 mr-2" />
+                      Learn More
+                    </Button>
+                  </div>
+
+                  <div className="text-right">
+                    <p className={`text-sm ${themeClasses.text}/70`}>
+                      {course.targetAudience.join(' • ')}
+                    </p>
+                  </div>
                 </div>
-                
-                <Button 
-                  onClick={handleSignOut} 
-                  variant="outline" 
-                  size="sm"
-                  className={`${themeClasses.border} ${themeClasses.text} hover:${themeClasses.card.replace('bg-', 'bg-').replace('/10', '/20')} border-2`}
-                >
-                <LogOut className="h-4 w-4 mr-2" />
-                  Exit Quest
-              </Button>
-            </div>
-          </div>
+              </CardContent>
+            </Card>
+          ))}
         </div>
-      </header>
 
-        <main className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
-          {/* Hero Stats Section */}
-          <div className="mb-8">
-            <div className={`${themeClasses.card} backdrop-blur-sm rounded-3xl p-8 border ${themeClasses.border}`}>
-              <div className="flex flex-col lg:flex-row items-center justify-between mb-6">
-                <div>
-                  <h2 className={`text-3xl font-bold ${themeClasses.text} mb-2`}>Welcome back, Wizard! 🧙‍♂️</h2>
-                  <p className={`${themeClasses.text}/80 text-lg`}>Ready to continue your machine learning journey?</p>
-                </div>
-                <div className="mt-4 lg:mt-0">
-                  <ProgressRing progress={calculateOverallProgress()} size={120} />
-                </div>
-              </div>
-
-              {/* Stats Grid */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-yellow-400 mb-1">{calculateLevel()}</div>
-                  <div className={`${themeClasses.text}/70 text-sm`}>Level</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-green-400 mb-1">{getCompletedLessons()}</div>
-                  <div className={`${themeClasses.text}/70 text-sm`}>Quests Completed</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-blue-400 mb-1">{getCurrentStreak()}</div>
-                  <div className={`${themeClasses.text}/70 text-sm`}>Day Streak</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-purple-400 mb-1">{Math.round(calculateOverallProgress())}%</div>
-                  <div className={`${themeClasses.text}/70 text-sm`}>Overall Progress</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* RPG Learning Experience Section */}
-          <div className="mb-8">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className={`text-2xl font-bold ${themeClasses.text} flex items-center`}>
-                <BookOpen className="h-6 w-6 mr-2 text-blue-400" />
-                🎮 AI Learning Quest
+        {/* Call to Action */}
+        <div className="text-center mt-16">
+          <Card className={`${themeClasses.card} backdrop-blur-sm border ${themeClasses.border} max-w-2xl mx-auto`}>
+            <CardContent className="p-8">
+              <div className="text-4xl mb-4">🚀</div>
+              <h3 className={`text-2xl font-bold ${themeClasses.text} mb-4`}>
+                Ready to Transform Your Future?
               </h3>
-              <div className="flex space-x-3">
-                <Button
-                  onClick={() => router.push('/learning-path/fundamentals')}
-                  className="bg-gradient-to-r from-green-500 to-teal-600 hover:from-green-600 hover:to-teal-700 text-white font-semibold"
-                >
-                  <BookOpen className="h-4 w-4 mr-2" />
-                  Start 4-Week Quest
-                </Button>
-                <Button
-                  onClick={handleStartStorytelling}
-                  className="bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white font-semibold"
-                >
-                  <Play className="h-4 w-4 mr-2" />
-                  Story Mode
-                </Button>
-              </div>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card className={`${themeClasses.card} backdrop-blur-sm border ${themeClasses.border} hover:${themeClasses.card.replace('/10', '/20')} transition-all duration-300 transform hover:scale-105 cursor-pointer`}
-          onClick={() => router.push('/learning-path/fundamentals')}>
-          <CardHeader>
-            <CardTitle className={`text-xl ${themeClasses.text} flex items-center`}>
-              📚 4-Week AI Fundamentals Quest
-            </CardTitle>
-            <CardDescription className={`${themeClasses.text}/70`}>
-              Embark on an epic journey through AI fundamentals with RPG-style progression
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-2 text-sm">
-              <div className="flex justify-between">
-                <span className={`${themeClasses.text}/70`}>Quests:</span>
-                <span className={`${themeClasses.text}`}>16</span>
-              </div>
-              <div className="flex justify-between">
-                <span className={`${themeClasses.text}/70`}>Duration:</span>
-                <span className={`${themeClasses.text}`}>12-16 hours</span>
-              </div>
-              <div className="flex justify-between">
-                <span className={`${themeClasses.text}/70`}>XP Available:</span>
-                <span className={`${themeClasses.text}`}>2,000+</span>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className={`${themeClasses.card} backdrop-blur-sm border ${themeClasses.border} hover:${themeClasses.card.replace('/10', '/20')} transition-all duration-300 transform hover:scale-105 cursor-pointer`}
-          onClick={() => router.push('/learning/karpathy')}>
-          <CardHeader>
-            <CardTitle className={`text-xl ${themeClasses.text} flex items-center`}>
-              🧠 Neural Networks: Zero to Hero
-            </CardTitle>
-            <CardDescription className={`${themeClasses.text}/70`}>
-              Master neural networks with Andrej Karpathy&apos;s legendary course, enhanced with interactive learning
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-2 text-sm">
-              <div className="flex justify-between">
-                <span className={`${themeClasses.text}/70`}>Tracks:</span>
-                <span className={`${themeClasses.text}`}>2 (Beginner/Advanced)</span>
-              </div>
-              <div className="flex justify-between">
-                <span className={`${themeClasses.text}/70`}>Duration:</span>
-                <span className={`${themeClasses.text}`}>20-35 hours</span>
-              </div>
-              <div className="flex justify-between">
-                <span className={`${themeClasses.text}/70`}>Features:</span>
-                <span className={`${themeClasses.text}`}>Interactive Widgets</span>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-              <Card className={`${themeClasses.card} backdrop-blur-sm border ${themeClasses.border} hover:${themeClasses.card.replace('/10', '/20')} transition-all duration-300 transform hover:scale-105 cursor-pointer`}
-                onClick={() => router.push('/lesson/fundamentals-ch1-lesson1')}>
-                <CardHeader>
-                  <CardTitle className={`text-xl ${themeClasses.text} flex items-center`}>
-                    🎯 Try Sample Quest
-                  </CardTitle>
-                  <CardDescription className={`${themeClasses.text}/70`}>
-                    Experience the RPG-style lesson format with interactive elements
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-2 text-sm">
-                    <div className="flex justify-between">
-                      <span className={`${themeClasses.text}/70`}>Topic:</span>
-                      <span className={`${themeClasses.text}`}>What is AI?</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className={`${themeClasses.text}/70`}>Duration:</span>
-                      <span className={`${themeClasses.text}`}>20 minutes</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className={`${themeClasses.text}/70`}>Level:</span>
-                      <span className={`${themeClasses.text}`}>Beginner</span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className={`${themeClasses.card} backdrop-blur-sm border ${themeClasses.border} hover:${themeClasses.card.replace('/10', '/20')} transition-all duration-300 transform hover:scale-105 cursor-pointer`}
-                onClick={() => router.push('/flashcards/fundamentals')}>
-                <CardHeader>
-                  <CardTitle className={`text-xl ${themeClasses.text} flex items-center`}>
-                    🃏 Memory Training Arena
-                  </CardTitle>
-                  <CardDescription className={`${themeClasses.text}/70`}>
-                    Master AI concepts with gamified flashcard practice
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-2 text-sm">
-                    <div className="flex justify-between">
-                      <span className={`${themeClasses.text}/70`}>Cards:</span>
-                      <span className={`${themeClasses.text}`}>10+</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className={`${themeClasses.text}/70`}>Method:</span>
-                      <span className={`${themeClasses.text}`}>Spaced Repetition</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className={`${themeClasses.text}/70`}>Streak:</span>
-                      <span className={`${themeClasses.text}`}>Track Progress</span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-
-        </main>
+              <p className={`text-lg ${themeClasses.text}/70 mb-6`}>
+                Join thousands of learners who are already building the future with AI. 
+                Your journey starts with a single click.
+              </p>
+              <Button
+                onClick={() => handleStartCourse('ai-awakening')}
+                className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-8 py-4 text-lg"
+              >
+                <Rocket className="h-5 w-5 mr-2" />
+                Start Your AI Journey
+              </Button>
+            </CardContent>
+          </Card>
         </div>
+      </div>
     </div>
   );
 }

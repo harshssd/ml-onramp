@@ -156,6 +156,13 @@ export default function Dashboard() {
               >
                 🏠 Home
               </Button>
+              <Button 
+                onClick={() => router.push('/pricing')}
+                variant="outline"
+                className="border-purple-300 dark:border-purple-600 text-purple-700 dark:text-purple-300 hover:bg-purple-50 dark:hover:bg-purple-900/20"
+              >
+                💎 Plans
+              </Button>
               <ThemeSelector />
               {user ? (
                 <div className="flex items-center space-x-3">

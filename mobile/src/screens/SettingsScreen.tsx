@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { useTheme } from '../contexts/ThemeContext';
+import { supabase } from '../lib/supabase';
 
 interface SettingsScreenProps {
   navigation: any;
@@ -56,6 +57,20 @@ export default function SettingsScreen({ navigation }: SettingsScreenProps) {
             <Text style={[styles.comingSoon, { color: colors.accent }]}>
               🚧 More settings coming soon!
             </Text>
+            <TouchableOpacity
+              onPress={async () => {
+                try {
+                  const { error } = await supabase.auth.signOut();
+                  if (error) throw error;
+                  Alert.alert('Signed out', 'You have been logged out.');
+                } catch (e: any) {
+                  Alert.alert('Logout Error', e?.message || 'Failed to logout');
+                }
+              }}
+              style={[styles.logoutButton, { backgroundColor: colors.card, borderColor: colors.border }]}
+            >
+              <Text style={[styles.logoutText, { color: colors.text }]}>Logout</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </ScrollView>
@@ -111,6 +126,17 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: 'center',
     fontWeight: 'bold',
+  },
+  logoutButton: {
+    marginTop: 12,
+    padding: 14,
+    borderRadius: 12,
+    borderWidth: 1,
+    alignItems: 'center',
+  },
+  logoutText: {
+    fontSize: 16,
+    fontWeight: '600',
   },
 });
 

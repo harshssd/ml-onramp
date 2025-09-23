@@ -81,7 +81,7 @@ export default function DashboardScreen({ navigation }: DashboardScreenProps) {
         .eq('user_id', userId);
 
       const progressMap: Record<string, number> = {};
-      data?.forEach((item) => {
+      (data as any[])?.forEach((item: any) => {
         progressMap[item.lesson_id] = item.progress_percentage;
       });
       setUserProgress(progressMap);
@@ -98,8 +98,9 @@ export default function DashboardScreen({ navigation }: DashboardScreenProps) {
 
   const calculateOverallProgress = () => {
     if (lessons.length === 0) return 0;
-    const totalProgress = Object.values(userProgress).reduce((sum, progress) => sum + progress, 0);
-    return totalProgress / lessons.length;
+    const values = Object.values(userProgress) as number[];
+    const totalProgress = values.reduce((sum: number, progress: number) => sum + (progress || 0), 0);
+    return totalProgress / Math.max(lessons.length, 1);
   };
 
   const calculateXP = () => {
@@ -295,6 +296,53 @@ export default function DashboardScreen({ navigation }: DashboardScreenProps) {
             </TouchableOpacity>
           ))}
         </View>
+
+        {/* Quest Selection (parity with web) */}
+        <View style={styles.section}>
+          <Text style={[styles.sectionTitle, { color: colors.text }]}> 
+            🧭 Choose Your Quest
+          </Text>
+          <View style={styles.courseGrid}>
+            <TouchableOpacity
+              style={[styles.courseCard, { backgroundColor: colors.card, borderColor: colors.border }]}
+              onPress={() => navigation.navigate('Lesson', { lesson: { title: 'AI Awakening - Chapter 1', description: 'Begin your AI journey', duration: 30, difficulty: 'beginner' } })}
+            >
+              <Text style={styles.courseIcon}>🌟</Text>
+              <Text style={[styles.courseTitle, { color: colors.text }]}>AI Awakening</Text>
+              <Text style={[styles.courseSubtitle, { color: colors.text + 'CC' }]}>From Curious to Capable</Text>
+              <View style={styles.courseMetaRow}>
+                <Text style={[styles.courseMeta, { color: colors.text + '99' }]}>4 chapters</Text>
+                <Text style={[styles.courseMeta, { color: colors.accent }]}>Beginner</Text>
+              </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[styles.courseCard, { backgroundColor: colors.card, borderColor: colors.border }]}
+              onPress={() => navigation.navigate('Lesson', { lesson: { title: 'Neural Mastery - Chapter 1', description: 'Dive into neural networks', duration: 45, difficulty: 'intermediate' } })}
+            >
+              <Text style={styles.courseIcon}>🧠</Text>
+              <Text style={[styles.courseTitle, { color: colors.text }]}>Neural Mastery</Text>
+              <Text style={[styles.courseSubtitle, { color: colors.text + 'CC' }]}>Build and understand NNs</Text>
+              <View style={styles.courseMetaRow}>
+                <Text style={[styles.courseMeta, { color: colors.text + '99' }]}>4 chapters</Text>
+                <Text style={[styles.courseMeta, { color: colors.accent }]}>Intermediate</Text>
+              </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[styles.courseCard, { backgroundColor: colors.card, borderColor: colors.border }]}
+              onPress={() => navigation.navigate('Lesson', { lesson: { title: 'AI Builder - Chapter 1', description: 'Ship production apps', duration: 60, difficulty: 'advanced' } })}
+            >
+              <Text style={styles.courseIcon}>🚀</Text>
+              <Text style={[styles.courseTitle, { color: colors.text }]}>AI Builder</Text>
+              <Text style={[styles.courseSubtitle, { color: colors.text + 'CC' }]}>Projects and capstones</Text>
+              <View style={styles.courseMetaRow}>
+                <Text style={[styles.courseMeta, { color: colors.text + '99' }]}>4 chapters</Text>
+                <Text style={[styles.courseMeta, { color: colors.accent }]}>Advanced</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -457,6 +505,42 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: 'center',
     marginTop: 50,
+  },
+  courseGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
+  },
+  courseCard: {
+    width: '48%',
+    padding: 16,
+    borderRadius: 12,
+    borderWidth: 1,
+    marginBottom: 12,
+  },
+  courseIcon: {
+    fontSize: 28,
+    marginBottom: 8,
+    textAlign: 'center',
+  },
+  courseTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  courseSubtitle: {
+    fontSize: 12,
+    textAlign: 'center',
+    marginBottom: 8,
+  },
+  courseMetaRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  courseMeta: {
+    fontSize: 12,
+    fontWeight: '600',
   },
 });
 

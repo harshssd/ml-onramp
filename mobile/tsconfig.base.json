@@ -1,17 +1,16 @@
 {
-  "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "strict": true,
     "target": "ES2019",
     "moduleResolution": "node",
     "jsx": "react",
     "lib": ["ES2019", "DOM", "DOM.Iterable"],
+    "types": ["react", "react-native"],
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "allowJs": true,
     "noEmit": true,
     "baseUrl": "."
-  },
-  "include": ["src"]
+  }
 }
+

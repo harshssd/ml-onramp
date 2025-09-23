@@ -13,6 +13,7 @@ import DashboardScreen from '../screens/DashboardScreen';
 import LessonScreen from '../screens/LessonScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import FlashcardsScreen from '../screens/FlashcardsScreen';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -23,8 +24,8 @@ function MainTabs() {
 
   return (
     <Tab.Navigator
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
+      screenOptions={({ route }: { route: { name: string } }) => ({
+        tabBarIcon: ({ focused, color, size }: { focused: boolean; color: string; size: number }) => {
           let iconName: keyof typeof Ionicons.glyphMap;
 
           if (route.name === 'Dashboard') {
@@ -33,6 +34,8 @@ function MainTabs() {
             iconName = focused ? 'person' : 'person-outline';
           } else if (route.name === 'Settings') {
             iconName = focused ? 'settings' : 'settings-outline';
+          } else if (route.name === 'Flashcards') {
+            iconName = focused ? 'albums' : 'albums-outline';
           } else {
             iconName = 'help-outline';
           }
@@ -55,6 +58,11 @@ function MainTabs() {
         name="Dashboard" 
         component={DashboardScreen}
         options={{ title: 'Quest Board' }}
+      />
+      <Tab.Screen 
+        name="Flashcards" 
+        component={FlashcardsScreen}
+        options={{ title: 'Flashcards' }}
       />
       <Tab.Screen 
         name="Profile" 

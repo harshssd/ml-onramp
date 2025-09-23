@@ -46,9 +46,9 @@ export default function PricingPage() {
               </div>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-6">
+            <div className="grid md:grid-cols-3 gap-6 items-stretch">
               {/* Rookie Tier */}
-              <div className="bg-gradient-to-br from-blue-500/20 to-purple-500/20 backdrop-blur-sm rounded-2xl p-6 border border-blue-400/30 hover:border-blue-400/50 transition-all duration-300 hover:scale-105 hover:shadow-xl">
+              <div className="bg-gradient-to-br from-blue-500/20 to-purple-500/20 backdrop-blur-sm rounded-2xl p-6 border border-blue-400/30 hover:border-blue-400/50 transition-all duration-300 hover:scale-105 hover:shadow-xl h-full flex flex-col">
                 <div className="text-center">
                   <div className="text-4xl mb-4">🥉</div>
                   <h3 className="text-2xl font-bold text-white mb-2">Rookie</h3>
@@ -73,13 +73,13 @@ export default function PricingPage() {
                     Progress tracking
                   </li>
                 </ul>
-                <Button className="w-full bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-3 rounded-xl">
+                <Button className="w-full bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-3 rounded-xl mt-auto">
                   Start as Rookie
                 </Button>
               </div>
 
               {/* Hero Tier */}
-              <div className="bg-gradient-to-br from-purple-500/30 to-pink-500/30 backdrop-blur-sm rounded-2xl p-6 border-2 border-purple-400/50 hover:border-purple-400/70 transition-all duration-300 hover:scale-105 hover:shadow-xl relative">
+              <div className="bg-gradient-to-br from-purple-500/30 to-pink-500/30 backdrop-blur-sm rounded-2xl p-6 border-2 border-purple-400/50 hover:border-purple-400/70 transition-all duration-300 hover:scale-105 hover:shadow-xl relative h-full flex flex-col">
                 <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
                   <span className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black px-4 py-1 rounded-full text-sm font-bold">
                     MOST POPULAR
@@ -113,13 +113,13 @@ export default function PricingPage() {
                     Certificate of completion
                   </li>
                 </ul>
-                <Button className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold py-3 rounded-xl">
+                <Button className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold py-3 rounded-xl mt-auto">
                   Become a Hero
                 </Button>
               </div>
 
               {/* Legend Tier */}
-              <div className="bg-gradient-to-br from-yellow-500/20 to-red-500/20 backdrop-blur-sm rounded-2xl p-6 border border-yellow-400/30 hover:border-yellow-400/50 transition-all duration-300 hover:scale-105 hover:shadow-xl">
+              <div className="bg-gradient-to-br from-yellow-500/20 to-red-500/20 backdrop-blur-sm rounded-2xl p-6 border border-yellow-400/30 hover:border-yellow-400/50 transition-all duration-300 hover:scale-105 hover:shadow-xl h-full flex flex-col">
                 <div className="text-center">
                   <div className="text-4xl mb-4">🏆</div>
                   <h3 className="text-2xl font-bold text-white mb-2">Legend</h3>
@@ -148,7 +148,7 @@ export default function PricingPage() {
                     Lifetime access to all content
                   </li>
                 </ul>
-                <Button className="w-full bg-gradient-to-r from-yellow-500 to-red-500 hover:from-yellow-600 hover:to-red-600 text-white font-semibold py-3 rounded-xl">
+                <Button className="w-full bg-gradient-to-r from-yellow-500 to-red-500 hover:from-yellow-600 hover:to-red-600 text-white font-semibold py-3 rounded-xl mt-auto">
                   Achieve Legend Status
                 </Button>
               </div>

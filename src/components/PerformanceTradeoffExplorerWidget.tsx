@@ -66,7 +66,7 @@ export default function PerformanceTradeoffExplorerWidget({
     
     const newComparisons: ModelComparison[] = models.map(model => {
       // Apply optimizations to baseline metrics
-      let metrics = { ...model.baseline_metrics };
+      const metrics = { ...model.baseline_metrics };
       const appliedOptimizations: string[] = [];
       
       optimizations.forEach(optName => {

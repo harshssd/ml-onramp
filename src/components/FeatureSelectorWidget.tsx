@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useTheme } from '@/contexts/ThemeContext';
-import { Target, CheckCircle, TrendingUp, BarChart3, Zap } from 'lucide-react';
+import { Target, CheckCircle, TrendingUp, BarChart3, Zap, XCircle, AlertTriangle } from 'lucide-react';
 
 interface FeatureSelectorWidgetProps {
   onComplete?: () => void;

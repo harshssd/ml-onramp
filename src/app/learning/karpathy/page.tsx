@@ -19,6 +19,10 @@ type AppState = 'track-selection' | 'chapter-selection' | 'lesson' | 'completed'
 export default function KarpathyLearningPage() {
   const { getThemeClasses } = useTheme();
   const themeClasses = getThemeClasses();
+  
+  // Fix template literal parsing issues
+  const cardBgClass = themeClasses.card.replace('/10', '/5');
+  const cardHoverClass = themeClasses.card.replace('/10', '/20');
 
   const [appState, setAppState] = useState<AppState>('track-selection');
   const [selectedTrack, setSelectedTrack] = useState<string | null>(null);
@@ -105,7 +109,7 @@ export default function KarpathyLearningPage() {
 
   if (appState === 'track-selection') {
     return (
-      <div className={`min-h-screen ${themeClasses.background}`}>
+      <div className="min-h-screen bg-gray-900">
         <div className="max-w-6xl mx-auto py-8 px-4">
           <div className="text-center mb-8">
             <h1 className={`text-4xl font-bold ${themeClasses.text} mb-4`}>
@@ -122,19 +126,19 @@ export default function KarpathyLearningPage() {
               Neural Mastery: The Deep Dive with Karpathy
             </h2>
             <p className={`text-xl ${themeClasses.text}/70 max-w-3xl mx-auto mb-6`}>
-              Master neural networks from the ground up with Andrej Karpathy&apos;s legendary course. 
+              Master neural networks from the ground up with Andrej Karpathy's legendary course. 
               Build, understand, and create with the power of deep learning.
             </p>
-            <div className={`p-6 rounded-lg ${themeClasses.card.replace('/10', '/5')} border ${themeClasses.border} max-w-4xl mx-auto`}>
+            <div className={`p-6 rounded-lg ${cardBgClass} border ${themeClasses.border} max-w-4xl mx-auto`}>
               <p className={`${themeClasses.text} italic text-lg`}>
-                &quot;You&apos;ve seen what AI can do. Now it&apos;s time to understand HOW it does it. This is where the magic happens.&quot;
+                "You've seen what AI can do. Now it's time to understand HOW it does it. This is where the magic happens."
               </p>
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Chapter 1 - Detailed Implementation */}
-            <Card className={`${themeClasses.card} backdrop-blur-sm border ${themeClasses.border} hover:${themeClasses.card.replace('/10', '/20')} transition-all duration-300 transform hover:scale-105 cursor-pointer`}
+            <Card className={`${themeClasses.card} backdrop-blur-sm border ${themeClasses.border} hover:${cardHoverClass} transition-all duration-300 transform hover:scale-105 cursor-pointer`}
               onClick={() => window.location.href = '/learning/karpathy/chapter1'}>
               <CardHeader>
                 <div className="flex items-center justify-between mb-4">
@@ -151,7 +155,7 @@ export default function KarpathyLearningPage() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className={`p-4 rounded-lg ${themeClasses.card.replace('/10', '/5')} border ${themeClasses.border} mb-4`}>
+                <div className={`p-4 rounded-lg ${cardBgClass} border ${themeClasses.border} mb-4`}>
                   <div className="space-y-2">
                     <div>
                       <span className={`font-semibold ${themeClasses.text}`}>Setup: </span>
@@ -207,7 +211,7 @@ export default function KarpathyLearningPage() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className={`p-4 rounded-lg ${themeClasses.card.replace('/10', '/5')} border ${themeClasses.border} mb-4`}>
+                <div className={`p-4 rounded-lg ${cardBgClass} border ${themeClasses.border} mb-4`}>
                   <div className="space-y-2">
                     <div>
                       <span className={`font-semibold ${themeClasses.text}`}>Setup: </span>
@@ -247,7 +251,7 @@ export default function KarpathyLearningPage() {
           </div>
 
             {karpathyTracks.map((track) => (
-              <Card key={track.id} className={`${themeClasses.card} backdrop-blur-sm border ${themeClasses.border} hover:${themeClasses.card.replace('/10', '/20')} transition-all duration-300 transform hover:scale-105 cursor-pointer`}
+              <Card key={track.id} className={`${themeClasses.card} backdrop-blur-sm border ${themeClasses.border} hover:${cardHoverClass} transition-all duration-300 transform hover:scale-105 cursor-pointer`}
                 onClick={() => handleTrackSelect(track.id)}>
                 <CardHeader>
                   <div className="flex items-center justify-between mb-4">
@@ -306,7 +310,7 @@ export default function KarpathyLearningPage() {
 
   if (appState === 'chapter-selection' && currentTrack) {
     return (
-      <div className={`min-h-screen ${themeClasses.background}`}>
+      <div className="min-h-screen bg-gray-900">
         <div className="max-w-6xl mx-auto py-8 px-4">
           <div className="flex items-center justify-between mb-8">
             <Button onClick={handleBack} variant="outline" className={`${themeClasses.border}`}>
@@ -365,7 +369,7 @@ export default function KarpathyLearningPage() {
                     {chapter.lessons.map((lesson) => (
                       <Card
                         key={lesson.id}
-                        className={`${themeClasses.card.replace('/10', '/5')} backdrop-blur-sm border ${themeClasses.border} hover:${themeClasses.card.replace('/10', '/20')} transition-all duration-300 cursor-pointer`}
+                        className={`${cardBgClass} backdrop-blur-sm border ${themeClasses.border} hover:${cardHoverClass} transition-all duration-300 cursor-pointer`}
                         onClick={() => {
                           handleLessonSelect(lesson.id);
                           handleChapterSelect(chapter.id);
@@ -414,7 +418,7 @@ export default function KarpathyLearningPage() {
 
   if (appState === 'lesson' && currentLesson) {
     return (
-      <div className={`min-h-screen ${themeClasses.background}`}>
+      <div className="min-h-screen bg-gray-900">
         <div className="max-w-4xl mx-auto py-8 px-4">
           <div className="flex items-center justify-between mb-6">
             <Button onClick={handleBack} variant="outline" className={`${themeClasses.border}`}>
@@ -478,7 +482,7 @@ export default function KarpathyLearningPage() {
                   <h4 className={`font-semibold ${themeClasses.text} mb-2`}>Key Concepts</h4>
                   <div className="flex flex-wrap gap-2">
                     {currentLesson.keyConcepts.map((concept, index) => (
-                      <Badge key={index} variant="secondary" className={`${themeClasses.card.replace('/10', '/20')}`}>
+                      <Badge key={index} variant="secondary" className={`${cardHoverClass}`}>
                         {concept}
                       </Badge>
                     ))}
@@ -619,7 +623,7 @@ export default function KarpathyLearningPage() {
               <CardContent>
                 <div className="space-y-3">
                   {currentLesson.reflection.map((question, index) => (
-                    <div key={index} className={`p-3 rounded-lg ${themeClasses.card.replace('/10', '/5')}`}>
+                    <div key={index} className={`p-3 rounded-lg ${cardBgClass}`}>
                       <p className={`text-sm ${themeClasses.text}`}>{question}</p>
                     </div>
                   ))}

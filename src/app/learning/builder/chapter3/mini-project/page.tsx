@@ -19,7 +19,9 @@ import {
   Award
 } from 'lucide-react';
 
-interface MiniProjectPageProps {}
+interface MiniProjectPageProps {
+  // Add props here if needed
+}
 
 export default function MiniProjectPage({}: MiniProjectPageProps) {
   const { getThemeClasses } = useTheme();

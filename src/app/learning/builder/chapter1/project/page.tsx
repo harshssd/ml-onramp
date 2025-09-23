@@ -19,7 +19,8 @@ import {
   Flower2,
   BookOpen,
   Lightbulb,
-  Trophy
+  Trophy,
+  Clock
 } from 'lucide-react';
 import Link from 'next/link';
 

@@ -22,6 +22,9 @@ export default function TrainTestSplitWidget({ onComplete }: TrainTestSplitWidge
   const { getThemeClasses } = useTheme();
   const themeClasses = getThemeClasses();
   
+  // Fix template literal parsing issue
+  const cardBgClass = themeClasses.card.replace('/10', '/5');
+  
   const [trainRatio, setTrainRatio] = useState([70]);
   const [dataPoints, setDataPoints] = useState<DataPoint[]>([]);
   const [showResults, setShowResults] = useState(false);
@@ -228,7 +231,7 @@ export default function TrainTestSplitWidget({ onComplete }: TrainTestSplitWidge
           <div className="space-y-4">
             <h4 className={`font-semibold ${themeClasses.text}`}>Model Performance</h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className={`p-4 rounded-lg ${themeClasses.card.replace('/10', '/5')} border ${themeClasses.border}`}>
+              <div className={`p-4 rounded-lg ${cardBgClass} border ${themeClasses.border}`}>
                 <div className="flex items-center space-x-2 mb-2">
                   <BarChart3 className="h-5 w-5 text-blue-500" />
                   <h5 className={`font-semibold ${themeClasses.text}`}>Training Performance</h5>
@@ -239,7 +242,7 @@ export default function TrainTestSplitWidget({ onComplete }: TrainTestSplitWidge
                 </p>
               </div>
               
-              <div className={`p-4 rounded-lg ${themeClasses.card.replace('/10', '/5')} border ${themeClasses.border}`}>
+              <div className={`p-4 rounded-lg ${cardBgClass} border ${themeClasses.border}`}>
                 <div className="flex items-center space-x-2 mb-2">
                   <Target className="h-5 w-5 text-red-500" />
                   <h5 className={`font-semibold ${themeClasses.text}`}>Testing Performance</h5>
@@ -268,7 +271,7 @@ export default function TrainTestSplitWidget({ onComplete }: TrainTestSplitWidge
         )}
 
         {/* Key Concepts */}
-        <div className={`p-4 rounded-lg ${themeClasses.card.replace('/10', '/5')} border ${themeClasses.border}`}>
+        <div className={`p-4 rounded-lg ${cardBgClass} border ${themeClasses.border}`}>
           <h4 className={`font-semibold ${themeClasses.text} mb-3`}>Why Split Data?</h4>
           <div className="space-y-2 text-sm">
             <div className="flex items-start space-x-2">

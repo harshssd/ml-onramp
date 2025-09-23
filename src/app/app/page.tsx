@@ -226,7 +226,7 @@ export default function Dashboard() {
             {[aiAwakeningCourse, neuralMasteryCourse, aiBuilderCourse].map((course, index) => (
               <Card 
                 key={course.id} 
-                className={`${themeClasses.card} backdrop-blur-sm border ${themeClasses.border} hover:${themeClasses.card.replace('/10', '/20')} transition-all duration-300 transform hover:scale-105 cursor-pointer group`}
+                className={`${themeClasses.card} backdrop-blur-sm border ${themeClasses.border} hover:${themeClasses.card.replace('/10', '/20')} transition-all duration-300 transform hover:scale-105 cursor-pointer group flex flex-col h-full`}
                 onClick={() => {
                   if (course.id === 'ai-awakening') {
                     router.push('/learning/awakening/chapter1');
@@ -258,7 +258,7 @@ export default function Dashboard() {
                   </div>
                 </CardHeader>
                 
-                <CardContent className="pt-0">
+                <CardContent className="pt-0 flex flex-col flex-grow">
                   {/* Story Hook */}
                   <div className={`p-3 rounded-lg ${themeClasses.card.replace('/10', '/5')} border ${themeClasses.border} mb-4`}>
                     <p className={`${themeClasses.text} italic text-sm`}>
@@ -299,29 +299,31 @@ export default function Dashboard() {
                     </div>
                   </div>
 
-                  {/* Action Button */}
-                  <Button
-                    className={`w-full bg-gradient-to-r ${course.gradient} hover:opacity-90 text-white`}
-                    disabled={course.chapters[0]?.locked}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      if (!course.chapters[0]?.locked) {
-                        handleStartCourse(course.id);
-                      }
-                    }}
-                  >
-                    {course.chapters[0]?.locked ? (
-                      <>
-                        <Lock className="h-4 w-4 mr-2" />
-                        Locked
-                      </>
-                    ) : (
-                      <>
-                        <Play className="h-4 w-4 mr-2" />
-                        Start Quest
-                      </>
-                    )}
-                  </Button>
+                  {/* Action Button - Pushed to bottom */}
+                  <div className="mt-auto">
+                    <Button
+                      className={`w-full bg-gradient-to-r ${course.gradient} hover:opacity-90 text-white`}
+                      disabled={course.chapters[0]?.locked}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (!course.chapters[0]?.locked) {
+                          handleStartCourse(course.id);
+                        }
+                      }}
+                    >
+                      {course.chapters[0]?.locked ? (
+                        <>
+                          <Lock className="h-4 w-4 mr-2" />
+                          Locked
+                        </>
+                      ) : (
+                        <>
+                          <Play className="h-4 w-4 mr-2" />
+                          Start Quest
+                        </>
+                      )}
+                    </Button>
+                  </div>
                 </CardContent>
               </Card>
             ))}

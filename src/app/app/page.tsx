@@ -63,6 +63,27 @@ export default function Dashboard() {
     }
   }, []);
 
+  const handleLogout = async () => {
+    try {
+      const supabase = createClient();
+      const { error } = await supabase.auth.signOut();
+      
+      if (error) {
+        console.error('Error signing out:', error);
+        return;
+      }
+      
+      // Clear user data
+      setUser(null);
+      setUserProgress(null);
+      
+      // Redirect to home page
+      router.push('/');
+    } catch (error) {
+      console.error('Error during logout:', error);
+    }
+  };
+
   useEffect(() => {
     loadUser();
   }, [loadUser]);
@@ -149,6 +170,14 @@ export default function Dashboard() {
                   <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
                     <User className="h-4 w-4 text-white" />
                   </div>
+                  <Button 
+                    onClick={handleLogout}
+                    variant="outline"
+                    size="sm"
+                    className="border-red-300 dark:border-red-600 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20"
+                  >
+                    Logout
+                  </Button>
                 </div>
               ) : (
                 <Button 

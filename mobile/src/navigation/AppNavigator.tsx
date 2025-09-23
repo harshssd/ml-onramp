@@ -14,6 +14,7 @@ import LessonScreen from '../screens/LessonScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import FlashcardsScreen from '../screens/FlashcardsScreen';
+import LearningScreen from '../screens/LearningScreen';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -58,6 +59,11 @@ function MainTabs() {
         name="Dashboard" 
         component={DashboardScreen}
         options={{ title: 'Quest Board' }}
+      />
+      <Tab.Screen 
+        name="Learn" 
+        component={LearningScreen}
+        options={{ title: 'Learn' }}
       />
       <Tab.Screen 
         name="Flashcards" 

@@ -22,6 +22,7 @@ export default function FlashcardsScreen({ route }: FlashcardsScreenProps) {
   const initialTrack = route?.params?.track || DEFAULT_TRACK;
 
   const [track, setTrack] = useState<string>(initialTrack);
+  const tracks = ['fundamentals'];
   const [cards, setCards] = useState<Flashcard[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
@@ -106,6 +107,17 @@ export default function FlashcardsScreen({ route }: FlashcardsScreenProps) {
         <View style={[styles.section, { backgroundColor: colors.card, borderColor: colors.border }]}> 
           <Text style={[styles.headerTitle, { color: colors.text }]}>Memory Training Arena 🧠</Text>
           <Text style={[styles.headerSubtitle, { color: colors.text + 'CC' }]}>Track: {track}</Text>
+          <View style={styles.trackRow}>
+            {tracks.map((t) => (
+              <TouchableOpacity
+                key={t}
+                onPress={() => setTrack(t)}
+                style={[styles.trackPill, { borderColor: colors.border, backgroundColor: t === track ? colors.accent : 'transparent' }]}
+              >
+                <Text style={[styles.trackPillText, { color: t === track ? '#000' : colors.text }]}>{t}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
         </View>
 
         <View style={[styles.section, { backgroundColor: colors.card, borderColor: colors.border }]}> 
@@ -199,6 +211,22 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     borderWidth: 1,
     marginBottom: 12,
+  },
+  trackRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+    marginTop: 8,
+  },
+  trackPill: {
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+    borderRadius: 999,
+    borderWidth: 1,
+  },
+  trackPillText: {
+    fontSize: 12,
+    fontWeight: '700',
   },
   headerTitle: {
     fontSize: 22,

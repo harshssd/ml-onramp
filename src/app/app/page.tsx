@@ -34,12 +34,21 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge as UIBadge } from '@/components/ui/badge';
 import { useTheme } from '@/contexts/ThemeContext';
 
+interface UserProgress {
+  id: number;
+  user_id: string;
+  lesson_id: number;
+  progress_percentage: number;
+  completed: boolean;
+  last_accessed: string;
+}
+
 export default function Dashboard() {
   const { getThemeClasses } = useTheme();
   const themeClasses = getThemeClasses();
   const router = useRouter();
   const [user, setUser] = useState<any>(null);
-  const [userProgress, setUserProgress] = useState<any>(null);
+  const [userProgress, setUserProgress] = useState<UserProgress | null>(null);
   const [loading, setLoading] = useState(true);
 
   const loadUser = useCallback(async () => {
@@ -171,7 +180,7 @@ export default function Dashboard() {
                       {user.email}
                     </p>
                     <p className={`text-xs ${themeClasses.text}/70`}>
-                      Level {userProgress?.level || 1}
+                      Level 1
                     </p>
                   </div>
                   <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
@@ -262,7 +271,7 @@ export default function Dashboard() {
                   {/* Story Hook */}
                   <div className={`p-3 rounded-lg ${themeClasses.card.replace('/10', '/5')} border ${themeClasses.border} mb-4`}>
                     <p className={`${themeClasses.text} italic text-sm`}>
-                      "{course.story.hook}"
+                      &quot;{course.story.hook}&quot;
                     </p>
                   </div>
 
@@ -353,8 +362,8 @@ export default function Dashboard() {
                     <div className={`p-4 rounded-lg ${themeClasses.card.replace('/10', '/5')} border ${themeClasses.border}`}>
                       <h5 className={`font-semibold ${themeClasses.text} mb-2`}>The Hook</h5>
                       <p className={`${themeClasses.text} italic`}>
-                        "You've seen AI everywhere - in your phone, your apps, your daily life. 
-                        But have you ever wondered: 'How does it actually work?' This is your awakening."
+                        &quot;You&apos;ve seen AI everywhere - in your phone, your apps, your daily life. 
+                        But have you ever wondered: &apos;How does it actually work?&apos; This is your awakening.&quot;
                       </p>
                     </div>
                     
@@ -362,7 +371,7 @@ export default function Dashboard() {
                       <h5 className={`font-semibold ${themeClasses.text} mb-2`}>The Journey</h5>
                       <p className={`${themeClasses.text}`}>
                         Follow the journey of a curious mind discovering the secrets of artificial intelligence. 
-                        From simple concepts to building your first neural network, you'll experience the "aha!" moments that change everything.
+                        From simple concepts to building your first neural network, you&apos;ll experience the &quot;aha!&quot; moments that change everything.
                       </p>
                     </div>
                   </div>

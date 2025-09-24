@@ -111,6 +111,31 @@ export default function LearningPage() {
     });
     
     setCurrentUnit(null);
+
+    // Also persist to backend progression API
+    try {
+      const body: any = {
+        eventType: 'unit_complete',
+        unitId,
+        xpDelta: xpEarned,
+        minutesDelta: 30,
+      };
+      if (superpower) {
+        body.superpower = {
+          id: superpower.id,
+          name: superpower.name,
+          icon: superpower.icon,
+          color: superpower.color,
+          levelDelta: 1,
+          unlockedAt: unitId,
+        };
+      }
+      fetch('/api/progression', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      }).catch(() => {});
+    } catch {}
   };
 
   const startUnit = (unit: LearningUnit) => {

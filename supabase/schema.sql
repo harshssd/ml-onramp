@@ -105,3 +105,89 @@ CREATE TRIGGER update_lessons_updated_at
 CREATE TRIGGER update_user_progress_updated_at
   BEFORE UPDATE ON public.user_progress
   FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();
+
+-- Character progression: avatars, powers, activity
+
+-- User characters table
+CREATE TABLE IF NOT EXISTS public.user_characters (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE UNIQUE,
+  name TEXT,
+  avatar_emoji TEXT DEFAULT '🤖',
+  level INTEGER DEFAULT 1 CHECK (level >= 1),
+  xp INTEGER DEFAULT 0 CHECK (xp >= 0),
+  current_streak INTEGER DEFAULT 0 CHECK (current_streak >= 0),
+  total_learning_minutes INTEGER DEFAULT 0 CHECK (total_learning_minutes >= 0),
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- User superpowers table
+CREATE TABLE IF NOT EXISTS public.user_superpowers (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
+  superpower_id TEXT NOT NULL,
+  name TEXT NOT NULL,
+  icon TEXT,
+  color TEXT,
+  level INTEGER DEFAULT 1 CHECK (level >= 1),
+  unlocked_at TEXT, -- unit/lesson id where unlocked
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  UNIQUE(user_id, superpower_id)
+);
+
+-- Activity log for XP/level events
+CREATE TABLE IF NOT EXISTS public.user_activity (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
+  event_type TEXT CHECK (event_type IN ('quiz_pass','project_complete','unit_complete','streak_update')),
+  unit_id TEXT,
+  xp_delta INTEGER DEFAULT 0,
+  metadata JSONB,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Indexes
+CREATE INDEX IF NOT EXISTS idx_user_characters_user_id ON public.user_characters(user_id);
+CREATE INDEX IF NOT EXISTS idx_user_superpowers_user_id ON public.user_superpowers(user_id);
+CREATE INDEX IF NOT EXISTS idx_user_activity_user_id ON public.user_activity(user_id);
+
+-- Enable RLS
+ALTER TABLE public.user_characters ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.user_superpowers ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.user_activity ENABLE ROW LEVEL SECURITY;
+
+-- Policies: users manage their own data
+CREATE POLICY "Users can view their own character" ON public.user_characters
+  FOR SELECT USING (auth.uid() = user_id);
+
+CREATE POLICY "Users can upsert their own character" ON public.user_characters
+  FOR INSERT WITH CHECK (auth.uid() = user_id);
+
+CREATE POLICY "Users can update their own character" ON public.user_characters
+  FOR UPDATE USING (auth.uid() = user_id);
+
+CREATE POLICY "Users can view their own superpowers" ON public.user_superpowers
+  FOR SELECT USING (auth.uid() = user_id);
+
+CREATE POLICY "Users can upsert their own superpowers" ON public.user_superpowers
+  FOR INSERT WITH CHECK (auth.uid() = user_id);
+
+CREATE POLICY "Users can update their own superpowers" ON public.user_superpowers
+  FOR UPDATE USING (auth.uid() = user_id);
+
+CREATE POLICY "Users can view their own activity" ON public.user_activity
+  FOR SELECT USING (auth.uid() = user_id);
+
+CREATE POLICY "Users can insert their own activity" ON public.user_activity
+  FOR INSERT WITH CHECK (auth.uid() = user_id);
+
+-- Triggers for updated_at
+CREATE TRIGGER update_user_characters_updated_at
+  BEFORE UPDATE ON public.user_characters
+  FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();
+
+CREATE TRIGGER update_user_superpowers_updated_at
+  BEFORE UPDATE ON public.user_superpowers
+  FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();

@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, ScrollView, ActivityIndicator, Alert } from 'react-native';
 import { useTheme } from '../contexts/ThemeContext';
 import { API_CONFIG } from '../config/api';
+import { supabase } from '../lib/supabase';
 import YouTubeSegment from '../components/YouTubeSegment';
 
 interface LessonScreenProps {
@@ -54,7 +55,10 @@ export default function LessonScreen({ navigation, route }: LessonScreenProps) {
       setError(null);
       try {
         const url = `${API_CONFIG.baseUrl}/api/content/lessons/${slugOrId}`;
-        const res = await fetch(url);
+        const { data: session } = await supabase.auth.getSession();
+        const res = await fetch(url, {
+          headers: session.session?.access_token ? { Authorization: `Bearer ${session.session.access_token}` } : {},
+        });
         if (!res.ok) throw new Error(`Failed to fetch lesson: ${res.status}`);
         const data = await res.json();
         if (isMounted) setLesson(data);

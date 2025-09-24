@@ -70,6 +70,13 @@ ml-onramp/
    - Update `src/config/supabase.ts` with your credentials
    - **Important**: Never commit real credentials to git!
 
+4. **Point the mobile app to your web API (for progression sync):**
+   - In development, set an environment variable so the mobile app can call the web API:
+     - Bash: `export EXPO_PUBLIC_API_BASE_URL=http://YOUR_DEV_MACHINE_IP:3000`
+     - Windows (Powershell): `$env:EXPO_PUBLIC_API_BASE_URL="http://YOUR_DEV_MACHINE_IP:3000"`
+   - Replace `YOUR_DEV_MACHINE_IP` with your machine IP on the same network (not `localhost`).
+   - The mobile app will include the Supabase session as a Bearer token when calling `GET /api/progression`.
+
 4. **Start development server:**
    ```bash
    npx expo start

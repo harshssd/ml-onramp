@@ -112,6 +112,31 @@ export function UnifiedLearningUnit({
         maxLevel: 5
       } : undefined);
     }
+
+    // Persist progression to backend
+    try {
+      const body: any = {
+        eventType: 'unit_complete',
+        unitId: unit.id,
+        xpDelta: totalXP,
+        minutesDelta: unit.duration_min || 0,
+      };
+      if (unit.superpower) {
+        body.superpower = {
+          id: unit.superpower.id,
+          name: unit.superpower.name,
+          icon: unit.superpower.icon,
+          color: unit.superpower.color,
+          levelDelta: 1,
+          unlockedAt: unit.id,
+        };
+      }
+      fetch('/api/progression', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      }).catch(() => {});
+    } catch {}
   };
 
   const isUnitComplete = completedSections.size >= 3; // Complete when 3+ sections done

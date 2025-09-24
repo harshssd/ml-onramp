@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
 import { useTheme } from '../contexts/ThemeContext';
 import { supabase } from '../lib/supabase';
+import { API_CONFIG } from '../config/api';
 
 interface ProfileScreenProps {
   navigation: any;
@@ -14,25 +15,32 @@ export default function ProfileScreen({ navigation }: ProfileScreenProps) {
   const [level, setLevel] = useState<number>(1);
   const [xp, setXp] = useState<number>(0);
   const [completed, setCompleted] = useState<number>(0);
+  const [superpowers, setSuperpowers] = useState<Array<{ name: string; level: number; icon?: string }>>([]);
 
   useEffect(() => {
     const load = async () => {
       try {
         const { data: { user } } = await supabase.auth.getUser();
         if (user?.email) setUserEmail(user.email);
-        if (user?.id) {
-          const { data } = await supabase
-            .from('user_progress')
-            .select('progress_percentage, completed')
-            .eq('user_id', user.id);
-          const values = (data as any[]) || [];
-          const totalProgress = values.reduce((sum: number, row: any) => sum + (row.progress_percentage || 0), 0);
-          const done = values.filter((row: any) => row.completed).length;
-          setCompleted(done);
-          const avg = values.length > 0 ? totalProgress / values.length : 0;
-          const computedXP = Math.floor(avg * 10);
-          setXp(computedXP);
-          setLevel(Math.floor(computedXP / 100) + 1);
+        // Fetch aggregated progression from web API (same Supabase backend)
+        const { data: session } = await supabase.auth.getSession();
+        const token = session.session?.access_token;
+        const res = await fetch(`${API_CONFIG.baseUrl}/api/progression`, {
+          headers: {
+            'Accept': 'application/json',
+            ...(token ? { Authorization: `Bearer ${token}` } : {}),
+          },
+        });
+        if (res.ok) {
+          const json = await res.json();
+          const ch = json.character;
+          const sp = json.superpowers as Array<any>;
+          if (ch) {
+            setLevel(ch.level || 1);
+            setXp(ch.xp || 0);
+            setCompleted((json.activity || []).filter((e: any) => e.event_type === 'unit_complete').length);
+          }
+          setSuperpowers(sp.map(p => ({ name: p.name, level: p.level, icon: p.icon })));
         }
       } catch {}
     };
@@ -62,6 +70,16 @@ export default function ProfileScreen({ navigation }: ProfileScreenProps) {
               <Text style={[styles.statLabel, { color: colors.text + '99' }]}>Quests</Text>
             </View>
           </View>
+        {superpowers.length > 0 && (
+          <View style={{ marginTop: 16 }}> 
+            <Text style={[styles.label, { color: colors.text + '99' }]}>Superpowers</Text>
+            {superpowers.map((p, idx) => (
+              <Text key={idx} style={[styles.value, { color: colors.text }]}>
+                {p.icon ? `${p.icon} ` : ''}{p.name} • Lv {p.level}
+              </Text>
+            ))}
+          </View>
+        )}
         </View>
       </View>
     </SafeAreaView>

@@ -63,7 +63,16 @@ export default function CheckpointQuiz({ question, options, correctId, explanati
       {isCorrect && onPass && (
         <div className="mt-4">
           <button
-            onClick={onPass}
+            onClick={() => {
+              try {
+                fetch('/api/progression', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ eventType: 'quiz_pass', xpDelta: 25 }),
+                }).catch(() => {});
+              } catch {}
+              onPass();
+            }}
             className="px-4 py-2 rounded-lg bg-black text-white hover:opacity-90"
           >
             Continue
